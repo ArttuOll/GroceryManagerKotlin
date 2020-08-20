@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container_food_item_detail"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.GroceryItemDetailActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView_detail"
+            style="@style/activity_imageviews"
+            android:contentDescription="@string/food_image_content_description"
+            android:transitionName="@string/transition_detail" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/activity_imageview_height"
+            android:background="@drawable/activity_imageview_gradient_bg" />
+
+        <TextView
+            android:id="@+id/textview_title"
+            style="@style/TextImageViewLabels"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="4dp" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/layout_horizontal_margins"
+        android:layout_marginVertical="8dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textview_brand"
+            style="@style/TextImageViewSubLabels"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/textview_amount"
+            style="@style/TextImageViewSubLabels"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textview_info_label"
+        style="@style/TextSubLabels"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/fooditem_detail_more_info" />
+
+    <TextView
+        android:id="@+id/textview_info"
+        style="@style/TextBody"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/layout_horizontal_margins" />
+
+</LinearLayout>

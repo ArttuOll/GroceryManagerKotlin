@@ -1,10 +1,82 @@
 <resources>
+
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
+        <item name="colorSecondary">@color/colorAccent</item>
+        <item name="colorOnSecondary">@android:color/white</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!-- Text Styles -->
+    <style name="TextLabels">
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/textColorMain</item>
+    </style>
+
+    <style name="TextSubLabels">
+        <item name="font">@font/roboto_medium</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/textColorMainLight</item>
+    </style>
+
+    <style name="TextBody">
+        <item name="font">@font/roboto_light</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/textColorBody</item>
+    </style>
+
+    <style name="TextImageViewLabels">
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">32sp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="TextImageViewSubLabels">
+        <item name="font">@font/roboto_medium</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/textColorMain</item>
+    </style>
+
+    <style name="TextPlaceholders">
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/textColorPlaceholder</item>
+    </style>
+
+    <!-- ImageView Styles -->
+    <style name="listitem_imageviews">
+        <item name="android:layout_width">@dimen/listitem_imageview_width</item>
+        <item name="android:layout_height">@dimen/listitem_imageview_height</item>
+        <item name="android:adjustViewBounds">false</item>
+        <item name="android:background">@drawable/grocerylist_imageview_bg</item>
+        <item name="android:scaleType">fitCenter</item>
+    </style>
+
+    <style name="activity_imageviews">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/activity_imageview_height</item>
+        <item name="android:background">@drawable/imageview_bg_square</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+
+    <!-- Button Styles -->
+    <style name="fabs">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
     </style>
 
 </resources>

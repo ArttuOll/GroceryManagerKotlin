@@ -1,0 +1,47 @@
+<resources>
+
+    <!-- Grocery Day Preference -->
+    <string-array name="daysofweek">
+        <item>Maanantai</item>
+        <item>Tiistai</item>
+        <item>Keskiviikko</item>
+        <item>Torstai</item>
+        <item>Perjantai</item>
+        <item>Lauantai</item>
+        <item>Sunnuntai</item>
+    </string-array>
+
+    <string-array name="daysofweek_values">
+        <item>Maanantai</item>
+        <item>Tiistai</item>
+        <item>Keskiviikko</item>
+        <item>Torstai</item>
+        <item>Perjantai</item>
+        <item>Lauantai</item>
+        <item>Sunnuntai</item>
+    </string-array>
+
+    <string-array name="empty_array">
+
+    </string-array>
+
+    <!-- DateTimeHelper -->
+    <string-array name="daysofweek_datehelper">
+        <item>Sunnuntai</item>
+        <item>Maanantai</item>
+        <item>Tiistai</item>
+        <item>Keskiviikko</item>
+        <item>Torstai</item>
+        <item>Perjantai</item>
+        <item>Lauantai</item>
+    </string-array>
+
+    <!-- NewFoodItemActivity Unit Dropdown Menu & PluralsProvider-->
+    <string-array name="units_plural">
+        <item>kpl</item>
+        <item>pkt</item>
+        <item>tlk</item>
+        <item>ps</item>
+        <item>plo</item>
+    </string-array>
+</resources>

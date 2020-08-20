@@ -1,0 +1,47 @@
+<resources>
+
+    <!-- Grocery Day Preference -->
+    <string-array name="daysofweek">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+        <item>Sunday</item>
+    </string-array>
+
+    <string-array name="daysofweek_values">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+        <item>Sunday</item>
+    </string-array>
+
+    <string-array name="empty_array">
+
+    </string-array>
+
+    <!-- DateTimeHelper -->
+    <string-array name="daysofweek_datehelper">
+        <item>Sunday</item>
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+    </string-array>
+
+    <!-- NewFoodItemActivity Unit Dropdown Menu & PluralsProvider-->
+    <string-array name="units_plural">
+        <item>Pieces</item>
+        <item>Packets</item>
+        <item>Cans</item>
+        <item>Bags</item>
+        <item>Bottles</item>
+    </string-array>
+</resources>

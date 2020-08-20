@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/config_item_linearlayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingTop="16dp">
+
+    <ImageView
+        android:id="@+id/configlist_food_image"
+        style="@style/listitem_imageviews"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/food_image_content_description"
+        android:transitionName="@string/transition_detail" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/listitem_bg"
+        android:paddingBottom="8dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/config_item_label"
+                style="@style/TextLabels"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Placeholder" />
+
+            <TextView
+                android:id="@+id/config_item_brand"
+                style="@style/TextSubLabels"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-4dp"
+                android:text="Placeholder" />
+
+            <TextView
+                android:id="@+id/config_item_amount"
+                style="@style/TextSubLabels"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-4dp"
+                android:text="Placeholder" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/config_item_schedule"
+            style="@style/TextSubLabels"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="Placeholder"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

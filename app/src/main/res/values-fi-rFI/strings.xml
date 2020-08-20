@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Grocery Manager</string>
+    <string name="food_image_content_description">Ruoan kuva</string>
+    <string name="title_activity_settings">Asetukset</string>
+    <string name="grocery_settings_label_text">Ruoat</string>
+    <string name="grocery_day_title">Kauppapäivät</string>
+    <string name="groceries_header">Ruokaostokset</string>
+    <string name="hint_item_label">Ruoan nimi</string>
+    <string name="hint_brand">Merkki</string>
+    <string name="hint_amount">Määrä</string>
+    <string name="textview_frequency_1">Esiintymistiheys:</string>
+    <string name="textview_frequency_2">kertaa</string>
+    <string name="button_week">vk:ssa</string>
+    <string name="button_twoweeks">kahdessa vk:ssa</string>
+    <string name="button_month">kk:ssa</string>
+    <string name="hint_more_information">Lisätietoja:</string>
+    <string name="hint_unit">Yksikkö</string>
+    <string name="main_not_grocery_day">Tänään ei ole kauppapäivä!</string>
+    <string name="main_no_grocery_days_set">Kauppapäiviä ei ole asetettu!</string>
+    <string name="no_grocery_items">Yhtään ruokaa ei ole määritetty vielä!</string>
+    <string name="main_groceries_done">Ruokaostokset tehty!</string>
+    <string name="action_settings">Asetukset</string>
+    <string name="action_configure">Hallitse ruokia</string>
+    <string name="toast_checked">Hoidettu!</string>
+    <string name="mainActivity_actionbar_label">Kauppalista</string>
+    <string name="error_not_grocery_day">Tänään ei ole kauppapäivä!</string>
+    <string name="newFoodItem_title">Lisää ruoka</string>
+    <string name="snackbar_no_grocery_days">Kauppapäivät on määriteltävä asetuksissa ennen kuin voit hallinnoida kauppalistaasi!</string>
+    <string name="snackbar_not_enough_grocery_days">Kauppapäiviä ei ole tarpeeksi, jotta tämä ruoka voisi olla kauppalistalla näin usein!</string>
+    <string name="snackbar_label_empty">Nimikenttä ei voi olla tyhjä!</string>
+    <string name="imageview_grocerylist_content_description">Ruoka</string>
+    <string name="fooditem_detail_more_info">Lisätietoja:</string>
+    <string name="hint_freq_input">esiintymistiheyden syöttö</string>
+    <string name="transition_detail">lisätietonäkymän siirtymäanimaatio</string>
+    <string name="snackbar_time_frame_not_chosen">Aikaväliä ei valittuna!</string>
+    <string name="snackbar_frequency_not_set">Esiintymistiheys ei voi olla nolla!</string>
+    <string name="notifchan_primary_name">Kauppapäiväilmoitus</string>
+    <string name="notifchan_primary_description">Muistutus ruokaostoksien tekemisestä</string>
+    <string name="notification_content_title">On kauppapäivä!</string>
+    <string name="notification_content_text">Aika hakea täytettä jääkaappiin!</string>
+    <string name="snackbar_amount_empty">Määräkenttä ei voi olla tyhjä!</string>
+    <string name="activity_configs_title">Ruoat</string>
+</resources>

@@ -1,3 +1,64 @@
 <resources>
     <string name="app_name">Grocery Manager</string>
+
+    <!-- Multiple Activities -->
+    <string name="food_image_content_description">Food-item image</string>
+    <string name="transition_detail">transition detail</string>
+
+    <!-- SettingsActivity  -->
+    <string name="title_activity_settings">Settings</string>
+    <string name="grocery_settings_label_text">Food-items</string>
+    <string name="grocery_day_title">Grocery days</string>
+    <string name="groceries_header">Groceries</string>
+
+    <!-- NewFoodItemActivity  -->
+    <string name="hint_item_label">Item Label</string>
+    <string name="hint_brand">Brand</string>
+    <string name="hint_amount">Amount</string>
+    <string name="textview_frequency_1">Frequency:</string>
+    <string name="textview_frequency_2">times in</string>
+    <string name="button_week">A Week</string>
+    <string name="button_twoweeks">Two Weeks</string>
+    <string name="button_month">A Month</string>
+    <string name="hint_more_information">More information:</string>
+    <string name="hint_freq_input">frequency input</string>
+
+    <!-- ConfigurationsActivity  -->
+    <string name="comma" translatable="false">%1$s,</string>
+    <string name="hint_unit">Unit</string>
+    <string name="activity_configs_title">Food-items</string>
+
+    <!-- Main Activity -->
+    <string name="main_not_grocery_day">It is not a grocery day!</string>
+    <string name="main_no_grocery_days_set">No grocery days set!</string>
+    <string name="no_grocery_items">No grocery items configured yet!</string>
+    <string name="main_groceries_done">Groceries done!</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_configure">Manage food-items</string>
+    <string name="toast_checked">Check!</string>
+    <string name="mainActivity_actionbar_label">Groceries for </string>
+    <string name="error_not_grocery_day">It is not a grocery day!</string>
+
+    <!-- Grocery Preferences -->
+    <string name="newFoodItem_title">Add Food-item</string>
+
+    <!-- Snackbars -->
+    <string name="snackbar_no_grocery_days">You must set grocery days in settings before you can configure your grocerylist!</string>
+    <string name="snackbar_not_enough_grocery_days">You don\'t have enough grocery days per week
+        to have this food-item this often!</string>
+    <string name="snackbar_time_frame_not_chosen">You must select a time frame!</string>
+    <string name="snackbar_frequency_not_set">Frequency can\'t be zero!</string>
+    <string name="snackbar_amount_empty">Amount field can\'t be empty!</string>
+    <string name="snackbar_label_empty">The label field cannot be empty!</string>
+
+    <!-- GroceryItemDetailActivity -->
+    <string name="imageview_grocerylist_content_description">Grocery Item</string>
+    <string name="fooditem_detail_more_info">Info:</string>
+
+    <!-- Notifications -->
+    <string name="notifchan_primary_name">Grocery Day Notification</string>
+    <string name="notifchan_primary_description">A notification that reminds you to do your groceries</string>
+    <string name="notification_content_title">It\'s grocery day!</string>
+    <string name="notification_content_text">Time to feed your fridge!</string>
+
 </resources>

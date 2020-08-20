@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Plurals -->
+    <plurals name="times_a_week">
+        <item quantity="one">Kerran vk:ssa</item>
+        <item quantity="other">%1$d kertaa vk:ssa</item>
+    </plurals>
+
+    <plurals name="times_in_two_weeks">
+        <item quantity="one">Kerran kahdessa vk:ssa</item>
+        <item quantity="other">%1$d kertaa kahdessa vk:ssa</item>
+    </plurals>
+
+    <plurals name="times_in_a_month">
+        <item quantity="one">Kerran kk:ssa</item>
+        <item quantity="other">%1$d kertaa kk:ssa</item>
+    </plurals>
+
+    <plurals name="Pieces">
+        <item quantity="one">%1$d kpl</item>
+        <item quantity="other">%1$d kpl</item>
+    </plurals>
+
+    <plurals name="Packets">
+        <item quantity="one">%1$d pkt</item>
+        <item quantity="other">%1$d pkt</item>
+    </plurals>
+
+    <plurals name="Cans">
+        <item quantity="one">%1$d tlk</item>
+        <item quantity="other">%1$d tlk</item>
+    </plurals>
+
+    <plurals name="Bags">
+        <item quantity="one">%1$d ps</item>
+        <item quantity="other">%1$d ps</item>
+    </plurals>
+
+    <plurals name="Bottles">
+        <item quantity="one">%1$d plo</item>
+        <item quantity="other">%1$d plo</item>
+    </plurals>
+
+</resources>

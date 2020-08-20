@@ -1,0 +1,13 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/groceries_header">
+        <MultiSelectListPreference
+            app:defaultValue="@array/empty_array"
+            app:entries="@array/daysofweek"
+            app:entryValues="@array/daysofweek_values"
+            app:key="grocerydays"
+            app:title="@string/grocery_day_title" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
