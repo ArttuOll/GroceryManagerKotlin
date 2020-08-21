@@ -4,14 +4,14 @@ import com.bsuuv.grocerymanager.util.TimeFrame
 
 interface FoodItem {
 
-    val mId: Int
-    val mImageUri: String
+    val id: Int
+    val imageUri: String
     val label: String
-    val mBrand: String
+    val brand: String
     val mInfo: String
-    val mAmount: Int
-    val mUnit: String
-    val mTimeFrame: TimeFrame
-    val mFrequency: Int
-    val mCountdownValue: Double
+    val amount: Int
+    val unit: String
+    val timeFrame: TimeFrame
+    val frequency: Int
+    val countdownValue: Double
 }

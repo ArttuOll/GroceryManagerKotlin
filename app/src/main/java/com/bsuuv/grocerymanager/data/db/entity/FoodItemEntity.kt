@@ -12,35 +12,35 @@ import com.bsuuv.grocerymanager.util.TimeFrame
 data class FoodItemEntity(
         @PrimaryKey(autoGenerate = true)
         @ColumnInfo(name = "id")
-        override val mId: Int,
+        override val id: Int,
 
         @ColumnInfo(name = "image_uri")
-        override val mImageUri: String,
+        override val imageUri: String,
 
         @NonNull
         @ColumnInfo(name = "label")
         override val label: String,
 
         @ColumnInfo(name = "brand")
-        override val mBrand: String,
+        override val brand: String,
 
         @ColumnInfo(name = "info")
         override val mInfo: String,
 
         @ColumnInfo(name = "amount")
-        override val mAmount: Int,
+        override val amount: Int,
 
         @ColumnInfo(name = "unit")
-        override val mUnit: String,
+        override val unit: String,
 
         @NonNull
         @TypeConverters(TimeFrameConverter::class)
         @ColumnInfo(name = "time_frame")
-        override val mTimeFrame: TimeFrame,
+        override val timeFrame: TimeFrame,
 
         @ColumnInfo(name = "frequency")
-        override val mFrequency: Int,
+        override val frequency: Int,
 
         @ColumnInfo(name = "countdown_value")
-        override val mCountdownValue: Double
+        override val countdownValue: Double
 ) : FoodItem
