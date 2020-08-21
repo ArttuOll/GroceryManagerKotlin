@@ -5,6 +5,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
+import com.bsuuv.grocerymanager.data.model.FoodItem
 import com.bsuuv.grocerymanager.util.TimeFrame
 
 @Entity

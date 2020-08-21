@@ -1,4 +1,4 @@
-package com.bsuuv.grocerymanager.data.db.entity
+package com.bsuuv.grocerymanager.data.model
 
 import com.bsuuv.grocerymanager.util.TimeFrame
 

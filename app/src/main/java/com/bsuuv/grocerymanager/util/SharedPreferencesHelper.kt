@@ -3,8 +3,8 @@ package com.bsuuv.grocerymanager.util
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
-import com.bsuuv.grocerymanager.data.db.entity.FoodItem
 import com.bsuuv.grocerymanager.data.db.entity.FoodItemEntity
+import com.bsuuv.grocerymanager.data.model.FoodItem
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
