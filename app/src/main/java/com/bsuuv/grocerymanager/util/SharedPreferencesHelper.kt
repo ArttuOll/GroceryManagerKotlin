@@ -14,8 +14,13 @@ import com.google.gson.reflect.TypeToken
  */
 class SharedPreferencesHelper(context: Context) {
 
-    val mSharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+    val mSharedPreferences: SharedPreferences =
+        PreferenceManager.getDefaultSharedPreferences(context)
     private val gson: Gson
+
+    companion object {
+        const val GROCERY_DAYS_KEY = "grocerydays"
+    }
 
     init {
         val builder = GsonBuilder()
@@ -29,7 +34,7 @@ class SharedPreferencesHelper(context: Context) {
      * selected, an empty <code>Set</code> is returned.
      */
     fun getGroceryDays(): MutableSet<String> = mSharedPreferences
-            .getStringSet(Keys.GROCERY_DAYS_KEY, HashSet())!!
+        .getStringSet(GROCERY_DAYS_KEY, HashSet())!!
 
     fun saveList(foodItems: MutableList<FoodItemEntity>, key: String) {
         val json = gson.toJson(foodItems)
@@ -50,9 +55,5 @@ class SharedPreferencesHelper(context: Context) {
     }
 
     private inline fun <reified T> Gson.fromJson(json: String?) =
-            fromJson<T>(json, object : TypeToken<T>() {}.type)
-
-    object Keys {
-        const val GROCERY_DAYS_KEY = "grocerydays"
-    }
+        fromJson<T>(json, object : TypeToken<T>() {}.type)
 }

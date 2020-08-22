@@ -19,6 +19,10 @@ class DateTimeHelper(private val mContext: Context, sharedPrefsHelper: SharedPre
         this.mToday = mCalendar.get(Calendar.DAY_OF_WEEK)
     }
 
+    companion object {
+        const val NO_GROCERY_DAYS_SET = 8
+    }
+
     private fun createCalendar(): Calendar {
         val calendar: Calendar = Calendar.getInstance()
         calendar.firstDayOfWeek = Calendar.SUNDAY
@@ -40,7 +44,7 @@ class DateTimeHelper(private val mContext: Context, sharedPrefsHelper: SharedPre
     }
 
     fun getTimeUntilNextGroceryDay(): Int {
-        var daysUntilClosestGroceryDay = Keys.NO_GROCERY_DAYS_SET
+        var daysUntilClosestGroceryDay = NO_GROCERY_DAYS_SET
         for (groceryDay in mGroceryDays) {
             val groceryDayOrdinal = getNextGroceryDayOrdinal(groceryDay)
             val daysFromTodayToGroceryDay = groceryDayOrdinal - mToday
@@ -81,9 +85,5 @@ class DateTimeHelper(private val mContext: Context, sharedPrefsHelper: SharedPre
 
     internal fun setToday(today: Int) {
         mToday = today
-    }
-
-    object Keys {
-        const val NO_GROCERY_DAYS_SET = 8
     }
 }
