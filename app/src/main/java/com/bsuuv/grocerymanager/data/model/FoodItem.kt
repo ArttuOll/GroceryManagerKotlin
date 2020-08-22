@@ -8,7 +8,7 @@ interface FoodItem {
     val imageUri: String
     val label: String
     val brand: String
-    val mInfo: String
+    val info: String
     val amount: Int
     val unit: String
     val timeFrame: TimeFrame

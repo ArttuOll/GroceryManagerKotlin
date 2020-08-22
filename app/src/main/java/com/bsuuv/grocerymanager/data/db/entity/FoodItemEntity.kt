@@ -25,7 +25,7 @@ data class FoodItemEntity(
         override val brand: String,
 
         @ColumnInfo(name = "info")
-        override val mInfo: String,
+        override val info: String,
 
         @ColumnInfo(name = "amount")
         override val amount: Int,
