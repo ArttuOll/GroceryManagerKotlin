@@ -42,5 +42,5 @@ data class FoodItemEntity(
         override val frequency: Int,
 
         @ColumnInfo(name = "countdown_value")
-        override val countdownValue: Double
+        override var countdownValue: Double
 ) : FoodItem
