@@ -8,17 +8,17 @@ import com.bsuuv.grocerymanager.data.db.entity.FoodItemEntity
 interface FoodItemDao {
 
     @Insert
-    fun insert(foodItem: FoodItemEntity)
+    suspend fun insert(foodItem: FoodItemEntity)
 
     @Query("SELECT * FROM FoodItemEntity WHERE id = :foodItemId")
-    fun get(foodItemId: Int): FoodItemEntity
+    suspend fun get(foodItemId: Int): FoodItemEntity
 
     @Delete
-    fun delete(foodItem: FoodItemEntity)
+    suspend fun delete(foodItem: FoodItemEntity)
 
     @Query("SELECT * FROM FoodItemEntity ORDER BY label ASC")
-    fun getAll(): LiveData<List<FoodItemEntity>>
+    suspend fun getAll(): LiveData<MutableList<FoodItemEntity>>
 
     @Update
-    fun update(foodItem: FoodItemEntity)
+    suspend fun update(foodItem: FoodItemEntity)
 }
