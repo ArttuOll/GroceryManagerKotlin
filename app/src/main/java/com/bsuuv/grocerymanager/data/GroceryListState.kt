@@ -26,12 +26,12 @@ class GroceryListState(private val mSharedPrefsHelper: SharedPreferencesHelper) 
 
     private fun notIncremented(foodItem: FoodItem): Boolean = !incrementedItems.contains(foodItem)
 
-    fun saveState() {
+    fun save() {
         mSharedPrefsHelper.saveList(incrementedItems, INCREMENTED_ITEMS_KEY)
         mSharedPrefsHelper.saveList(removedItems, REMOVED_ITEMS_KEY)
     }
 
-    fun resetState() {
+    fun reset() {
         mSharedPrefsHelper.clearList(INCREMENTED_ITEMS_KEY)
         mSharedPrefsHelper.clearList(REMOVED_ITEMS_KEY)
     }
