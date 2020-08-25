@@ -14,14 +14,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bsuuv.grocerymanager.R
 import com.bsuuv.grocerymanager.data.model.FoodItem
 import com.bsuuv.grocerymanager.ui.GroceryItemDetailFragment
-import com.bsuuv.grocerymanager.ui.util.FoodItemListDifferenceCalc
 import com.bsuuv.grocerymanager.ui.util.ImageViewPopulater
 import com.bsuuv.grocerymanager.ui.util.PluralsProvider
 
 class GroceryListAdapter(private val mContext: Context, private val mIsWideScreen: Boolean) :
-    RecyclerView.Adapter<GroceryListAdapter.GroceryViewHolder>() {
+    Adapter() {
 
-    private lateinit var mGroceryItems: MutableList<out FoodItem>
     private val mInflater: LayoutInflater = LayoutInflater.from(mContext)
 
     override fun onCreateViewHolder(
@@ -32,31 +30,10 @@ class GroceryListAdapter(private val mContext: Context, private val mIsWideScree
         return GroceryViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: GroceryListAdapter.GroceryViewHolder, position: Int) {
-        val currentFoodItem = mGroceryItems[position]
-        holder.bindTo(currentFoodItem)
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val currentFoodItem = mItems[position]
+        (holder as GroceryViewHolder).bindTo(currentFoodItem)
     }
-
-    override fun getItemCount() = mGroceryItems.size
-
-    fun setGroceryItems(newGroceryItems: MutableList<out FoodItem>) {
-        if (!this::mGroceryItems.isInitialized) initGroceryItems(newGroceryItems)
-        else updateGroceryItems(newGroceryItems)
-    }
-
-    private fun initGroceryItems(newGroceryItems: MutableList<out FoodItem>) {
-        mGroceryItems = newGroceryItems
-        notifyItemRangeInserted(0, newGroceryItems.size)
-    }
-
-    private fun updateGroceryItems(newGroceryItems: MutableList<out FoodItem>) {
-        val migrationOperations =
-            FoodItemListDifferenceCalc.calculateMigrationOperations(mGroceryItems, newGroceryItems)
-        mGroceryItems = newGroceryItems
-        migrationOperations.dispatchUpdatesTo(this)
-    }
-
-    fun getFoodItemAtPosition(position: Int) = mGroceryItems[position]
 
     /**
      * A <code>ViewHolder</code> containing one grocery item to be displayed in the
@@ -67,26 +44,26 @@ class GroceryListAdapter(private val mContext: Context, private val mIsWideScree
     inner class GroceryViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
-        private val mFoodItemLabel: TextView = itemView.findViewById(R.id.grocery_item_label)
-        private val mFoodItemBrand: TextView = itemView.findViewById(R.id.grocery_item_brand)
-        private val mFoodItemAmount: TextView = itemView.findViewById(R.id.grocery_item_amount)
+        private val mLabel: TextView = itemView.findViewById(R.id.grocery_item_label)
+        private val mBrand: TextView = itemView.findViewById(R.id.grocery_item_brand)
+        private val mAmount: TextView = itemView.findViewById(R.id.grocery_item_amount)
         private val mPluralsProvider: PluralsProvider = PluralsProvider(mContext)
-        private val mFoodImage: ImageView = itemView.findViewById(R.id.grocerylist_food_image)
+        private val mImage: ImageView = itemView.findViewById(R.id.grocerylist_food_image)
 
         init {
             itemView.setOnClickListener(this)
-            mFoodImage.clipToOutline = true
+            mImage.clipToOutline = true
         }
 
-        internal fun bindTo(currentFoodItem: FoodItem) {
-            setInputFieldValuesBasedOn(currentFoodItem)
-            ImageViewPopulater.populateFromUri(mContext, currentFoodItem.imageUri, mFoodImage)
+        internal fun bindTo(currentItem: FoodItem) {
+            setInputFieldValuesBasedOn(currentItem)
+            ImageViewPopulater.populateFromUri(mContext, currentItem.imageUri, mImage)
         }
 
         private fun setInputFieldValuesBasedOn(foodItem: FoodItem) {
-            mFoodItemLabel.text = foodItem.label
-            mFoodItemBrand.text = foodItem.brand
-            mFoodItemAmount.text = mPluralsProvider.getAmountString(foodItem.amount, foodItem.unit)
+            mLabel.text = foodItem.label
+            mBrand.text = foodItem.brand
+            mAmount.text = mPluralsProvider.getAmountString(foodItem.amount, foodItem.unit)
         }
 
         /**
@@ -101,7 +78,7 @@ class GroceryListAdapter(private val mContext: Context, private val mIsWideScree
          * @see GroceryItemDetailActivity
          */
         override fun onClick(itemView: View?) {
-            val currentFoodItem = mGroceryItems[adapterPosition]
+            val currentFoodItem = mItems[adapterPosition]
             if (mIsWideScreen) showInMainActivity(currentFoodItem)
             else showInFoodItemDetailActivity(currentFoodItem)
         }
@@ -118,8 +95,8 @@ class GroceryListAdapter(private val mContext: Context, private val mIsWideScree
             val toFoodItemDetail = createIntentToFoodItemDetail(currentFoodItem)
             val bundle = ActivityOptions.makeSceneTransitionAnimation(
                 (mContext as Activity),
-                mFoodImage,
-                mFoodImage.transitionName
+                mImage,
+                mImage.transitionName
             ).toBundle()
             mContext.startActivity(toFoodItemDetail, bundle)
         }
