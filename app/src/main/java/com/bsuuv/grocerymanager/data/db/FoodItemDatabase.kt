@@ -4,8 +4,10 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.bsuuv.grocerymanager.data.db.dao.FoodItemDao
 import com.bsuuv.grocerymanager.data.db.entity.FoodItemEntity
+import com.bsuuv.grocerymanager.data.db.entity.TimeFrameConverter
 
 /**
  * A <code>Room</code> database definition for saving food-items.
@@ -14,6 +16,7 @@ import com.bsuuv.grocerymanager.data.db.entity.FoodItemEntity
  * Library</a>
  */
 @Database(entities = [FoodItemEntity::class], version = 1)
+@TypeConverters(TimeFrameConverter::class)
 abstract class FoodItemDatabase : RoomDatabase() {
 
     /**

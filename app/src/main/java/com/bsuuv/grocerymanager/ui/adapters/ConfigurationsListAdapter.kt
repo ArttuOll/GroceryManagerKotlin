@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bsuuv.grocerymanager.R
 import com.bsuuv.grocerymanager.data.model.FoodItem
+import com.bsuuv.grocerymanager.ui.NewFoodItemActivity
 import com.bsuuv.grocerymanager.ui.util.PluralsProvider
 import com.bsuuv.grocerymanager.ui.util.RequestValidator
 

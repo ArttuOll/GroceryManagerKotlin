@@ -17,7 +17,7 @@ interface FoodItemDao {
     suspend fun delete(foodItem: FoodItemEntity)
 
     @Query("SELECT * FROM FoodItemEntity ORDER BY label ASC")
-    suspend fun getAll(): LiveData<MutableList<FoodItemEntity>>
+    fun getAll(): LiveData<MutableList<FoodItemEntity>>
 
     @Update
     suspend fun update(foodItem: FoodItemEntity)

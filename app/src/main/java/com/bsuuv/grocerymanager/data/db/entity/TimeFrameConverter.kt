@@ -10,6 +10,7 @@ import com.bsuuv.grocerymanager.util.TimeFrame
 class TimeFrameConverter {
     companion object {
         @TypeConverter
+        @JvmStatic
         fun toTimeFrame(timeFrame: Int): TimeFrame {
             return when (timeFrame) {
                 TimeFrame.WEEK.value -> TimeFrame.WEEK
@@ -20,6 +21,7 @@ class TimeFrameConverter {
         }
 
         @TypeConverter
+        @JvmStatic
         fun toInteger(timeFrame: TimeFrame): Int = timeFrame.value
     }
 }
