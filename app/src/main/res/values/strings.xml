@@ -60,5 +60,6 @@
     <string name="notifchan_primary_description">A notification that reminds you to do your groceries</string>
     <string name="notification_content_title">It\'s grocery day!</string>
     <string name="notification_content_text">Time to feed your fridge!</string>
+    <string name="freq_edittext_default" translatable="false">0</string>
 
 </resources>

@@ -37,11 +37,11 @@ class FoodItemCreationRequirementChecker(private val mSharedPrefsHelper: SharedP
      *                                    was not met.
      */
     fun requirementsMet(
-        label: String, amount: Int, timeFrame: TimeFrame, frequency: Int,
+        textFieldValues: MutableList<String>, amount: Int, timeFrame: TimeFrame, frequency: Int,
         frequencyQuotient: Double
     ): Boolean {
         return groceryDaysSet() &&
-                inputFieldsValid(label, amount, timeFrame, frequency) &&
+                inputFieldsValid(textFieldValues, amount, timeFrame, frequency) &&
                 frequencyQuotientValid(frequencyQuotient)
     }
 
@@ -52,18 +52,19 @@ class FoodItemCreationRequirementChecker(private val mSharedPrefsHelper: SharedP
     }
 
     private fun inputFieldsValid(
-        label: String,
+        textFieldValues: MutableList<String>,
         amount: Int,
         timeFrame: TimeFrame,
         frequency: Int
     ): Boolean {
-        return labelFieldValid(label) &&
+        return labelFieldValid(textFieldValues) &&
                 amountFieldValid(amount) &&
                 timeFrameSelected(timeFrame) &&
                 frequencyFieldSet(frequency)
     }
 
-    private fun labelFieldValid(label: String): Boolean {
+    private fun labelFieldValid(textFieldValues: MutableList<String>): Boolean {
+        val label = textFieldValues[0]
         if (label.isNotEmpty()) return true
         else throw RequirementNotMetException(R.string.snackbar_label_empty)
     }
