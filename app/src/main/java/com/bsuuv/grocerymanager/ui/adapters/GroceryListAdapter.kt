@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bsuuv.grocerymanager.R
 import com.bsuuv.grocerymanager.data.model.FoodItem
+import com.bsuuv.grocerymanager.ui.GroceryItemDetailActivity
 import com.bsuuv.grocerymanager.ui.GroceryItemDetailFragment
 import com.bsuuv.grocerymanager.ui.util.ImageViewPopulater
 import com.bsuuv.grocerymanager.ui.util.PluralsProvider
@@ -33,6 +34,11 @@ class GroceryListAdapter(private val mContext: Context, private val mIsWideScree
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val currentFoodItem = mItems[position]
         (holder as GroceryViewHolder).bindTo(currentFoodItem)
+    }
+
+    fun removeItemAtPosition(position: Int) {
+        mItems.removeAt(position)
+        notifyItemRemoved(position)
     }
 
     /**

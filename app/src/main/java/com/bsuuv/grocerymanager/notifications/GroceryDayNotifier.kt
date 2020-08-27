@@ -32,7 +32,7 @@ class GroceryDayNotifier(
     private fun calculateDaysToNotif(daysUntilGroceryDay: Int) =
         AlarmManager.INTERVAL_DAY * daysUntilGroceryDay
 
-    fun scheduleNotification() {
+    fun scheduleGroceryDayNotification() {
         val groceryDaysChangedListener = createOnSharedPrefsChangedListener()
         val sharedPreferences = mSharedPrefsHelper.sharedPreferences
         sharedPreferences.registerOnSharedPreferenceChangeListener(groceryDaysChangedListener)
