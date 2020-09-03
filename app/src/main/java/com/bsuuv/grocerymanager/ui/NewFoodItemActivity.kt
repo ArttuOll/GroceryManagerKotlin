@@ -158,7 +158,7 @@ class NewFoodItemActivity : AppCompatActivity(), View.OnClickListener {
         super.onSaveInstanceState(outState)
     }
 
-    fun onFabClick() {
+    fun onFabClick(view: View) {
         val label = mLabelField.text.toString()
         val brand = mBrandField.text.toString()
         val unit = mUnitDropdown.text.toString()
@@ -283,7 +283,7 @@ class NewFoodItemActivity : AppCompatActivity(), View.OnClickListener {
         return intent.getDoubleExtra("count", 0.0)
     }
 
-    fun onImageClick() {
+    fun onImageClick(view: View) {
         val cameraUtil = CameraUtil(this)
         mImageUri = cameraUtil.getImagePath()
         val toCaptureImage = cameraUtil.getIntentToCaptureImage()

@@ -156,7 +156,7 @@ class ConfigurationsActivity : AppCompatActivity() {
      * @param view The view that has been clicked, in this case, the FAB. Default parameter required
      *             by the system.
      */
-    fun onFabClick() {
+    fun onFabClick(view: View) {
         val toNewFoodItem = Intent(this, NewFoodItemActivity::class.java)
         val requestCode = RequestValidator.FOOD_ITEM_CREATE_REQUEST
         toNewFoodItem.putExtra("requestCode", requestCode)
