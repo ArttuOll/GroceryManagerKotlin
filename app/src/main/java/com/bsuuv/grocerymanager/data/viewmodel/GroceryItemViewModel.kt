@@ -38,6 +38,7 @@ class GroceryItemViewModel(application: Application) : AndroidViewModel(applicat
                 mRepository.update(foodItem as FoodItemEntity)
             }
         }
+        mGroceryListState.reset()
     }
 
     fun getGroceryList(): LiveData<MutableList<FoodItemEntity>> {

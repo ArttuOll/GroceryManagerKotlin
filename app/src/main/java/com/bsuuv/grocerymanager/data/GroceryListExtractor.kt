@@ -50,7 +50,7 @@ class GroceryListExtractor(
         } else {
             incrementCountdownValue(foodItem, frequencyQuotient)
         }
-        mGroceryListState.incrementedItems.add(foodItem)
+        mGroceryListState.increment(foodItem)
     }
 
     private fun shouldAppearInGroceryList(foodItem: FoodItemEntity): Boolean =
