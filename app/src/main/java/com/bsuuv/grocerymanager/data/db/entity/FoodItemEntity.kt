@@ -1,6 +1,5 @@
 package com.bsuuv.grocerymanager.data.db.entity
 
-import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -17,7 +16,6 @@ data class FoodItemEntity(
         @ColumnInfo(name = "image_uri")
         override val imageUri: String,
 
-        @NonNull
         @ColumnInfo(name = "label")
         override val label: String,
 
@@ -33,7 +31,6 @@ data class FoodItemEntity(
         @ColumnInfo(name = "unit")
         override val unit: String,
 
-        @NonNull
         @TypeConverters(TimeFrameConverter::class)
         @ColumnInfo(name = "time_frame")
         override val timeFrame: TimeFrame,
