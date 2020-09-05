@@ -12,11 +12,11 @@ class DateTimeHelper(private val mContext: Context, sharedPrefsHelper: SharedPre
 
     private val mGroceryDays: MutableSet<String> = sharedPrefsHelper.getGroceryDays()
     private val mCalendar: Calendar
-    private var mToday: Int
+    internal var today: Int
 
     init {
         this.mCalendar = createCalendar()
-        this.mToday = mCalendar.get(Calendar.DAY_OF_WEEK)
+        this.today = mCalendar.get(Calendar.DAY_OF_WEEK)
     }
 
     companion object {
@@ -38,7 +38,7 @@ class DateTimeHelper(private val mContext: Context, sharedPrefsHelper: SharedPre
     fun isGroceryDay(): Boolean {
         for (groceryDay in mGroceryDays) {
             val groceryDayInt = getOrdinalOfWeekday(groceryDay)
-            if (groceryDayInt == mToday) return true
+            if (groceryDayInt == today) return true
         }
         return false
     }
@@ -47,7 +47,7 @@ class DateTimeHelper(private val mContext: Context, sharedPrefsHelper: SharedPre
         var daysUntilClosestGroceryDay = NO_GROCERY_DAYS_SET
         for (groceryDay in mGroceryDays) {
             val groceryDayOrdinal = getNextGroceryDayOrdinal(groceryDay)
-            val daysFromTodayToGroceryDay = groceryDayOrdinal - mToday
+            val daysFromTodayToGroceryDay = groceryDayOrdinal - today
             if (daysFromTodayToGroceryDay < daysUntilClosestGroceryDay) {
                 daysUntilClosestGroceryDay = daysFromTodayToGroceryDay
             }
@@ -76,14 +76,10 @@ class DateTimeHelper(private val mContext: Context, sharedPrefsHelper: SharedPre
         }
     }
 
-    private fun weekdayPassed(weekdayOrdinal: Int): Boolean = weekdayOrdinal < mToday
+    private fun weekdayPassed(weekdayOrdinal: Int): Boolean = weekdayOrdinal < today
 
     fun getCurrentDate(): String {
         val defaultLocaleFormat = SimpleDateFormat.getDateInstance()
         return defaultLocaleFormat.format(mCalendar.time)
-    }
-
-    internal fun setToday(today: Int) {
-        mToday = today
     }
 }
