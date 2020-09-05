@@ -33,7 +33,7 @@ class NewFoodItemActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var mImage: ImageView
     private lateinit var mUnitDropdown: AutoCompleteTextView
     private lateinit var mSharedPrefsHelper: SharedPreferencesHelper
-    private lateinit var mImageUri: String
+    private var mImageUri = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
