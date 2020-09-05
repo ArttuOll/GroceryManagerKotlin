@@ -97,8 +97,8 @@ class ConfigurationsActivity : AppCompatActivity() {
     }
 
     private fun setRecyclerViewVisibility(size: Int) {
-        when (size) {
-            0 -> RecyclerViewVisibilityToggle.toggle(
+        when {
+            size > 0 -> RecyclerViewVisibilityToggle.toggle(
                 mRecyclerView,
                 mRecyclerViewPlaceholder,
                 View.VISIBLE,
