@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bsuuv.grocerymanager.R
 import com.bsuuv.grocerymanager.data.model.FoodItem
 import com.bsuuv.grocerymanager.ui.NewFoodItemActivity
+import com.bsuuv.grocerymanager.ui.util.ImageViewPopulater
 import com.bsuuv.grocerymanager.ui.util.PluralsProvider
 import com.bsuuv.grocerymanager.ui.util.RequestValidator
 
@@ -64,6 +65,7 @@ class ConfigurationsListAdapter(private val mContext: Context) :
                 currentItem.frequency,
                 currentItem.timeFrame
             )
+            ImageViewPopulater.populateFromUri(mContext, currentItem.imageUri, mImage)
         }
 
         private fun setBrandOrHideIfEmpty(brand: String) =
