@@ -13,7 +13,7 @@ class FoodItemCreationRequirementChecker(private val mSharedPrefsHelper: SharedP
     companion object {
         const val FREQUENCY_NOT_SET = 0
         const val AMOUNT_FIELD_EMPTY = 0
-        const val MAX_FREQUENCY_QUOTIENT = 0
+        const val MAX_FREQUENCY_QUOTIENT = 1.0
     }
 
     /**
