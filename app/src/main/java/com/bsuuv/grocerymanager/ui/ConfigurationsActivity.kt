@@ -116,25 +116,25 @@ class ConfigurationsActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, fromNewFoodItem: Intent?) {
         super.onActivityResult(requestCode, resultCode, fromNewFoodItem)
         if (RequestValidator.foodItemCreationSuccesful(requestCode, resultCode)) {
-            val result = getFoodItemFromIntent()
+            val result = getFoodItemFromIntent(fromNewFoodItem)
             mViewModel.insert(result)
         } else if (RequestValidator.foodItemEditSuccesful(requestCode, resultCode)) {
             val id = intent?.getIntExtra("id", 0)!!
-            val result = getFoodItemFromIntent(id = id)
+            val result = getFoodItemFromIntent(fromNewFoodItem, id = id)
             mViewModel.update(result)
         }
     }
 
-    private fun getFoodItemFromIntent(id: Int = 0): FoodItemEntity {
-        val label = intent.getStringExtra("label")!!
-        val brand = intent.getStringExtra("brand")!!
-        val amount = intent.getIntExtra("amount", 0)
-        val unit = intent.getStringExtra("unit")!!
-        val info = intent.getStringExtra("info")!!
-        val timeFrame = intent.getSerializableExtra("time_frame")!!
-        val frequency = intent.getIntExtra("frequency", 0)
-        val imageUri = intent.getStringExtra("uri")!!
-        val countdownValue = intent.getDoubleExtra("frequencyQuotient", 0.0)
+    private fun getFoodItemFromIntent(fromNewFoodItem: Intent?, id: Int = 0): FoodItemEntity {
+        val label = fromNewFoodItem?.getStringExtra("label")!!
+        val brand = fromNewFoodItem.getStringExtra("brand")!!
+        val amount = fromNewFoodItem.getIntExtra("amount", 0)
+        val unit = fromNewFoodItem.getStringExtra("unit")!!
+        val info = fromNewFoodItem.getStringExtra("info")!!
+        val timeFrame = fromNewFoodItem.getSerializableExtra("time_frame")!!
+        val frequency = fromNewFoodItem.getIntExtra("frequency", 0)
+        val imageUri = fromNewFoodItem.getStringExtra("uri")!!
+        val countdownValue = fromNewFoodItem.getDoubleExtra("frequencyQuotient", 0.0)
         return FoodItemEntity(
             id,
             imageUri,
