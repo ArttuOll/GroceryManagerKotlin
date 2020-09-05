@@ -1,5 +1,6 @@
 package com.bsuuv.grocerymanager.data
 
+import com.bsuuv.grocerymanager.data.db.entity.FoodItemEntity
 import com.bsuuv.grocerymanager.data.model.FoodItem
 import com.bsuuv.grocerymanager.util.SharedPreferencesHelper
 
@@ -10,18 +11,18 @@ class GroceryListState(private val mSharedPrefsHelper: SharedPreferencesHelper) 
         const val REMOVED_ITEMS_KEY = "removedItems"
     }
 
-    val incrementedItems: MutableList<FoodItem>
-    internal val removedItems: MutableList<FoodItem>
+    val incrementedItems: MutableList<FoodItemEntity>
+    internal val removedItems: MutableList<FoodItemEntity>
 
     init {
         incrementedItems = mSharedPrefsHelper.getList(INCREMENTED_ITEMS_KEY)
         removedItems = mSharedPrefsHelper.getList(REMOVED_ITEMS_KEY)
     }
 
-    fun remove(foodItem: FoodItem) = removedItems.add(foodItem)
+    fun remove(foodItem: FoodItem) = removedItems.add(foodItem as FoodItemEntity)
 
     fun increment(foodItem: FoodItem) {
-        if (notIncremented(foodItem)) incrementedItems.add(foodItem)
+        if (notIncremented(foodItem)) incrementedItems.add(foodItem as FoodItemEntity)
     }
 
     private fun notIncremented(foodItem: FoodItem): Boolean = !incrementedItems.contains(foodItem)

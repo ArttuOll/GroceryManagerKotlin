@@ -3,7 +3,7 @@ package com.bsuuv.grocerymanager.util
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
-import com.bsuuv.grocerymanager.data.model.FoodItem
+import com.bsuuv.grocerymanager.data.db.entity.FoodItemEntity
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
@@ -35,16 +35,16 @@ class SharedPreferencesHelper(context: Context) {
     fun getGroceryDays(): MutableSet<String> = sharedPreferences
         .getStringSet(GROCERY_DAYS_KEY, HashSet())!!
 
-    fun saveList(foodItems: MutableList<FoodItem>, key: String) {
+    fun saveList(foodItems: MutableList<FoodItemEntity>, key: String) {
         val json = gson.toJson(foodItems)
         val editor: SharedPreferences.Editor = sharedPreferences.edit()
         editor.putString(key, json)
         editor.apply()
     }
 
-    fun getList(key: String): MutableList<FoodItem> {
+    fun getList(key: String): MutableList<FoodItemEntity> {
         val json = sharedPreferences.getString(key, "")
-        return if (json == "") ArrayList() else gson.fromJson<MutableList<FoodItem>>(json)
+        return if (json == "") ArrayList() else gson.fromJson<MutableList<FoodItemEntity>>(json)
     }
 
     fun clearList(key: String) {
