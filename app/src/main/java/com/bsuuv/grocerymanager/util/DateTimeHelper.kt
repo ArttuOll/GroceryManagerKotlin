@@ -2,13 +2,19 @@ package com.bsuuv.grocerymanager.util
 
 import android.content.Context
 import com.bsuuv.grocerymanager.R
+import dagger.hilt.android.qualifiers.ApplicationContext
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
 /**
  * Utility class to help with date- and time- related operations.
  */
-class DateTimeHelper(private val mContext: Context, sharedPrefsHelper: SharedPreferencesHelper) {
+class DateTimeHelper @Inject constructor(
+    @ApplicationContext private val mContext: Context,
+    sharedPrefsHelper:
+    SharedPreferencesHelper
+) {
 
     private val mGroceryDays: MutableSet<String> = sharedPrefsHelper.getGroceryDays()
     private val mCalendar: Calendar

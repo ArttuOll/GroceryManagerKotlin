@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mAdapter: GroceryListAdapter
     private lateinit var mRecyclerViewPlaceholder: TextView
     private lateinit var mViewModel: GroceryItemViewModel
-    private lateinit var mDateTimeHelper: DateTimeHelper
+    @Inject lateinit var mDateTimeHelper: DateTimeHelper
     @Inject lateinit var mSharedPrefsHelper: SharedPreferencesHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,7 +48,6 @@ class MainActivity : AppCompatActivity() {
         mAdapter = initAdapter()
         mRecyclerViewPlaceholder = findViewById(R.id.main_recyclerview_placeholder)
         mViewModel = ViewModelProvider(this).get(GroceryItemViewModel::class.java)
-        mDateTimeHelper = DateTimeHelper(this, mSharedPrefsHelper)
     }
 
     private fun initAdapter(): GroceryListAdapter {
