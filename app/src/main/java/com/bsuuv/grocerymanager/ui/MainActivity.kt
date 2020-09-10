@@ -21,7 +21,10 @@ import com.bsuuv.grocerymanager.ui.adapters.GroceryListAdapter
 import com.bsuuv.grocerymanager.ui.util.RecyclerViewVisibilityToggle
 import com.bsuuv.grocerymanager.util.DateTimeHelper
 import com.bsuuv.grocerymanager.util.SharedPreferencesHelper
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mRecyclerView: RecyclerView
@@ -29,7 +32,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mRecyclerViewPlaceholder: TextView
     private lateinit var mViewModel: GroceryItemViewModel
     private lateinit var mDateTimeHelper: DateTimeHelper
-    private lateinit var mSharedPrefsHelper: SharedPreferencesHelper
+    @Inject lateinit var mSharedPrefsHelper: SharedPreferencesHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +48,6 @@ class MainActivity : AppCompatActivity() {
         mAdapter = initAdapter()
         mRecyclerViewPlaceholder = findViewById(R.id.main_recyclerview_placeholder)
         mViewModel = ViewModelProvider(this).get(GroceryItemViewModel::class.java)
-        mSharedPrefsHelper = SharedPreferencesHelper(this)
         mDateTimeHelper = DateTimeHelper(this, mSharedPrefsHelper)
     }
 

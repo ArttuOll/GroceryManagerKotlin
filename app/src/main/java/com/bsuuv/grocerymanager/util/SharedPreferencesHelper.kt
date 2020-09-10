@@ -7,11 +7,13 @@ import com.bsuuv.grocerymanager.data.db.entity.FoodItemEntity
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
 /**
  * An utility class to handle all interactions with <code>SharedPreferences</code>.
  */
-class SharedPreferencesHelper(context: Context) {
+class SharedPreferencesHelper @Inject constructor(@ApplicationContext context: Context) {
 
     val sharedPreferences: SharedPreferences =
         PreferenceManager.getDefaultSharedPreferences(context)

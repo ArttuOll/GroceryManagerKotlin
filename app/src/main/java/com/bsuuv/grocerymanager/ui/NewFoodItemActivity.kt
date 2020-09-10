@@ -15,7 +15,10 @@ import com.bsuuv.grocerymanager.util.SharedPreferencesHelper
 import com.bsuuv.grocerymanager.util.TimeFrame
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class NewFoodItemActivity : AppCompatActivity(), View.OnClickListener {
 
     private object Keys {
@@ -32,7 +35,7 @@ class NewFoodItemActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var mFrequencyField: EditText
     private lateinit var mImage: ImageView
     private lateinit var mUnitDropdown: AutoCompleteTextView
-    private lateinit var mSharedPrefsHelper: SharedPreferencesHelper
+    @Inject lateinit var mSharedPrefsHelper: SharedPreferencesHelper
     private var mImageUri = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +55,6 @@ class NewFoodItemActivity : AppCompatActivity(), View.OnClickListener {
         mInfoField = findViewById(R.id.editText_info)
         mFrequencyField = initFrequencyEditText()
         mImage = findViewById(R.id.imageView_new_fooditem)
-        mSharedPrefsHelper = SharedPreferencesHelper(this)
         mUnitDropdown = initUnitDropdown()
         mTimeFrameButtons = findViewById(R.id.freq_selection_togglegroup)
     }

@@ -15,6 +15,7 @@
         android:required="true" />
 
     <application
+        android:name=".di.GmApplication"
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
