@@ -15,13 +15,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import javax.inject.Inject
 
-class GroceryItemViewModel(application: Application) : AndroidViewModel(application) {
+class GroceryItemViewModel(application: Application) : AndroidViewModel
+    (application) {
 
     private val mRepository: FoodItemRepository
     private val mGroceryListExtractor: GroceryListExtractor
-    @Inject lateinit var mDateTimeHelper: DateTimeHelper
+    private val mDateTimeHelper: DateTimeHelper
     private val mGroceryListState: GroceryListState
 
     init {
@@ -29,6 +29,7 @@ class GroceryItemViewModel(application: Application) : AndroidViewModel(applicat
         mRepository = FoodItemRepository(application)
         mGroceryListState = GroceryListState(sharedPrefsHelper)
         mGroceryListExtractor = GroceryListExtractor(mGroceryListState, sharedPrefsHelper)
+        mDateTimeHelper = DateTimeHelper(application, sharedPrefsHelper)
         if (!mDateTimeHelper.isGroceryDay()) updateDatabase()
     }
 
