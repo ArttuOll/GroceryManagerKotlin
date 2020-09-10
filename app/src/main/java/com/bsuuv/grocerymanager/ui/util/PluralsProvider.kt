@@ -3,8 +3,10 @@ package com.bsuuv.grocerymanager.ui.util
 import android.content.Context
 import com.bsuuv.grocerymanager.R
 import com.bsuuv.grocerymanager.util.TimeFrame
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
-class PluralsProvider(private val mContext: Context) {
+class PluralsProvider @Inject constructor(@ApplicationContext private val mContext: Context) {
 
     /**
      * Creates a string describing a food-item's schedule based on its frequency and time frame in

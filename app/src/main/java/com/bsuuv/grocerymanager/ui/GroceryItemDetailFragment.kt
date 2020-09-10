@@ -12,7 +12,10 @@ import com.bsuuv.grocerymanager.data.model.FoodItem
 import com.bsuuv.grocerymanager.data.viewmodel.GroceryItemViewModel
 import com.bsuuv.grocerymanager.ui.util.ImageViewPopulater
 import com.bsuuv.grocerymanager.ui.util.PluralsProvider
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class GroceryItemDetailFragment : Fragment() {
 
     companion object {
@@ -27,7 +30,7 @@ class GroceryItemDetailFragment : Fragment() {
         }
     }
 
-    private lateinit var mPluralsProvider: PluralsProvider
+    @Inject lateinit var mPluralsProvider: PluralsProvider
     private lateinit var mFoodItem: FoodItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +39,6 @@ class GroceryItemDetailFragment : Fragment() {
     }
 
     private fun initMembers() {
-        mPluralsProvider = PluralsProvider(requireActivity())
         mFoodItem = getFoodItemFromArgs()
     }
 

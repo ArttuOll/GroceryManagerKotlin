@@ -16,6 +16,7 @@ import com.bsuuv.grocerymanager.ui.NewFoodItemActivity
 import com.bsuuv.grocerymanager.ui.util.ImageViewPopulater
 import com.bsuuv.grocerymanager.ui.util.PluralsProvider
 import com.bsuuv.grocerymanager.ui.util.RequestValidator
+import javax.inject.Inject
 
 class ConfigurationsListAdapter(private val mContext: Context) :
     Adapter() {
@@ -46,7 +47,7 @@ class ConfigurationsListAdapter(private val mContext: Context) :
         private val mAmount: TextView = itemView.findViewById(R.id.config_item_amount)
         private val mSchedule: TextView = itemView.findViewById(R.id.config_item_schedule)
         private val mImage: ImageView = itemView.findViewById(R.id.configlist_food_image)
-        private val mPlurals = PluralsProvider(mContext)
+        @Inject lateinit var mPlurals: PluralsProvider
 
         init {
             itemView.setOnClickListener(this)
