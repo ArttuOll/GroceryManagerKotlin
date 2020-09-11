@@ -17,7 +17,6 @@ import com.bsuuv.grocerymanager.ui.GroceryItemDetailActivity
 import com.bsuuv.grocerymanager.ui.GroceryItemDetailFragment
 import com.bsuuv.grocerymanager.ui.util.ImageViewPopulater
 import com.bsuuv.grocerymanager.ui.util.PluralsProvider
-import javax.inject.Inject
 
 class GroceryListAdapter(private val mContext: Context, private val mIsWideScreen: Boolean) :
     Adapter() {
@@ -54,7 +53,7 @@ class GroceryListAdapter(private val mContext: Context, private val mIsWideScree
         private val mLabel: TextView = itemView.findViewById(R.id.grocery_item_label)
         private val mBrand: TextView = itemView.findViewById(R.id.grocery_item_brand)
         private val mAmount: TextView = itemView.findViewById(R.id.grocery_item_amount)
-        @Inject lateinit var mPluralsProvider: PluralsProvider
+        private val mPluralsProvider = PluralsProvider(mContext)
         private val mImage: ImageView = itemView.findViewById(R.id.grocerylist_food_image)
 
         init {
