@@ -145,7 +145,7 @@ class NewFoodItemActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun recoverFoodImage(savedInstanceState: Bundle) {
         mImageUri = savedInstanceState.getString(Keys.IMAGE_PATH_KEY)!!
-        ImageViewPopulater.populateFromUri(this, mImageUri, mImage)
+        if (mImageUri != "") ImageViewPopulater.populateFromUri(this, mImageUri, mImage)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
