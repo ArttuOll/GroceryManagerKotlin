@@ -32,7 +32,7 @@ If only someone could write a grocery list like this for me!
 
 * MVVM-architecture
 
-  * Room & LiveData
+* Room & LiveData
 
 * Dependecy Injection with HILT
 
