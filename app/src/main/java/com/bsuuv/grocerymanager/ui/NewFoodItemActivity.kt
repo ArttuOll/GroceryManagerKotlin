@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.bsuuv.grocerymanager.R
+import com.bsuuv.grocerymanager.data.db.entity.FoodItemEntity
 import com.bsuuv.grocerymanager.ui.util.CameraUtil
 import com.bsuuv.grocerymanager.ui.util.FoodItemCreationRequirementChecker
 import com.bsuuv.grocerymanager.ui.util.ImageViewPopulater
@@ -18,6 +19,32 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+/**
+ * Activity for creating new food-items. Displays a form with input fields corresponding to
+ * different properties of a food-item:
+ *
+ * * An image, with a camera icon as a placeholder. Clicking the camera icon
+ *     or an image launches the devices camera app, if one is installed.
+ * * A label
+ * * Brand
+ * * Amount
+ * * Unit for the amount
+ * * Frequency, that is, how many times in the chosen time frame (see next)
+ *     the user wants this?
+ * * Time frame, that is, what is the time period during which the user wants
+ *     to see this food-item appear on the grocery list the amount of times specified
+ *     by the frequency?
+ * * Additional information the user wants to add
+ *
+ * Some of these input fields are not mandatory. Finally, the view contains a
+ * floating action button, which launches validation of the input fields and
+ * afterwards sends their data to [ConfigurationsActivity]. For information
+ * on required fields and their validation, see [FoodItemCreationRequirementChecker]
+ *
+ * @see ConfigurationsActivity
+ * @see FoodItemCreationRequirementChecker
+ * @see FoodItemEntity
+ */
 @AndroidEntryPoint
 class NewFoodItemActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -296,6 +323,9 @@ class NewFoodItemActivity : AppCompatActivity(), View.OnClickListener {
         startActivityForResult(toCaptureImage, RequestValidator.REQUEST_IMAGE_CAPTURE)
     }
 
+    /**
+     * Called when one of the toggle buttons for time frame selection is clicked.
+     */
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.togglebutton_week -> mTimeFrameButtons.check(R.id.togglebutton_week)

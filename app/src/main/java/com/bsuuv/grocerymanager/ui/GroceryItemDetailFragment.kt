@@ -15,6 +15,10 @@ import com.bsuuv.grocerymanager.ui.util.PluralsProvider
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+/**
+ * Fragment for displaying properties of a grocery item. Used by [GroceryItemDetailActivity]
+ * and [MainActivity] (on wide-screen devices).
+ */
 @AndroidEntryPoint
 class GroceryItemDetailFragment : Fragment() {
 

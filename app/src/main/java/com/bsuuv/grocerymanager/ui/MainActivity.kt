@@ -24,6 +24,26 @@ import com.bsuuv.grocerymanager.util.SharedPreferencesHelper
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+/**
+ * The entry point and opening view of the app. Displays the grocery list or a placeholder when it's
+ * not grocery day. The grocery items can be deleted by swiping them left or right. Contains an
+ * options menu for navigating to [SettingsActivity] and [ConfigurationsActivity] and an
+ * app bar that collapses when browsing the grocery-items. On wide-screen devices the layout of this
+ * activity is split into two panes, the other one showing the grocery list, the other showing
+ * details of a selected grocery item in [GroceryItemDetailFragment].
+ * <p>
+ * The grocery list is displayed in a <code>RecyclerView</code>, the [GroceryListAdapter] of
+ * which receives its data from a [GroceryItemViewModel].
+ * <p>
+ * When this activity is created, a notification is scheduled through [GroceryDayNotifier] to
+ * notify user on the grocery day.
+ *
+ * @see SettingsActivity
+ * @see ConfigurationsActivity
+ * @see GroceryItemDetailFragment
+ * @see GroceryListAdapter
+ * @see GroceryItemViewModel
+ */
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 

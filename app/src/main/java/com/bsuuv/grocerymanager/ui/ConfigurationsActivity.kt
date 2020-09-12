@@ -20,11 +20,11 @@ import com.bsuuv.grocerymanager.util.TimeFrame
 /**
  * Activity for viewing all created food-items. Displays the items as a list or shows a placeholder
  * text if no food-items are yet created. The items can be swiped left or right to delete them, or
- * clicked to edit the. Contains a floating action button, which launches {@link
- * NewFoodItemActivity} for creating a new food-item.
+ * clicked to edit the. Contains a floating action button, which launches
+ * [NewFoodItemActivity] for creating a new food-item.
  * <p>
- * The food-items are displayed in a <code>RecyclerView</code>, the {@link
- * ConfigurationsListAdapter} of which receives its data from a {@link FoodItemViewModel}.
+ * The food-items are displayed in a `RecyclerView`, the
+ * [ConfigurationsListAdapter] of which receives its data from a [FoodItemViewModel].
  *
  * @see NewFoodItemActivity
  * @see ConfigurationsListAdapter
@@ -151,10 +151,7 @@ class ConfigurationsActivity : AppCompatActivity() {
 
     /**
      * Called when the floating action button in this activity is pressed. Launches
-     * <code>NewFoodItemActivity</code> for creating a new <code>FoodItem</code>.
-     *
-     * @param view The view that has been clicked, in this case, the FAB. Default parameter required
-     *             by the system.
+     * `NewFoodItemActivity` for creating a new `FoodItem`.
      */
     fun onFabClick(view: View) {
         val toNewFoodItem = Intent(this, NewFoodItemActivity::class.java)

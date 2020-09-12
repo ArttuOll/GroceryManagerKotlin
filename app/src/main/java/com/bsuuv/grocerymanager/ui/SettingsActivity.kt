@@ -9,6 +9,10 @@ import com.bsuuv.grocerymanager.R
 import com.bsuuv.grocerymanager.ui.util.WeekdaySorter
 import java.util.*
 
+/**
+ * Activity containing settings of the application. Hosts the setting `Preference`s in
+ * `SettingsFragment` inner class.
+ */
 class SettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

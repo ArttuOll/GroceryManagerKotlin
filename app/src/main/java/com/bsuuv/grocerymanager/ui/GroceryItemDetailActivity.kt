@@ -6,9 +6,9 @@ import com.bsuuv.grocerymanager.R
 
 /**
  * Activity for viewing the details of a grocery-item. Delegates the details of displaying a
- * grocery-item to {@link GroceryItemDetailFragment}. This is done to avoid code duplication, since
- * {@link GroceryItemDetailFragment} is also used to display grocery-item details in two-pane views
- * on large-screen devices (see {@link MainActivity}.
+ * grocery-item to [GroceryItemDetailFragment]. This is done to avoid code duplication, since
+ * [GroceryItemDetailFragment] is also used to display grocery-item details in two-pane views
+ * on large-screen devices (see [MainActivity]).
  *
  * @see GroceryItemDetailFragment
  * @see MainActivity
