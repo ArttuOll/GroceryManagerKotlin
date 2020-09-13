@@ -6,6 +6,10 @@ import com.bsuuv.grocerymanager.data.db.FoodItemDatabase
 import com.bsuuv.grocerymanager.data.db.dao.FoodItemDao
 import com.bsuuv.grocerymanager.data.db.entity.FoodItemEntity
 
+/**
+ * A single source of data for the whole app. Handles communication with
+ * [FoodItemDatabase] making sure that all operations are executed on a separate thread.
+ */
 class FoodItemRepository(application: Application) {
 
     private val mDao: FoodItemDao
@@ -15,7 +19,11 @@ class FoodItemRepository(application: Application) {
         mDao = db.foodItemDao
     }
 
-    suspend fun getFoodItems(): LiveData<MutableList<FoodItemEntity>> = mDao.getAll()
+    /**
+     * Returns an always-up-to-date list of all food-items created by the user, wrapped into an
+     * observable `LiveData`-object.
+     */
+    fun getFoodItems(): LiveData<MutableList<FoodItemEntity>> = mDao.getAll()
 
     suspend fun getFoodItem(id: Int): FoodItemEntity = mDao.get(id)
 

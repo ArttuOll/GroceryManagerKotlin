@@ -10,20 +10,15 @@ import com.bsuuv.grocerymanager.data.db.entity.FoodItemEntity
 import com.bsuuv.grocerymanager.data.db.entity.TimeFrameConverter
 
 /**
- * A <code>Room</code> database definition for saving food-items.
- *
- * @see <a href=https://developer.android.com/topic/libraries/architecture/room>Room Persistence
- * Library</a>
+ * A `Room` database definition for saving food-items.
  */
 @Database(entities = [FoodItemEntity::class], version = 1)
 @TypeConverters(TimeFrameConverter::class)
 abstract class FoodItemDatabase : RoomDatabase() {
 
     /**
-     * Defines the type of DAO this <code>Room</code> database should provide.
-     *
-     * @return <code>FoodItemDao</code> that grants access to values stored in
-     * this database
+     * Returns a `FoodItemDao`-object that grants access to values stored in
+     * this database.
      */
     abstract val foodItemDao: FoodItemDao
 

@@ -4,6 +4,12 @@ import com.bsuuv.grocerymanager.data.db.entity.FoodItemEntity
 import com.bsuuv.grocerymanager.data.model.FoodItem
 import com.bsuuv.grocerymanager.util.SharedPreferencesHelper
 
+/**
+ * Represent the state of the grocery list on any given moment. The state consists of food-items
+ * that were not displayed on the grocery list yet, but whose countdown values (for information on
+ * countdown values, see [GroceryListExtractor]) were incremented, and food-items that the user
+ * has removed from the grocery list.
+ */
 class GroceryListState(private val mSharedPrefsHelper: SharedPreferencesHelper) {
 
     companion object {

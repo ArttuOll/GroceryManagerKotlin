@@ -7,6 +7,9 @@ import androidx.room.TypeConverters
 import com.bsuuv.grocerymanager.data.model.FoodItem
 import com.bsuuv.grocerymanager.util.TimeFrame
 
+/**
+ * A concrete data-class representing a food-item on the grocery list
+ */
 @Entity
 data class FoodItemEntity(
         @PrimaryKey(autoGenerate = true)

@@ -9,6 +9,7 @@ import com.bsuuv.grocerymanager.data.FoodItemRepository
 import com.bsuuv.grocerymanager.data.GroceryListExtractor
 import com.bsuuv.grocerymanager.data.GroceryListState
 import com.bsuuv.grocerymanager.data.db.entity.FoodItemEntity
+import com.bsuuv.grocerymanager.ui.MainActivity
 import com.bsuuv.grocerymanager.util.DateTimeHelper
 import com.bsuuv.grocerymanager.util.SharedPreferencesHelper
 import kotlinx.coroutines.CoroutineScope
@@ -16,6 +17,9 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
+/**
+ * A `ViewModel` that contains all the data and business logic calls required by [MainActivity].
+ */
 class GroceryItemViewModel(application: Application) : AndroidViewModel
     (application) {
 
@@ -42,6 +46,10 @@ class GroceryItemViewModel(application: Application) : AndroidViewModel
         mGroceryListState.reset()
     }
 
+    /**
+     * Returns an always-up-to-date list of all food-items that are qualified to be on the grocery
+     * list.
+     */
     fun getGroceryList(): LiveData<MutableList<FoodItemEntity>> {
         val foodItems = liveData { emitSource(mRepository.getFoodItems()) }
         return Transformations.map(
@@ -54,6 +62,9 @@ class GroceryItemViewModel(application: Application) : AndroidViewModel
         mRepository.getFoodItem(id)
     }
 
+    /**
+     * Deletes the given food-item from the grocery list, but not from the database.
+     */
     fun deleteFromGroceryList(foodItem: FoodItemEntity) = mGroceryListState.remove(foodItem)
 
     override fun onCleared() {

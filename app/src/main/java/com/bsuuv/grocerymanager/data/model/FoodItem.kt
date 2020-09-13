@@ -2,6 +2,9 @@ package com.bsuuv.grocerymanager.data.model
 
 import com.bsuuv.grocerymanager.util.TimeFrame
 
+/**
+ * Definition of a food-item on the grocery list.
+ */
 interface FoodItem {
 
     val id: Int

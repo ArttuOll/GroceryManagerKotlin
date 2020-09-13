@@ -1,10 +1,11 @@
 package com.bsuuv.grocerymanager.data.db.entity
 
 import androidx.room.TypeConverter
+import com.bsuuv.grocerymanager.data.db.FoodItemDatabase
 import com.bsuuv.grocerymanager.util.TimeFrame
 
 /**
- * Helps {@link FoodItemRoomDatabase} to convert the enum {@link TimeFrame} to integers that can be
+ * Helps [FoodItemDatabase] to convert the enum [TimeFrame] to integers that can be
  * persisted in the database.
  */
 class TimeFrameConverter {
