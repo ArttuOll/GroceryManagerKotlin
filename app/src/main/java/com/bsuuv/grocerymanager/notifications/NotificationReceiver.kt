@@ -10,6 +10,10 @@ import com.bsuuv.grocerymanager.R
 import com.bsuuv.grocerymanager.notifications.GroceryDayNotifier.Companion.NOTIFICATION_ID
 import com.bsuuv.grocerymanager.ui.MainActivity
 
+/**
+ * A receiver for the alarm set by [GroceryDayNotifier]. Defines what happens when the alarm is
+ * triggered.
+ */
 class NotificationReceiver : BroadcastReceiver() {
 
     companion object {

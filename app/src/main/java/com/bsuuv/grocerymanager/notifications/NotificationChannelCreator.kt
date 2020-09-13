@@ -8,12 +8,23 @@ import android.graphics.Color
 import android.os.Build
 import com.bsuuv.grocerymanager.R
 
+/**
+ * A logic class responsible for creating the notification channel for the grocery day notification.
+ */
 class NotificationChannelCreator(private val mContext: Context) {
 
     companion object {
         const val PRIMARY_CHANNEL_ID = "primary_notification_channel"
     }
 
+    /**
+     * Creates the primary notification channel of this app. This method can be
+     * safely called multiple times, since trying to create a notification channel
+     * that already exists causes no action (see [Android documentation on notifications](https://developer.android.com/training/notify-user/channels#importance))
+     *
+     * Since notification channels are required only on SDKs higher than 26, on
+     * lower SDKs this method does nothing.
+     */
     fun createNotificationChannel() {
         val notifManager = mContext.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         if (sdkOreoOrHigher()) {

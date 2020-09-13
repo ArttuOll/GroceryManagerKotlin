@@ -9,6 +9,9 @@ import android.content.SharedPreferences
 import android.os.SystemClock
 import com.bsuuv.grocerymanager.util.SharedPreferencesHelper
 
+/**
+ * Logic class responsible for scheduling a notification for the grocery day(s).
+ */
 class GroceryDayNotifier(
     private val mContext: Context,
     private val mSharedPrefsHelper: SharedPreferencesHelper,
@@ -32,6 +35,12 @@ class GroceryDayNotifier(
     private fun calculateDaysToNotif(daysUntilGroceryDay: Int) =
         AlarmManager.INTERVAL_DAY * daysUntilGroceryDay
 
+    /**
+     * Schedules a notification to be shown on the primary notification channel (see {@link
+     * [NotificationChannelCreator]), if the grocery days have changed since the last time this method
+     * was called. `AlarmManager` and [NotificationReceiver] are used to trigger the
+     * notification on time.
+     */
     fun scheduleGroceryDayNotification() {
         val groceryDaysChangedListener = createOnSharedPrefsChangedListener()
         val sharedPreferences = mSharedPrefsHelper.sharedPreferences
