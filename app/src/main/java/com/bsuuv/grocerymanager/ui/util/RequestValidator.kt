@@ -3,7 +3,7 @@ package com.bsuuv.grocerymanager.ui.util
 import android.app.Activity.RESULT_OK
 
 /**
- * Utility class for interpreting results of different kinds of <code>Activity</code>-related
+ * Utility class for interpreting results of different kinds of `Activity`-related
  * requests.
  */
 class RequestValidator {

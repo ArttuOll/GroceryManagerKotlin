@@ -4,6 +4,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bsuuv.grocerymanager.data.model.FoodItem
 import com.bsuuv.grocerymanager.ui.util.FoodItemListDifferenceCalc
 
+/**
+ * A generic adapter class containing common functionality of all adapters of the app.
+ */
 abstract class Adapter :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

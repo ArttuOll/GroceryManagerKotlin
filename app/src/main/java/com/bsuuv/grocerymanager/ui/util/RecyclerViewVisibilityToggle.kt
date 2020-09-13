@@ -4,15 +4,13 @@ import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
+//TODO: ala käyttää oliona?
 class RecyclerViewVisibilityToggle {
     companion object {
         /**
-         * @param recyclerView             The <code>RecyclerView</code> to act on
-         * @param recyclerViewPlaceholder  Placeholder <code>TextView</code> for the <code>RecyclerView</code>
-         * @param visibility               Visibility value from the class <code>View</code> to set on the
-         *                                 <code>RecyclerView</code>
-         * @param placeholderStrResourceId String resource id for the string to be displayed in the
-         *                                 placeholder
+         * Toggles the visibility of the [recyclerView] on and off, replacing it with the
+         * [placeholder] when off. The text of the [placeholder] is defined by the
+         * [placeholderStrResId].
          */
         fun toggle(
             recyclerView: RecyclerView,

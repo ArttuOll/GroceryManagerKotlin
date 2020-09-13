@@ -41,11 +41,8 @@ class WeekdaySorter {
 
     companion object {
         /**
-         * Sorts a set of weekdays, using Monday as the beginning of the week. Since <code>Set</code>
-         * doesn't hold any order of its items, this method turns the set into a <code>List</code>.
-         *
-         * @param unsortedWeekdays Set of weekdays to sort
-         * @return List of sorted weekdays
+         * Sorts the given set of weekdays, using Monday as the beginning of the week. Since `Set`
+         * doesn't hold any order of its items, this method turns the set into a `List`.
          */
         fun getAsSortedList(weekdays: MutableSet<String>): MutableList<String> {
             val weekdayList = ArrayList(weekdays)

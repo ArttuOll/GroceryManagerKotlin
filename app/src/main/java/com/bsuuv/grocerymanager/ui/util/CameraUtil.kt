@@ -12,7 +12,6 @@ import java.util.*
 
 /**
  * Utility class responsible for operations related to capturing and saving an image.
- * @throws IOException, if writing the image file is interrupted.
  */
 class CameraUtil(private val mContext: Context) {
 
@@ -52,8 +51,8 @@ class CameraUtil(private val mContext: Context) {
     fun getImagePath() = Uri.parse(mImageFile.toURI().path).path.toString()
 
     /**
-     * @param toCaptureImage Intent configured to launch the device's camera app
-     * @return boolean telling if a camera app has been installed on the device
+     * Takes an Intent configured to launch the device's camera app and returns
+     * a `boolean` telling whether a camera app exists on the device or not.
      */
     fun cameraAppExists(toCaptureImage: Intent) =
         toCaptureImage.resolveActivity(mContext.packageManager) != null

@@ -12,11 +12,17 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bsuuv.grocerymanager.R
 import com.bsuuv.grocerymanager.data.model.FoodItem
+import com.bsuuv.grocerymanager.ui.ConfigurationsActivity
 import com.bsuuv.grocerymanager.ui.NewFoodItemActivity
+import com.bsuuv.grocerymanager.ui.adapters.ConfigurationsListAdapter.ConfigsViewHolder
 import com.bsuuv.grocerymanager.ui.util.ImageViewPopulater
 import com.bsuuv.grocerymanager.ui.util.PluralsProvider
 import com.bsuuv.grocerymanager.ui.util.RequestValidator
 
+/**
+ * Adapter that feeds food-items in the form of [ConfigsViewHolder]s to the
+ * `RecyclerView` in [ConfigurationsActivity].
+ */
 class ConfigurationsListAdapter(private val mContext: Context) :
     Adapter() {
 

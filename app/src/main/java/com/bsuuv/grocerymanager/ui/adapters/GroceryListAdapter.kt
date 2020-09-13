@@ -15,9 +15,18 @@ import com.bsuuv.grocerymanager.R
 import com.bsuuv.grocerymanager.data.model.FoodItem
 import com.bsuuv.grocerymanager.ui.GroceryItemDetailActivity
 import com.bsuuv.grocerymanager.ui.GroceryItemDetailFragment
+import com.bsuuv.grocerymanager.ui.MainActivity
+import com.bsuuv.grocerymanager.ui.adapters.GroceryListAdapter.GroceryViewHolder
 import com.bsuuv.grocerymanager.ui.util.ImageViewPopulater
 import com.bsuuv.grocerymanager.ui.util.PluralsProvider
 
+/**
+ * Adapter that feeds grocery items in the form of [GroceryViewHolder]s to the
+ * `RecyclerView` in [MainActivity].
+ *
+ * @see GroceryViewHolder
+ * @see MainActivity
+ */
 class GroceryListAdapter(private val mContext: Context, private val mIsWideScreen: Boolean) :
     Adapter() {
 
@@ -42,8 +51,8 @@ class GroceryListAdapter(private val mContext: Context, private val mIsWideScree
     }
 
     /**
-     * A <code>ViewHolder</code> containing one grocery item to be displayed in the
-     * <code>RecyclerView</code> in [MainActivity].
+     * A `ViewHolder` containing one grocery item to be displayed in the
+     * `RecyclerView` in [MainActivity].
      *
      * @see MainActivity
      */
@@ -73,12 +82,11 @@ class GroceryListAdapter(private val mContext: Context, private val mIsWideScree
         }
 
         /**
-         * Called when an item in the <code>RecyclerView</code> in {@link MainActivity} is clicked.
-         * Checks if the device screen is wide (>900 dp) and based on that launches {@link
-         * GroceryItemDetailFragment} either in {@link MainActivity} or {@link
-         * GroceryItemDetailActivity}.
+         * Called when an item in the `RecyclerView` in [MainActivity] is clicked.
+         * Checks if the device screen is wide (>900 dp) and based on that launches
+         * [GroceryItemDetailFragment] either in [MainActivity] or
+         * [GroceryItemDetailActivity].
          *
-         * @param v Default parameter from the parent method. The <code>View</code> that was clicked.
          * @see MainActivity
          * @see GroceryItemDetailFragment
          * @see GroceryItemDetailActivity

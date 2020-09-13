@@ -4,18 +4,16 @@ import androidx.recyclerview.widget.DiffUtil
 import com.bsuuv.grocerymanager.data.model.FoodItem
 
 /**
- * Utility class for mutating one list of <code>FoodItem</code>s to another efficiently. This class
- * is used in this app's <code>RecyclerView Adapter</code>s in order to do as little re-rendering of
+ * Utility class for mutating one list of `FoodItem`s to another efficiently. This class
+ * is used in this app's `RecyclerView Adapter`s in order to do as little re-rendering of
  * items as possible when updating the
- * <code>RecyclerView</code> contents.
+ * `RecyclerView` contents.
  */
 class FoodItemListDifferenceCalc {
     companion object {
         /**
-         * Calculates an optimal set of update-operations to migrate from the old list to the new one.
-         * @param oldFoodItems List to migrate from
-         * @param newFoodItems List to migrate to
-         * @return <code>DiffUtil.DiffResult</code>-object containing the update-operations.
+         * Calculates an optimal set of update-operations to migrate from the [oldFoodItems] to [newFoodItems]
+         * and returns a `DiffUtil.DiffResult`-object containing the update-operations.
          */
         fun calculateMigrationOperations(
             oldFoodItems: MutableList<out FoodItem>,

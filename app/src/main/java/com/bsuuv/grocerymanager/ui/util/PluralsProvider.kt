@@ -9,14 +9,10 @@ import javax.inject.Inject
 class PluralsProvider @Inject constructor(@ApplicationContext private val mContext: Context) {
 
     /**
-     * Creates a string describing a food-item's schedule based on its frequency and time frame in
-     * correct plural format. For example: when frequency = 1 and timeFrame =
-     * <code>TimeFrame.WEEK</code>, the produced string is "Once a week". If frequency = 2, then the
+     * Returns a string describing a food-item's schedule based on its [frequency] and [timeFrame] in
+     * correct plural format. For example: when [frequency] = 1 and [timeFrame] =
+     * `TimeFrame.WEEK`, the produced string is "Once a week". If frequency = 2, then the
      * string is "Twice in a week".
-     *
-     * @param frequency Frequency of the food-item which the string describes
-     * @param timeFrame Time frame of the food-item which the string describes
-     * @return String describing the schedule in which a food-item appears on the grocery list
      */
     fun getScheduleString(frequency: Int, timeFrame: TimeFrame): String {
         val resources = mContext.resources
@@ -35,13 +31,9 @@ class PluralsProvider @Inject constructor(@ApplicationContext private val mConte
     }
 
     /**
-     * Creates a string describing food-item's amount and unit in correct plural format. For example,
+     * Returns a string describing food-item's [amount] and [unit] in correct plural format. For example,
      * when amount = 1 and unit = piece, the resulting string is "One piece". If the amount = 2, then
      * the string is "Two pieces".
-     *
-     * @param amount Amount of the food-item which the string describes
-     * @param unit   Unit of the food-item which the string describes
-     * @return String describing the quantity of the food-item
      */
     fun getAmountString(amount: Int, unit: String): String {
         val resources = mContext.resources
