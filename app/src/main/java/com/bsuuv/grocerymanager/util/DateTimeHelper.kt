@@ -38,8 +38,7 @@ class DateTimeHelper @Inject constructor(
     }
 
     /**
-     * @return <code>Boolean</code> telling whether the current day is set as
-     * grocery day by the user or not
+     * Returns a `Boolean` telling whether the user has set the current day as grocery day or not.
      */
     fun isGroceryDay(): Boolean {
         for (groceryDay in mGroceryDays) {

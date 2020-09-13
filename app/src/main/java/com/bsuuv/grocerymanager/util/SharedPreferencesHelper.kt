@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import com.bsuuv.grocerymanager.data.db.entity.FoodItemEntity
+import com.bsuuv.grocerymanager.ui.SettingsActivity
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
@@ -11,7 +12,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 /**
- * An utility class to handle all interactions with <code>SharedPreferences</code>.
+ * An utility class to handle all interactions with `SharedPreferences`.
  */
 class SharedPreferencesHelper @Inject constructor(@ApplicationContext context: Context) {
 
@@ -29,10 +30,8 @@ class SharedPreferencesHelper @Inject constructor(@ApplicationContext context: C
     }
 
     /**
-     * Returns a list of grocery days selected by the user in SettingsActivity.
-     *
-     * @return A <code>Set</code> containing the grocery days as lowercase strings. If none are
-     * selected, an empty <code>Set</code> is returned.
+     * Returns a list of grocery days, as a `MutableSet` of lowercase strings, selected by the user
+     * in [SettingsActivity].
      */
     fun getGroceryDays(): MutableSet<String> = sharedPreferences
         .getStringSet(GROCERY_DAYS_KEY, HashSet())!!
