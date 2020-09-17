@@ -37,6 +37,7 @@ class GroceryListFragment : Fragment() {
     ): View? {
         viewModel = ViewModelProvider(this).get(GroceryItemViewModel::class.java)
         setUpViewModel()
+        setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_main, container, false)
     }
 

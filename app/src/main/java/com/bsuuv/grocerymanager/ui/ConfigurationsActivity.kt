@@ -3,17 +3,11 @@ package com.bsuuv.grocerymanager.ui
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bsuuv.grocerymanager.R
 import com.bsuuv.grocerymanager.data.db.entity.FoodItemEntity
 import com.bsuuv.grocerymanager.data.viewmodel.FoodItemViewModel
 import com.bsuuv.grocerymanager.ui.adapters.ConfigurationsListAdapter
-import com.bsuuv.grocerymanager.ui.util.RecyclerViewVisibilityToggle
 import com.bsuuv.grocerymanager.ui.util.RequestValidator
 import com.bsuuv.grocerymanager.util.TimeFrame
 
@@ -25,91 +19,22 @@ import com.bsuuv.grocerymanager.util.TimeFrame
  * <p>
  * The food-items are displayed in a `RecyclerView`, the
  * [ConfigurationsListAdapter] of which receives its data from a [FoodItemViewModel].
- *
- * @see NewFoodItemActivity
- * @see ConfigurationsListAdapter
- * @see FoodItemViewModel
  */
 class ConfigurationsActivity : AppCompatActivity() {
 
-    private lateinit var mAdapter: ConfigurationsListAdapter
     private lateinit var mViewModel: FoodItemViewModel
-    private lateinit var mRecyclerView: RecyclerView
-    private lateinit var mRecyclerViewPlaceholder: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_configurations)
-        initMembers()
-        configureUi()
-        setUpViewModel()
-    }
+        setContentView(R.layout.configs_list_host)
 
-    private fun initMembers() {
-        mAdapter = ConfigurationsListAdapter(this)
-        mViewModel = ViewModelProvider(this).get(FoodItemViewModel::class.java)
-        mRecyclerView = findViewById(R.id.config_recyclerview)
-        mRecyclerViewPlaceholder = findViewById(R.id.config_recyclerview_placeholder)
-    }
-
-    private fun configureUi() {
-        title = getString(R.string.activity_configs_title)
-        setUpRecyclerView()
-    }
-
-    private fun setUpRecyclerView() {
-        mRecyclerView.layoutManager = LinearLayoutManager(this)
-        mRecyclerView.adapter = mAdapter
-        val itemTouchHelper = initializeItemTouchHelper()
-        itemTouchHelper.attachToRecyclerView(mRecyclerView)
-    }
-
-    private fun initializeItemTouchHelper(): ItemTouchHelper {
-        return ItemTouchHelper(
-            object : ItemTouchHelper.SimpleCallback(
-                0,
-                ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT
-            ) {
-                override fun onMove(
-                    recyclerView: RecyclerView,
-                    viewHolder: RecyclerView.ViewHolder,
-                    target: RecyclerView.ViewHolder
-                ): Boolean {
-                    return false
-                }
-
-                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                    val deletedItemPosition = viewHolder.adapterPosition
-                    val deletedItem =
-                        mAdapter.getItemAtPosition(deletedItemPosition) as FoodItemEntity
-                    mViewModel.delete(deletedItem)
-                }
-            })
-    }
-
-    private fun setUpViewModel() {
-        mViewModel.getFoodItems().observe(this, { foodItemEntities ->
-            run {
-                setRecyclerViewVisibility(foodItemEntities.size)
-                mAdapter.setItems(foodItemEntities)
-            }
-        })
-    }
-
-    private fun setRecyclerViewVisibility(size: Int) {
-        when {
-            size > 0 -> RecyclerViewVisibilityToggle.toggle(
-                mRecyclerView,
-                mRecyclerViewPlaceholder,
-                View.VISIBLE,
-                0
-            )
-            else -> RecyclerViewVisibilityToggle.toggle(
-                mRecyclerView,
-                mRecyclerViewPlaceholder,
-                View.GONE,
-                R.string.no_grocery_items
-            )
+        if (savedInstanceState == null) {
+            val fragment = ConfigsListFragment()
+            fragment.arguments = intent.extras
+            supportFragmentManager
+                .beginTransaction()
+                .add(R.id.configs_content, fragment)
+                .commit()
         }
     }
 
