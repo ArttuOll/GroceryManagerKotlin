@@ -8,7 +8,9 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
-    <fragment
+    <include layout="@layout/app_bar_main" />
+
+    <androidx.fragment.app.FragmentContainerView
         android:layout_width="match_parent"
         android:id="@+id/nav_host_fragment"
         android:layout_height="match_parent"
