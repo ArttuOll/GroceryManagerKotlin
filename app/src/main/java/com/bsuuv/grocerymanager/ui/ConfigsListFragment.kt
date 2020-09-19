@@ -46,7 +46,6 @@ class ConfigsListFragment : Fragment() {
     }
 
     private fun configureUi() {
-        requireActivity().title = getString(R.string.activity_configs_title)
         setUpRecyclerView()
     }
 

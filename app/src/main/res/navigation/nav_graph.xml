@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/nav_graph">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/groceryListFragment">
 
+    <fragment
+        android:id="@+id/groceryListFragment"
+        android:name="com.bsuuv.grocerymanager.ui.GroceryListFragment"
+        android:label="GroceryListFragment"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_groceryListFragment_to_configsListFragment"
+            app:destination="@id/configsListFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/configsListFragment"
+        android:name="com.bsuuv.grocerymanager.ui.ConfigsListFragment"
+        android:label="ConfigsListFragment"
+        tools:layout="@layout/activity_configurations" />
 </navigation>

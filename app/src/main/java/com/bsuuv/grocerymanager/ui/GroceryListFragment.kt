@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.*
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,6 +28,7 @@ class GroceryListFragment : Fragment() {
     private lateinit var adapter: GroceryListAdapter
     private lateinit var recyclerViewPlaceholder: TextView
     private lateinit var viewModel: GroceryItemViewModel
+    private lateinit var navController: NavController
     @Inject lateinit var dateTimeHelper: DateTimeHelper
     @Inject lateinit var sharedPrefsHelper: SharedPreferencesHelper
 
@@ -48,10 +49,10 @@ class GroceryListFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        navController = Navigation.findNavController(view)
         adapter = initAdapter(view)
         recyclerView = view.findViewById(R.id.main_recyclerview)
         recyclerViewPlaceholder = view.findViewById(R.id.main_recyclerview_placeholder)
-        setUpToolbar(view)
         setUpRecyclerView()
         super.onViewCreated(view, savedInstanceState)
     }
@@ -59,16 +60,6 @@ class GroceryListFragment : Fragment() {
     private fun initAdapter(view: View): GroceryListAdapter {
         val isWideScreen = view.findViewById<LinearLayout>(R.id.container_food_item_detail) != null
         return GroceryListAdapter(requireContext(), isWideScreen)
-    }
-
-    private fun setUpToolbar(view: View) {
-        val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
-        (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
-        requireActivity().title = getToolbarTitle()
-    }
-
-    private fun getToolbarTitle(): String {
-        return getString(R.string.mainActivity_actionbar_label) + " " + dateTimeHelper.getCurrentDate()
     }
 
     private fun setUpRecyclerView() {
@@ -127,6 +118,20 @@ class GroceryListFragment : Fragment() {
                 adapter.removeItemAtPosition(swipedPosition)
             }
         })
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_configure -> {
+                navController.navigate(R.id.action_groceryListFragment_to_configsListFragment)
+                true
+            }
+            R.id.action_settings -> {
+                //launchSettingsActivity()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

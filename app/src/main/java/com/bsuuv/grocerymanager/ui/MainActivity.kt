@@ -1,9 +1,8 @@
 package com.bsuuv.grocerymanager.ui
 
-import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.bsuuv.grocerymanager.R
 import com.bsuuv.grocerymanager.data.viewmodel.GroceryItemViewModel
 import com.bsuuv.grocerymanager.notifications.GroceryDayNotifier
@@ -30,52 +29,27 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    @Inject lateinit var mDateTimeHelper: DateTimeHelper
-    @Inject lateinit var mSharedPrefsHelper: SharedPreferencesHelper
+    @Inject lateinit var dateTimeHelper: DateTimeHelper
+    @Inject lateinit var sharedPrefsHelper: SharedPreferencesHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.grocery_list_host)
-
-        if (savedInstanceState == null) {
-            val fragment = GroceryListFragment()
-            supportFragmentManager
-                .beginTransaction()
-                .add(R.id.main_content, fragment)
-                .commit()
-        }
+        setUpToolbar()
         scheduleNotification()
     }
 
+    private fun setUpToolbar() {
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        title = resources.getString(R.string.app_name)
+    }
+
     private fun scheduleNotification() {
-        val timeUntilGroceryDay = mDateTimeHelper.getTimeUntilNextGroceryDay()
-        val notifier = GroceryDayNotifier(this, mSharedPrefsHelper, timeUntilGroceryDay)
+        val timeUntilGroceryDay = dateTimeHelper.getTimeUntilNextGroceryDay()
+        val notifier = GroceryDayNotifier(this, sharedPrefsHelper, timeUntilGroceryDay)
         if (timeUntilGroceryDay < DateTimeHelper.NO_GROCERY_DAYS_SET) {
             notifier.scheduleGroceryDayNotification()
         }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_configure -> {
-                launchConfigurationsActivity()
-                true
-            }
-            R.id.action_settings -> {
-                launchSettingsActivity()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    private fun launchConfigurationsActivity() {
-        val toConfigurationsActivity = Intent(this, ConfigurationsActivity::class.java)
-        startActivity(toConfigurationsActivity)
-    }
-
-    private fun launchSettingsActivity() {
-        val toSettingsActivity = Intent(this, SettingsActivity::class.java)
-        startActivity(toSettingsActivity)
     }
 }

@@ -22,7 +22,7 @@ import com.bsuuv.grocerymanager.util.TimeFrame
  */
 class ConfigurationsActivity : AppCompatActivity() {
 
-    private lateinit var mViewModel: FoodItemViewModel
+    private lateinit var viewModel: FoodItemViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,11 +42,11 @@ class ConfigurationsActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, fromNewFoodItem)
         if (RequestValidator.foodItemCreationSuccesful(requestCode, resultCode)) {
             val result = getFoodItemFromIntent(fromNewFoodItem)
-            mViewModel.insert(result)
+            viewModel.insert(result)
         } else if (RequestValidator.foodItemEditSuccesful(requestCode, resultCode)) {
             val id = intent?.getIntExtra("id", 0)!!
             val result = getFoodItemFromIntent(fromNewFoodItem, id = id)
-            mViewModel.update(result)
+            viewModel.update(result)
         }
     }
 
