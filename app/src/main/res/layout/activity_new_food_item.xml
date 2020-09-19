@@ -10,7 +10,6 @@
         android:id="@+id/fab_new_fooditem"
         style="@style/fabs"
         android:layout_gravity="bottom|end"
-        android:onClick="onFabClick"
         android:src="@drawable/ic_check" />
 
     <include

@@ -2,7 +2,6 @@ package com.bsuuv.grocerymanager.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.bsuuv.grocerymanager.R
 import com.bsuuv.grocerymanager.data.db.entity.FoodItemEntity
@@ -72,16 +71,5 @@ class ConfigurationsActivity : AppCompatActivity() {
             frequency,
             countdownValue
         )
-    }
-
-    /**
-     * Called when the floating action button in this activity is pressed. Launches
-     * `NewFoodItemActivity` for creating a new `FoodItem`.
-     */
-    fun onFabClick(view: View) {
-        val toNewFoodItem = Intent(this, NewFoodItemActivity::class.java)
-        val requestCode = RequestValidator.FOOD_ITEM_CREATE_REQUEST
-        toNewFoodItem.putExtra("requestCode", requestCode)
-        startActivityForResult(toNewFoodItem, requestCode)
     }
 }

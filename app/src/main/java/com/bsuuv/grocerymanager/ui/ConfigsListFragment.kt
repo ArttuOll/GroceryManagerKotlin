@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,13 +17,15 @@ import com.bsuuv.grocerymanager.data.db.entity.FoodItemEntity
 import com.bsuuv.grocerymanager.data.viewmodel.FoodItemViewModel
 import com.bsuuv.grocerymanager.ui.adapters.ConfigurationsListAdapter
 import com.bsuuv.grocerymanager.ui.util.RecyclerViewVisibilityToggle
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class ConfigsListFragment : Fragment() {
+class ConfigsListFragment : Fragment(), View.OnClickListener {
 
     private lateinit var adapter: ConfigurationsListAdapter
     private lateinit var viewModel: FoodItemViewModel
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerViewPlaceholder: TextView
+    private lateinit var navController: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,8 +45,11 @@ class ConfigsListFragment : Fragment() {
     }
 
     private fun initMembers(view: View) {
+        navController = Navigation.findNavController(view)
         recyclerView = view.findViewById(R.id.config_recyclerview)
         recyclerViewPlaceholder = view.findViewById(R.id.config_recyclerview_placeholder)
+        val fab = view.findViewById<FloatingActionButton>(R.id.configs_fab)
+        fab.setOnClickListener(this)
     }
 
     private fun configureUi() {
@@ -103,5 +110,17 @@ class ConfigsListFragment : Fragment() {
                     viewModel.delete(deletedItem)
                 }
             })
+    }
+
+    /**
+     * Called when the floating action button in this activity is pressed. Launches
+     * `NewFoodItemActivity` for creating a new `FoodItem`.
+     */
+    override fun onClick(view: View) {
+        navController.navigate(R.id.action_configsListFragment_to_newFoodItemFragment)
+//        // val toNewFoodItem = Intent(this, NewFoodItemActivity::class.java)
+//        val requestCode = RequestValidator.FOOD_ITEM_CREATE_REQUEST
+//        toNewFoodItem.putExtra("requestCode", requestCode)
+//        startActivityForResult(toNewFoodItem, requestCode)
     }
 }

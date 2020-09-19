@@ -19,5 +19,15 @@
         android:id="@+id/configsListFragment"
         android:name="com.bsuuv.grocerymanager.ui.ConfigsListFragment"
         android:label="ConfigsListFragment"
-        tools:layout="@layout/activity_configurations" />
+        tools:layout="@layout/activity_configurations">
+        <action
+            android:id="@+id/action_configsListFragment_to_newFoodItemFragment"
+            app:destination="@id/newFoodItemFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/newFoodItemFragment"
+        android:name="com.bsuuv.grocerymanager.ui.NewFoodItemFragment"
+        android:label="NewFoodItemFragment"
+        tools:layout="@layout/activity_new_food_item" />
 </navigation>
