@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -16,9 +17,19 @@ import com.bsuuv.grocerymanager.R
 import com.bsuuv.grocerymanager.data.db.entity.FoodItemEntity
 import com.bsuuv.grocerymanager.data.viewmodel.FoodItemViewModel
 import com.bsuuv.grocerymanager.ui.adapters.ConfigurationsListAdapter
+import com.bsuuv.grocerymanager.ui.util.Intention
 import com.bsuuv.grocerymanager.ui.util.RecyclerViewVisibilityToggle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
+/**
+ * Fragment for viewing all created food-items. Displays the items as a list or shows a placeholder
+ * text if no food-items are yet created. The items can be swiped left or right to delete them, or
+ * clicked to edit the. Contains a floating action button, which launches
+ * [NewFoodItemFragment] for creating a new food-item.
+ *
+ * The food-items are displayed in a `RecyclerView`, the
+ * [ConfigurationsListAdapter] of which receives its data from a [FoodItemViewModel].
+ */
 class ConfigsListFragment : Fragment(), View.OnClickListener {
 
     private lateinit var adapter: ConfigurationsListAdapter
@@ -32,7 +43,6 @@ class ConfigsListFragment : Fragment(), View.OnClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        adapter = ConfigurationsListAdapter(requireContext())
         viewModel = ViewModelProvider(this).get(FoodItemViewModel::class.java)
         return inflater.inflate(R.layout.activity_configurations, container, false)
     }
@@ -47,6 +57,7 @@ class ConfigsListFragment : Fragment(), View.OnClickListener {
     private fun initMembers(view: View) {
         navController = Navigation.findNavController(view)
         recyclerView = view.findViewById(R.id.config_recyclerview)
+        adapter = ConfigurationsListAdapter(requireContext(), navController)
         recyclerViewPlaceholder = view.findViewById(R.id.config_recyclerview_placeholder)
         val fab = view.findViewById<FloatingActionButton>(R.id.configs_fab)
         fab.setOnClickListener(this)
@@ -117,10 +128,7 @@ class ConfigsListFragment : Fragment(), View.OnClickListener {
      * `NewFoodItemActivity` for creating a new `FoodItem`.
      */
     override fun onClick(view: View) {
-        navController.navigate(R.id.action_configsListFragment_to_newFoodItemFragment)
-//        // val toNewFoodItem = Intent(this, NewFoodItemActivity::class.java)
-//        val requestCode = RequestValidator.FOOD_ITEM_CREATE_REQUEST
-//        toNewFoodItem.putExtra("requestCode", requestCode)
-//        startActivityForResult(toNewFoodItem, requestCode)
+        val args = bundleOf("intention" to Intention.CREATE)
+        navController.navigate(R.id.action_configsListFragment_to_newFoodItemFragment, args)
     }
 }

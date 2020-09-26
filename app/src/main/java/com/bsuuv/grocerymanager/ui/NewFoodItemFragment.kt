@@ -7,11 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.bsuuv.grocerymanager.R
-import com.bsuuv.grocerymanager.ui.util.FoodItemCreationRequirementChecker
-import com.bsuuv.grocerymanager.ui.util.RequestValidator
+import com.bsuuv.grocerymanager.data.db.entity.FoodItemEntity
+import com.bsuuv.grocerymanager.data.viewmodel.FoodItemViewModel
+import com.bsuuv.grocerymanager.ui.util.*
 import com.bsuuv.grocerymanager.util.FrequencyQuotientCalc
 import com.bsuuv.grocerymanager.util.SharedPreferencesHelper
 import com.bsuuv.grocerymanager.util.TimeFrame
@@ -25,47 +27,95 @@ import javax.inject.Inject
 class NewFoodItemFragment : Fragment(), View.OnClickListener {
 
     private object Keys {
+        const val IMAGE_PATH_KEY = "imagePath"
         const val FREQUENCY_NOT_SET = 0
         const val AMOUNT_FIELD_EMPTY = 0
+        const val ID_NOT_SET = 0
     }
 
-    private lateinit var mTimeFrameButtons: MaterialButtonToggleGroup
-    private lateinit var mLabelField: EditText
-    private lateinit var mBrandField: EditText
-    private lateinit var mAmountField: EditText
-    private lateinit var mInfoField: EditText
-    private lateinit var mFrequencyField: EditText
-    private lateinit var mImage: ImageView
-    private lateinit var mUnitDropdown: AutoCompleteTextView
+    private lateinit var timeFrameButtons: MaterialButtonToggleGroup
+    private lateinit var labelField: EditText
+    private lateinit var brandField: EditText
+    private lateinit var amountField: EditText
+    private lateinit var infoField: EditText
+    private lateinit var frequencyField: EditText
+    private lateinit var imageView: ImageView
+    private lateinit var unitDropdown: AutoCompleteTextView
     private lateinit var navController: NavController
-    @Inject lateinit var mSharedPrefsHelper: SharedPreferencesHelper
-    private var mImageUri = ""
+    private lateinit var viewModel: FoodItemViewModel
+    private lateinit var intention: Intention
+    private lateinit var editedItem: FoodItemEntity
+    private var imageUri = ""
+    @Inject lateinit var sharedPrefsHelper: SharedPreferencesHelper
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.activity_new_food_item, container, false)
+        viewModel = ViewModelProvider(this).get(FoodItemViewModel::class.java)
+        if (savedInstanceState != null) recoverFoodImage(savedInstanceState)
+        return inflater.inflate(R.layout.fragment_new_fooditem, container, false)
+    }
+
+    private fun recoverFoodImage(savedInstanceState: Bundle) {
+        imageUri = savedInstanceState.getString(Keys.IMAGE_PATH_KEY)!!
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initMembers(view)
         setUpToggleButtons(view)
+        manageIntention()
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    private fun manageIntention() {
+        val serializedIntention = requireArguments().getSerializable("intention")
+        if (serializedIntention != null) {
+            intention = serializedIntention as Intention
+            if (intention == Intention.EDIT) {
+                val editedItemId = requireArguments().getInt("editedItemId")
+                editedItem = viewModel.get(editedItemId)
+                populateInputFields()
+                populateImageView()
+                setToggleButtonStates()
+            }
+        }
+    }
+
+    private fun populateInputFields() {
+        labelField.setText(editedItem.label)
+        brandField.setText(editedItem.brand)
+        amountField.setText(editedItem.amount.toString())
+        unitDropdown.setText(editedItem.unit)
+        infoField.setText(editedItem.info)
+        frequencyField.setText(editedItem.frequency.toString())
+    }
+
+    private fun populateImageView() {
+        val uri = editedItem.imageUri
+        ImageViewPopulater.populateFromUri(requireContext(), uri, imageView)
+    }
+
+    private fun setToggleButtonStates() {
+        when (editedItem.timeFrame) {
+            TimeFrame.WEEK -> timeFrameButtons.check(R.id.togglebutton_week)
+            TimeFrame.TWO_WEEKS -> timeFrameButtons.check(R.id.togglebutton_two_weeks)
+            TimeFrame.MONTH -> timeFrameButtons.check(R.id.togglebutton_month)
+            else -> return
+        }
     }
 
     private fun initMembers(view: View) {
         navController = Navigation.findNavController(view)
-        mLabelField = view.findViewById(R.id.editText_label)
-        mBrandField = view.findViewById(R.id.editText_brand)
-        mAmountField = view.findViewById(R.id.editText_amount)
-        mInfoField = view.findViewById(R.id.editText_info)
-        mFrequencyField = initFrequencyEditText(view)
-        mImage = view.findViewById(R.id.imageView_new_fooditem)
-        mImage.setOnClickListener(this)
-        mUnitDropdown = initUnitDropdown(view)
-        mTimeFrameButtons = view.findViewById(R.id.freq_selection_togglegroup)
+        labelField = view.findViewById(R.id.editText_label)
+        brandField = view.findViewById(R.id.editText_brand)
+        amountField = view.findViewById(R.id.editText_amount)
+        infoField = view.findViewById(R.id.editText_info)
+        frequencyField = initFrequencyEditText(view)
+        initImageView(view)
+        unitDropdown = initUnitDropdown(view)
+        timeFrameButtons = view.findViewById(R.id.freq_selection_togglegroup)
         val fab = view.findViewById<FloatingActionButton>(R.id.fab_new_fooditem)
         fab.setOnClickListener(this)
     }
@@ -74,6 +124,16 @@ class NewFoodItemFragment : Fragment(), View.OnClickListener {
         val editText: EditText = view.findViewById(R.id.editText_freq)
         editText.setText(getString(R.string.freq_edittext_default))
         return editText
+    }
+
+    private fun initImageView(view: View) {
+        imageView = view.findViewById(R.id.imageView_new_fooditem)
+        imageView.setOnClickListener(this)
+        if (imageUri != "") ImageViewPopulater.populateFromUri(
+            requireContext(),
+            imageUri,
+            imageView
+        )
     }
 
     private fun initUnitDropdown(view: View): AutoCompleteTextView {
@@ -112,39 +172,8 @@ class NewFoodItemFragment : Fragment(), View.OnClickListener {
         monthToggle.setOnClickListener(this)
     }
 
-    fun onFabClick(view: View) {
-        val label = mLabelField.text.toString()
-        val brand = mBrandField.text.toString()
-        val unit = mUnitDropdown.text.toString()
-        val info = mInfoField.text.toString()
-        val textFieldValues = mutableListOf(label, brand, unit, info)
-        val timeFrame = getActiveToggleButton()
-        val amount = getAmount()
-        val frequency = getFrequency()
-        val groceryDaysAWeek = mSharedPrefsHelper.getGroceryDays().size
-        val frequencyQuotient =
-            FrequencyQuotientCalc.calculate(frequency, timeFrame, groceryDaysAWeek)
-
-        if (foodItemCreationRequirementsMet(
-                textFieldValues,
-                amount,
-                timeFrame,
-                frequency,
-                frequencyQuotient
-            )
-        ) run {
-//            NewFoodItemActivity.launchConfigurationsActivity(
-//                textFieldValues,
-//                amount,
-//                timeFrame,
-//                frequency,
-//                frequencyQuotient
-//            )
-        }
-    }
-
     private fun getActiveToggleButton(): TimeFrame {
-        return when (mTimeFrameButtons.checkedButtonId) {
+        return when (timeFrameButtons.checkedButtonId) {
             R.id.togglebutton_week -> TimeFrame.WEEK
             R.id.togglebutton_two_weeks -> TimeFrame.TWO_WEEKS
             R.id.togglebutton_month -> TimeFrame.MONTH
@@ -153,23 +182,23 @@ class NewFoodItemFragment : Fragment(), View.OnClickListener {
     }
 
     private fun getAmount(): Int {
-        val amountString = mAmountField.text.toString()
+        val amountString = amountField.text.toString()
         return if (amountString == "") Keys.AMOUNT_FIELD_EMPTY else amountString.toInt()
     }
 
     private fun getFrequency(): Int {
-        val frequencyString = mFrequencyField.text.toString()
+        val frequencyString = frequencyField.text.toString()
         return if (frequencyString == "") Keys.FREQUENCY_NOT_SET else frequencyString.toInt()
     }
 
     private fun foodItemCreationRequirementsMet(
-        textFieldValues: MutableList<String>,
+        textFieldValues: MutableMap<String, String>,
         amount: Int,
         timeFrame: TimeFrame,
         frequency: Int,
         frequencyQuotient: Double
     ): Boolean {
-        val checker = FoodItemCreationRequirementChecker(mSharedPrefsHelper)
+        val checker = FoodItemCreationRequirementChecker(sharedPrefsHelper)
         return try {
             checker.requirementsMet(
                 textFieldValues,
@@ -189,33 +218,108 @@ class NewFoodItemFragment : Fragment(), View.OnClickListener {
             requireView().findViewById(R.id.fab_new_fooditem),
             messageResId,
             Snackbar.LENGTH_LONG
-        )
-            .setAnchorView(R.id.fab_new_fooditem).show()
+        ).setAnchorView(R.id.fab_new_fooditem).show()
     }
 
-//    fun onImageClick(view: View) {
-//        val cameraUtil = CameraUtil(requireContext())
-//        mImageUri = cameraUtil.getImagePath()
-//        val toCaptureImage = cameraUtil.getIntentToCaptureImage()
-//        if (cameraUtil.cameraAppExists(toCaptureImage)) launchCameraApp(toCaptureImage)
-//    }
+    /**
+     * Called when any of the buttons in the fragment is clicked.
+     */
+    override fun onClick(view: View?) {
+        when (view?.id) {
+            R.id.togglebutton_week -> timeFrameButtons.check(R.id.togglebutton_week)
+            R.id.togglebutton_two_weeks -> timeFrameButtons.check(R.id.togglebutton_two_weeks)
+            R.id.togglebutton_month -> timeFrameButtons.check(R.id.togglebutton_month)
+            R.id.fab_new_fooditem -> {
+                handleFabClick()
+            }
+            R.id.imageView_new_fooditem -> {
+                handleImageClick()
+            }
+        }
+    }
+
+    private fun handleFabClick() {
+        val label = labelField.text.toString()
+        val brand = brandField.text.toString()
+        val unit = unitDropdown.text.toString()
+        val info = infoField.text.toString()
+        val textFieldValues = mutableMapOf(
+            "label" to label, "brand" to brand, "unit" to unit,
+            "info" to info
+        )
+        val timeFrame = getActiveToggleButton()
+        val amount = getAmount()
+        val frequency = getFrequency()
+        val groceryDaysAWeek = sharedPrefsHelper.getGroceryDays().size
+        val frequencyQuotient =
+            FrequencyQuotientCalc.calculate(frequency, timeFrame, groceryDaysAWeek)
+
+        if (foodItemCreationRequirementsMet(
+                textFieldValues,
+                amount,
+                timeFrame,
+                frequency,
+                frequencyQuotient
+            )
+        ) {
+            when (intention) {
+                Intention.CREATE -> {
+                    createFoodItemWithId(
+                        Keys.ID_NOT_SET,
+                        textFieldValues,
+                        amount,
+                        timeFrame,
+                        frequency
+                    )
+                }
+                Intention.EDIT -> {
+                    createFoodItemWithId(
+                        editedItem.id,
+                        textFieldValues,
+                        amount,
+                        timeFrame,
+                        frequency
+                    )
+                }
+            }
+            activity?.onBackPressed()
+        }
+    }
+
+    private fun createFoodItemWithId(
+        id: Int,
+        textFieldValues: MutableMap<String, String>,
+        amount: Int,
+        timeFrame: TimeFrame,
+        frequency: Int,
+    ) {
+        val newItem = FoodItemEntity(
+            id, imageUri, textFieldValues["label"]!!, textFieldValues["brand"]!!,
+            textFieldValues["info"]!!, amount, textFieldValues["unit"]!!, timeFrame, frequency, 0.0
+        )
+        viewModel.insert(newItem)
+    }
+
+    private fun handleImageClick() {
+        val cameraUtil = CameraUtil(requireContext())
+        imageUri = cameraUtil.getImagePath()
+        val toCaptureImage = cameraUtil.getIntentToCaptureImage()
+        if (cameraUtil.cameraAppExists(toCaptureImage)) launchCameraApp(toCaptureImage)
+    }
 
     private fun launchCameraApp(toCaptureImage: Intent) {
         startActivityForResult(toCaptureImage, RequestValidator.REQUEST_IMAGE_CAPTURE)
     }
 
-    /**
-     * Called when one of the toggle buttons for time frame selection is clicked.
-     */
-    override fun onClick(view: View?) {
-        when (view?.id) {
-            R.id.togglebutton_week -> mTimeFrameButtons.check(R.id.togglebutton_week)
-            R.id.togglebutton_two_weeks -> mTimeFrameButtons.check(R.id.togglebutton_two_weeks)
-            R.id.togglebutton_month -> mTimeFrameButtons.check(R.id.togglebutton_month)
-            R.id.fab_new_fooditem -> activity?.onBackPressed()
-            R.id.imageView_new_fooditem -> {
-                // TODO: launch camera activity
-            }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (RequestValidator.imageCaptureSuccesful(requestCode, resultCode)) {
+            ImageViewPopulater.populateFromUri(requireContext(), imageUri, imageView)
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(Keys.IMAGE_PATH_KEY, imageUri)
     }
 }

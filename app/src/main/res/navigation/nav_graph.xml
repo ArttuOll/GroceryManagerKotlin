@@ -29,5 +29,12 @@
         android:id="@+id/newFoodItemFragment"
         android:name="com.bsuuv.grocerymanager.ui.NewFoodItemFragment"
         android:label="NewFoodItemFragment"
-        tools:layout="@layout/activity_new_food_item" />
+        tools:layout="@layout/fragment_new_fooditem">
+        <argument
+            android:name="intention"
+            app:argType="com.bsuuv.grocerymanager.ui.util.Intention" />
+        <argument
+            android:name="editedItemId"
+            app:argType="integer" />
+    </fragment>
 </navigation>
