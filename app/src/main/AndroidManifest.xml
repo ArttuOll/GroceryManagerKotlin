@@ -38,10 +38,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.SettingsActivity"
-            android:label="@string/title_activity_settings"
-            android:parentActivityName=".ui.MainActivity" />
-        <activity
             android:name=".ui.NewFoodItemActivity"
             android:parentActivityName=".ui.ConfigurationsActivity" />
         <activity

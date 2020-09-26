@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_groceryListFragment_to_configsListFragment"
             app:destination="@id/configsListFragment" />
+        <action
+            android:id="@+id/action_groceryListFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
 
     <fragment
@@ -37,4 +40,9 @@
             android:name="editedItemId"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.bsuuv.grocerymanager.ui.SettingsFragment"
+        android:label="SettingsFragment"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

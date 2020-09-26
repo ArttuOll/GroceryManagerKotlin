@@ -127,7 +127,7 @@ class GroceryListFragment : Fragment() {
                 true
             }
             R.id.action_settings -> {
-                //launchSettingsActivity()
+                navController.navigate(R.id.action_groceryListFragment_to_settingsFragment)
                 true
             }
             else -> super.onOptionsItemSelected(item)
