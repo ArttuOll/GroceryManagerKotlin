@@ -54,6 +54,13 @@ class SharedPreferencesHelper @Inject constructor(@ApplicationContext context: C
         editor.apply()
     }
 
+    fun registerOnSharedPreferenceChangeListenter(
+        listenter: SharedPreferences
+        .OnSharedPreferenceChangeListener
+    ) {
+        sharedPreferences.registerOnSharedPreferenceChangeListener(listenter)
+    }
+
     private inline fun <reified T> Gson.fromJson(json: String?) =
         fromJson<T>(json, object : TypeToken<T>() {}.type)
 }

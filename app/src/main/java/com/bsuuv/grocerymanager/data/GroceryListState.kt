@@ -18,6 +18,7 @@ class GroceryListState(private val mSharedPrefsHelper: SharedPreferencesHelper) 
     }
 
     val incrementedItems: MutableList<FoodItemEntity>
+
     internal val removedItems: MutableList<FoodItemEntity>
 
     init {
@@ -28,7 +29,9 @@ class GroceryListState(private val mSharedPrefsHelper: SharedPreferencesHelper) 
     fun remove(foodItem: FoodItem) = removedItems.add(foodItem as FoodItemEntity)
 
     fun increment(foodItem: FoodItem) {
-        if (notIncremented(foodItem)) incrementedItems.add(foodItem as FoodItemEntity)
+        if (notIncremented(foodItem)) {
+            incrementedItems.add(foodItem as FoodItemEntity)
+        }
     }
 
     private fun notIncremented(foodItem: FoodItem): Boolean = !incrementedItems.contains(foodItem)

@@ -1,9 +1,9 @@
 package com.bsuuv.grocerymanager.util
 
 import android.content.Context
+import android.content.SharedPreferences
 import com.bsuuv.grocerymanager.R
 import dagger.hilt.android.qualifiers.ApplicationContext
-import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
@@ -11,18 +11,18 @@ import javax.inject.Inject
  * Utility class to help with date- and time- related operations.
  */
 class DateTimeHelper @Inject constructor(
-    @ApplicationContext private val mContext: Context,
-    sharedPrefsHelper:
-    SharedPreferencesHelper
-) {
+    @ApplicationContext private val context: Context,
+    private val sharedPrefsHelper: SharedPreferencesHelper
+) : SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private val mGroceryDays: MutableSet<String> = sharedPrefsHelper.getGroceryDays()
-    private val mCalendar: Calendar
+    private var groceryDays: MutableSet<String> = sharedPrefsHelper.getGroceryDays()
+    private val calendar: Calendar
     internal var today: Int
 
     init {
-        this.mCalendar = createCalendar()
-        this.today = mCalendar.get(Calendar.DAY_OF_WEEK)
+        this.calendar = createCalendar()
+        this.today = calendar.get(Calendar.DAY_OF_WEEK)
+        this.sharedPrefsHelper.registerOnSharedPreferenceChangeListenter(this)
     }
 
     companion object {
@@ -41,7 +41,7 @@ class DateTimeHelper @Inject constructor(
      * Returns a `Boolean` telling whether the user has set the current day as grocery day or not.
      */
     fun isGroceryDay(): Boolean {
-        for (groceryDay in mGroceryDays) {
+        for (groceryDay in groceryDays) {
             val groceryDayInt = getOrdinalOfWeekday(groceryDay)
             if (groceryDayInt == today) return true
         }
@@ -50,7 +50,7 @@ class DateTimeHelper @Inject constructor(
 
     fun getTimeUntilNextGroceryDay(): Int {
         var daysUntilClosestGroceryDay = NO_GROCERY_DAYS_SET
-        for (groceryDay in mGroceryDays) {
+        for (groceryDay in groceryDays) {
             val groceryDayOrdinal = getNextGroceryDayOrdinal(groceryDay)
             val daysFromTodayToGroceryDay = groceryDayOrdinal - today
             if (daysFromTodayToGroceryDay < daysUntilClosestGroceryDay) {
@@ -66,7 +66,7 @@ class DateTimeHelper @Inject constructor(
     }
 
     private fun getOrdinalOfWeekday(weekday: String): Int {
-        val daysOfWeek = mContext.resources.getStringArray(R.array.daysofweek_datehelper)
+        val daysOfWeek = context.resources.getStringArray(R.array.daysofweek_datehelper)
 
         // Days of the week start from Sunday and are represented by integers 1..7
         return when (weekday) {
@@ -83,8 +83,9 @@ class DateTimeHelper @Inject constructor(
 
     private fun weekdayPassed(weekdayOrdinal: Int): Boolean = weekdayOrdinal < today
 
-    fun getCurrentDate(): String {
-        val defaultLocaleFormat = SimpleDateFormat.getDateInstance()
-        return defaultLocaleFormat.format(mCalendar.time)
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        if (key == SharedPreferencesHelper.GROCERY_DAYS_KEY) {
+            groceryDays = sharedPrefsHelper.getGroceryDays()
+        }
     }
 }

@@ -137,4 +137,14 @@ class GroceryListFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.main, menu)
     }
+
+    override fun onPause() {
+        //Countdown values are incremented on grocery days. Calling updateItemCountdownValues()
+        //also reset the list of items that have been incremented. Thus, if this was called on
+        // grocery days, the countdown values would get incremented when navigating from grocery
+        // list fragment. On non-grocery days GroceryListExtractor does nothing, so calling this
+        // is safe.
+        if (!dateTimeHelper.isGroceryDay()) viewModel.updateItemCountdownValues()
+        super.onPause()
+    }
 }
