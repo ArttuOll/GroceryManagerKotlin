@@ -3,6 +3,11 @@ package com.bsuuv.grocerymanager.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.bsuuv.grocerymanager.R
 import com.bsuuv.grocerymanager.data.viewmodel.GroceryItemViewModel
 import com.bsuuv.grocerymanager.notifications.GroceryDayNotifier
@@ -31,6 +36,7 @@ class MainActivity : AppCompatActivity() {
 
     @Inject lateinit var dateTimeHelper: DateTimeHelper
     @Inject lateinit var sharedPrefsHelper: SharedPreferencesHelper
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +49,12 @@ class MainActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         title = resources.getString(R.string.app_name)
+        val navHostFragment = supportFragmentManager.findFragmentById(
+            R.id.nav_host_fragment
+        ) as NavHostFragment
+        val navController = navHostFragment.navController
+        appBarConfiguration = AppBarConfiguration(navController.graph)
+        setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
     private fun scheduleNotification() {
@@ -51,5 +63,10 @@ class MainActivity : AppCompatActivity() {
         if (timeUntilGroceryDay < DateTimeHelper.NO_GROCERY_DAYS_SET) {
             notifier.scheduleGroceryDayNotification()
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment)
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 }
