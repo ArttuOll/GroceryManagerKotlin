@@ -2,7 +2,6 @@ package com.bsuuv.grocerymanager.ui
 
 import android.os.Bundle
 import android.view.*
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -50,16 +49,11 @@ class GroceryListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         navController = Navigation.findNavController(view)
-        adapter = initAdapter(view)
+        adapter = GroceryListAdapter(requireContext(), navController)
         recyclerView = view.findViewById(R.id.main_recyclerview)
         recyclerViewPlaceholder = view.findViewById(R.id.main_recyclerview_placeholder)
         setUpRecyclerView()
         super.onViewCreated(view, savedInstanceState)
-    }
-
-    private fun initAdapter(view: View): GroceryListAdapter {
-        val isWideScreen = view.findViewById<LinearLayout>(R.id.container_food_item_detail) != null
-        return GroceryListAdapter(requireContext(), isWideScreen)
     }
 
     private fun setUpRecyclerView() {
@@ -139,11 +133,13 @@ class GroceryListFragment : Fragment() {
     }
 
     override fun onPause() {
-        //Countdown values are incremented on grocery days. Calling updateItemCountdownValues()
-        //also reset the list of items that have been incremented. Thus, if this was called on
-        // grocery days, the countdown values would get incremented when navigating from grocery
-        // list fragment. On non-grocery days GroceryListExtractor does nothing, so calling this
-        // is safe.
+        /*
+         Countdown values are incremented on grocery days. Calling updateItemCountdownValues()
+         also reset the list of items that have been incremented. Thus, if this was called on
+         grocery days, the countdown values would get incremented when navigating from grocery
+         list fragment. On non-grocery days GroceryListExtractor does nothing, so calling this
+         is safe
+         */
         if (!dateTimeHelper.isGroceryDay()) viewModel.updateItemCountdownValues()
         super.onPause()
     }
