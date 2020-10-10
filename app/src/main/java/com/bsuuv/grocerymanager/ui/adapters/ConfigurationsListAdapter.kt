@@ -11,7 +11,6 @@ import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bsuuv.grocerymanager.R
 import com.bsuuv.grocerymanager.data.model.FoodItem
-import com.bsuuv.grocerymanager.ui.ConfigurationsActivity
 import com.bsuuv.grocerymanager.ui.adapters.ConfigurationsListAdapter.ConfigsViewHolder
 import com.bsuuv.grocerymanager.ui.util.ImageViewPopulater
 import com.bsuuv.grocerymanager.ui.util.Intention

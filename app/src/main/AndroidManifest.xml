@@ -37,15 +37,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.NewFoodItemActivity"
-            android:parentActivityName=".ui.ConfigurationsActivity" />
-        <activity
-            android:name=".ui.ConfigurationsActivity"
-            android:parentActivityName=".ui.MainActivity" />
-        <activity
-            android:name=".ui.GroceryItemDetailActivity"
-            android:parentActivityName=".ui.MainActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

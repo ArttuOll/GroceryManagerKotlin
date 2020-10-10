@@ -1,7 +1,6 @@
 package com.bsuuv.grocerymanager.ui.util
 
 import com.bsuuv.grocerymanager.R
-import com.bsuuv.grocerymanager.ui.NewFoodItemActivity
 import com.bsuuv.grocerymanager.util.FrequencyQuotientCalc
 import com.bsuuv.grocerymanager.util.SharedPreferencesHelper
 import com.bsuuv.grocerymanager.util.TimeFrame
