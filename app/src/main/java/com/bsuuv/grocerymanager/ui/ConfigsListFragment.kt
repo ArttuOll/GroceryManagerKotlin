@@ -44,7 +44,7 @@ class ConfigsListFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         viewModel = ViewModelProvider(this).get(FoodItemViewModel::class.java)
-        return inflater.inflate(R.layout.activity_configurations, container, false)
+        return inflater.inflate(R.layout.fragment_configurations, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
