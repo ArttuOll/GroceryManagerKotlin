@@ -23,27 +23,26 @@ import kotlinx.coroutines.runBlocking
 class GroceryItemViewModel(application: Application) : AndroidViewModel
     (application) {
 
-    private val mRepository: FoodItemRepository
-    private val mGroceryListExtractor: GroceryListExtractor
-    private val mDateTimeHelper: DateTimeHelper
-    private val mGroceryListState: GroceryListState
+    private val repository: FoodItemRepository
+    private val groceryListExtractor: GroceryListExtractor
+    private val dateTimeHelper: DateTimeHelper
+    private val groceryListState: GroceryListState
 
     init {
         val sharedPrefsHelper = SharedPreferencesHelper(application)
-        mRepository = FoodItemRepository(application)
-        mGroceryListState = GroceryListState(sharedPrefsHelper)
-        mGroceryListExtractor = GroceryListExtractor(mGroceryListState, sharedPrefsHelper)
-        mDateTimeHelper = DateTimeHelper(application, sharedPrefsHelper)
-        if (!mDateTimeHelper.isGroceryDay()) updateDatabase()
+        repository = FoodItemRepository(application)
+        groceryListState = GroceryListState(sharedPrefsHelper)
+        groceryListExtractor = GroceryListExtractor(groceryListState, sharedPrefsHelper)
+        dateTimeHelper = DateTimeHelper(application, sharedPrefsHelper)
     }
 
-    private fun updateDatabase() {
-        for (foodItem in mGroceryListState.incrementedItems) {
+    fun updateItemCountdownValues() {
+        for (foodItem in groceryListState.incrementedItems) {
             CoroutineScope(IO).launch {
-                mRepository.update(foodItem)
+                repository.update(foodItem)
             }
         }
-        mGroceryListState.reset()
+        groceryListState.reset()
     }
 
     /**
@@ -51,24 +50,24 @@ class GroceryItemViewModel(application: Application) : AndroidViewModel
      * list.
      */
     fun getGroceryList(): LiveData<MutableList<FoodItemEntity>> {
-        val foodItems = liveData { emitSource(mRepository.getFoodItems()) }
+        val foodItems = liveData { emitSource(repository.getFoodItems()) }
         return Transformations.map(
             foodItems,
-            mGroceryListExtractor::extractGroceryListFromFoodItems
+            groceryListExtractor::extractGroceryListFromFoodItems
         )
     }
 
     fun get(id: Int): FoodItemEntity = runBlocking {
-        mRepository.getFoodItem(id)
+        repository.getFoodItem(id)
     }
 
     /**
      * Deletes the given food-item from the grocery list, but not from the database.
      */
-    fun deleteFromGroceryList(foodItem: FoodItemEntity) = mGroceryListState.remove(foodItem)
+    fun deleteFromGroceryList(foodItem: FoodItemEntity) = groceryListState.remove(foodItem)
 
     override fun onCleared() {
         super.onCleared()
-        if (mDateTimeHelper.isGroceryDay()) mGroceryListState.save()
+        if (dateTimeHelper.isGroceryDay()) groceryListState.save()
     }
 }

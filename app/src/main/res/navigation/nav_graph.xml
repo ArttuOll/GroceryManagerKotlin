@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/groceryListFragment">
+
+    <fragment
+        android:id="@+id/groceryListFragment"
+        android:name="com.bsuuv.grocerymanager.ui.GroceryListFragment"
+        android:label="GroceryListFragment"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_groceryListFragment_to_configsListFragment"
+            app:destination="@id/configsListFragment" />
+        <action
+            android:id="@+id/action_groceryListFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_groceryListFragment_to_groceryItemDetailFragment"
+            app:destination="@id/groceryItemDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/configsListFragment"
+        android:name="com.bsuuv.grocerymanager.ui.ConfigsListFragment"
+        android:label="ConfigsListFragment"
+        tools:layout="@layout/fragment_configurations">
+        <action
+            android:id="@+id/action_configsListFragment_to_newFoodItemFragment"
+            app:destination="@id/newFoodItemFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/newFoodItemFragment"
+        android:name="com.bsuuv.grocerymanager.ui.NewFoodItemFragment"
+        android:label="NewFoodItemFragment"
+        tools:layout="@layout/fragment_new_fooditem">
+        <argument
+            android:name="intention"
+            app:argType="com.bsuuv.grocerymanager.ui.util.Intention" />
+        <argument
+            android:name="editedItemId"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.bsuuv.grocerymanager.ui.SettingsFragment"
+        android:label="SettingsFragment"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/groceryItemDetailFragment"
+        android:name="com.bsuuv.grocerymanager.ui.GroceryItemDetailFragment"
+        android:label="GroceryItemDetailFragment" />
+</navigation>

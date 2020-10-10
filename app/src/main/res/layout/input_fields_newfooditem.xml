@@ -11,7 +11,6 @@
         style="@style/activity_imageviews"
         android:layout_marginVertical="8dp"
         android:contentDescription="@string/food_image_content_description"
-        android:onClick="onImageClick"
         android:scaleType="centerInside"
         android:src="@drawable/ic_camera"
         android:transitionName="@string/transition_detail" />

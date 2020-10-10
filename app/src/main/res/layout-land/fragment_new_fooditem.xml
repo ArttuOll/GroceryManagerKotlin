@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.NewFoodItemActivity">
+    android:layout_height="match_parent">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_new_fooditem"
         style="@style/fabs"
         android:layout_gravity="bottom|end"
-        android:onClick="onFabClick"
         android:src="@drawable/ic_check" />
 
-    <include
-        layout="@layout/input_fields_newfooditem"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageView_new_fooditem" />
+    <include layout="@layout/input_fields_newfooditem" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

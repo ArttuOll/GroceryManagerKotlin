@@ -16,22 +16,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 /**
- * Fragment for displaying properties of a grocery item. Used by [GroceryItemDetailActivity]
- * and [MainActivity] (on wide-screen devices).
+ * Fragment for viewing the details of a grocery-item.
  */
 @AndroidEntryPoint
 class GroceryItemDetailFragment : Fragment() {
 
     companion object {
         const val FOOD_ITEM_ID_KEY = "foodItemId"
-
-        fun newInstance(foodItemId: Int): GroceryItemDetailFragment {
-            val fragment = GroceryItemDetailFragment()
-            val args = Bundle()
-            args.putInt(FOOD_ITEM_ID_KEY, foodItemId)
-            fragment.arguments = args
-            return fragment
-        }
     }
 
     @Inject lateinit var mPluralsProvider: PluralsProvider
@@ -63,7 +54,7 @@ class GroceryItemDetailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.food_item_detail, container, false)
+        val rootView = inflater.inflate(R.layout.fragment_item_detail, container, false)
         setUpImageViews(rootView)
         setUpTextViews(rootView)
         return rootView

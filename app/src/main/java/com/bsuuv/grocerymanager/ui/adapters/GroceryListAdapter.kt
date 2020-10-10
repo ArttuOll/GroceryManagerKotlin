@@ -1,34 +1,29 @@
 package com.bsuuv.grocerymanager.ui.adapters
 
-import android.app.Activity
-import android.app.ActivityOptions
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.fragment.app.FragmentActivity
+import androidx.core.os.bundleOf
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bsuuv.grocerymanager.R
 import com.bsuuv.grocerymanager.data.model.FoodItem
-import com.bsuuv.grocerymanager.ui.GroceryItemDetailActivity
 import com.bsuuv.grocerymanager.ui.GroceryItemDetailFragment
-import com.bsuuv.grocerymanager.ui.MainActivity
 import com.bsuuv.grocerymanager.ui.adapters.GroceryListAdapter.GroceryViewHolder
 import com.bsuuv.grocerymanager.ui.util.ImageViewPopulater
 import com.bsuuv.grocerymanager.ui.util.PluralsProvider
 
 /**
  * Adapter that feeds grocery items in the form of [GroceryViewHolder]s to the
- * `RecyclerView` in [MainActivity].
- *
- * @see GroceryViewHolder
- * @see MainActivity
+ * `RecyclerView` in [GroceryListFragment].
  */
-class GroceryListAdapter(private val mContext: Context, private val mIsWideScreen: Boolean) :
-    Adapter() {
+class GroceryListAdapter(
+    private val mContext: Context,
+    private val navController: NavController
+) : Adapter() {
 
     private val mInflater: LayoutInflater = LayoutInflater.from(mContext)
 
@@ -52,9 +47,7 @@ class GroceryListAdapter(private val mContext: Context, private val mIsWideScree
 
     /**
      * A `ViewHolder` containing one grocery item to be displayed in the
-     * `RecyclerView` in [MainActivity].
-     *
-     * @see MainActivity
+     * `RecyclerView` in [GroceryListFragment].
      */
     inner class GroceryViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView), View.OnClickListener {
@@ -82,45 +75,24 @@ class GroceryListAdapter(private val mContext: Context, private val mIsWideScree
         }
 
         /**
-         * Called when an item in the `RecyclerView` in [MainActivity] is clicked.
+         * Called when an item in the `RecyclerView` in [GroceryListFragment] is clicked.
          * Checks if the device screen is wide (>900 dp) and based on that launches
-         * [GroceryItemDetailFragment] either in [MainActivity] or
-         * [GroceryItemDetailActivity].
-         *
-         * @see MainActivity
-         * @see GroceryItemDetailFragment
-         * @see GroceryItemDetailActivity
+         * [GroceryItemDetailFragment] in [GroceryListFragment].
          */
+        //TODO: migrate to nav component
         override fun onClick(itemView: View?) {
             val currentFoodItem = mItems[adapterPosition]
-            if (mIsWideScreen) showInMainActivity(currentFoodItem)
-            else showInFoodItemDetailActivity(currentFoodItem)
-        }
-
-        private fun showInMainActivity(currentFoodItem: FoodItem) {
-            val fragment = GroceryItemDetailFragment.newInstance(currentFoodItem.id)
-            (mContext as FragmentActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.container_food_item_detail, fragment)
-                .addToBackStack("")
-                .commit()
+            showInFoodItemDetailActivity(currentFoodItem)
         }
 
         private fun showInFoodItemDetailActivity(currentFoodItem: FoodItem) {
-            val toFoodItemDetail = createIntentToFoodItemDetail(currentFoodItem)
-            val bundle = ActivityOptions.makeSceneTransitionAnimation(
-                (mContext as Activity),
-                mImage,
-                mImage.transitionName
-            ).toBundle()
-            mContext.startActivity(toFoodItemDetail, bundle)
+            val foodItemIdKey = GroceryItemDetailFragment.FOOD_ITEM_ID_KEY
+            val args = bundleOf(foodItemIdKey to currentFoodItem.id)
+            navController.navigate(
+                R.id.action_groceryListFragment_to_groceryItemDetailFragment,
+                args
+            )
         }
-
-        private fun createIntentToFoodItemDetail(foodItem: FoodItem): Intent {
-            val toFoodItemDetail = Intent(mContext, GroceryItemDetailActivity::class.java)
-            toFoodItemDetail.putExtra(GroceryItemDetailFragment.FOOD_ITEM_ID_KEY, foodItem.id)
-            return toFoodItemDetail
-        }
-
     }
 
 }

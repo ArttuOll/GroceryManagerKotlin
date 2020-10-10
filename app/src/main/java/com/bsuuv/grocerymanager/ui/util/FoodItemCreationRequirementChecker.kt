@@ -1,7 +1,6 @@
 package com.bsuuv.grocerymanager.ui.util
 
 import com.bsuuv.grocerymanager.R
-import com.bsuuv.grocerymanager.ui.NewFoodItemActivity
 import com.bsuuv.grocerymanager.util.FrequencyQuotientCalc
 import com.bsuuv.grocerymanager.util.SharedPreferencesHelper
 import com.bsuuv.grocerymanager.util.TimeFrame
@@ -19,6 +18,8 @@ class FoodItemCreationRequirementChecker(private val mSharedPrefsHelper: SharedP
     }
 
     /**
+     * Returns a boolean telling if all of the requirements were met.
+     *
      * The requirements are as follows:
      *
      *   * Label must not be empty
@@ -26,12 +27,12 @@ class FoodItemCreationRequirementChecker(private val mSharedPrefsHelper: SharedP
      *   * TimeFrame must not equal `TimeFrame.NULL`
      *   * Frequency must be greater than zero
      *   * Frequency quotient must not be more than 1.0 [FrequencyQuotientCalc]).
-     * @return Boolean telling if all of the requirements were met.
      * @throws RequirementNotMetException An exception with message telling which of the requirements
      *                                    was not met.
      */
     fun requirementsMet(
-        textFieldValues: MutableList<String>, amount: Int, timeFrame: TimeFrame, frequency: Int,
+        textFieldValues: MutableMap<String, String>, amount: Int, timeFrame: TimeFrame, frequency:
+        Int,
         frequencyQuotient: Double
     ): Boolean {
         return groceryDaysSet() &&
@@ -46,7 +47,7 @@ class FoodItemCreationRequirementChecker(private val mSharedPrefsHelper: SharedP
     }
 
     private fun inputFieldsValid(
-        textFieldValues: MutableList<String>,
+        textFieldValues: MutableMap<String, String>,
         amount: Int,
         timeFrame: TimeFrame,
         frequency: Int
@@ -57,9 +58,10 @@ class FoodItemCreationRequirementChecker(private val mSharedPrefsHelper: SharedP
                 frequencyFieldSet(frequency)
     }
 
-    private fun labelFieldValid(textFieldValues: MutableList<String>): Boolean {
-        val label = textFieldValues[0]
-        if (label.isNotEmpty()) return true
+    private fun labelFieldValid(textFieldValues: MutableMap<String, String>): Boolean {
+        val label = textFieldValues["label"]
+        val labelNotEmpty = label?.isNotEmpty() ?: false
+        if (labelNotEmpty) return true
         else throw RequirementNotMetException(R.string.snackbar_label_empty)
     }
 

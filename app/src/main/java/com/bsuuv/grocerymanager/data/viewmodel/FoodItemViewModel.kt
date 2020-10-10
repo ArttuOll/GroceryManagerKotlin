@@ -6,13 +6,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.bsuuv.grocerymanager.data.FoodItemRepository
 import com.bsuuv.grocerymanager.data.db.entity.FoodItemEntity
-import com.bsuuv.grocerymanager.ui.ConfigurationsActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 /**
- * A `ViewModel` that contains all the data and business logic calls required by [ConfigurationsActivity].
+ * A `ViewModel` that contains all the data and business logic calls required by
+ * [ConfigurationsFragment].
  */
 class FoodItemViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -20,6 +21,10 @@ class FoodItemViewModel(application: Application) : AndroidViewModel(application
 
     fun getFoodItems(): LiveData<MutableList<FoodItemEntity>> =
         liveData { emitSource(mRepository.getFoodItems()) }
+
+    fun get(id: Int): FoodItemEntity = runBlocking {
+        mRepository.getFoodItem(id)
+    }
 
     fun insert(foodItem: FoodItemEntity) = CoroutineScope(IO).launch {
         mRepository.insert(foodItem)
