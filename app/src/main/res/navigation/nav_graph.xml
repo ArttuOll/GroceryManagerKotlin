@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_groceryListFragment_to_newFoodItemFragment"
             app:destination="@id/newFoodItemFragment" />
+        <action
+            android:id="@+id/action_groceryListFragment_to_newOnetimeFoodItemFragment"
+            app:destination="@id/newOnetimeFoodItemFragment" />
     </fragment>
 
     <fragment
@@ -45,9 +48,6 @@
         <argument
             android:name="editedItemId"
             app:argType="integer" />
-        <action
-            android:id="@+id/action_newFoodItemFragment_to_groceryListFragment"
-            app:destination="@id/groceryListFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -58,4 +58,8 @@
         android:id="@+id/groceryItemDetailFragment"
         android:name="com.bsuuv.grocerymanager.ui.GroceryItemDetailFragment"
         android:label="GroceryItemDetailFragment" />
+    <fragment
+        android:id="@+id/newOnetimeFoodItemFragment"
+        android:name="com.bsuuv.grocerymanager.ui.NewOnetimeFoodItemFragment"
+        android:label="NewOnetimeFoodItemFragment" />
 </navigation>

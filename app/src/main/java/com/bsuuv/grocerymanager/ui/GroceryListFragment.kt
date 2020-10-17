@@ -3,7 +3,6 @@ package com.bsuuv.grocerymanager.ui
 import android.os.Bundle
 import android.view.*
 import android.widget.TextView
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -15,7 +14,6 @@ import com.bsuuv.grocerymanager.R
 import com.bsuuv.grocerymanager.data.db.entity.FoodItemEntity
 import com.bsuuv.grocerymanager.data.viewmodel.GroceryItemViewModel
 import com.bsuuv.grocerymanager.ui.adapters.GroceryListAdapter
-import com.bsuuv.grocerymanager.ui.util.Intention
 import com.bsuuv.grocerymanager.ui.util.RecyclerViewVisibilityToggle
 import com.bsuuv.grocerymanager.util.DateTimeHelper
 import com.bsuuv.grocerymanager.util.SharedPreferencesHelper
@@ -64,8 +62,7 @@ class GroceryListFragment : Fragment() {
     private fun setUpFab(view: View) {
         this.fab = view.findViewById(R.id.grocerylist_fab)
         fab.setOnClickListener {
-            val args = bundleOf("intention" to Intention.CREATE_ONE_TIME)
-            navController.navigate(R.id.action_groceryListFragment_to_newFoodItemFragment, args)
+            navController.navigate(R.id.action_groceryListFragment_to_newOnetimeFoodItemFragment)
         }
     }
 

@@ -7,6 +7,7 @@
         android:id="@+id/fab_new_fooditem"
         style="@style/fabs"
         android:layout_gravity="bottom|end"
+        android:contentDescription="@string/content_desc_fab_new_food_item"
         android:src="@drawable/ic_check" />
 
     <include layout="@layout/input_fields_newfooditem" />
