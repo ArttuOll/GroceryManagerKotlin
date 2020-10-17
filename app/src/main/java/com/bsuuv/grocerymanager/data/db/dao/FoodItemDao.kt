@@ -21,6 +21,9 @@ interface FoodItemDao {
     @Delete
     suspend fun delete(foodItem: FoodItemEntity)
 
+    @Query("DELETE FROM FoodItemEntity WHERE onetime_item = 1")
+    suspend fun deleteOneTimeItems()
+
     @Query("SELECT * FROM FoodItemEntity ORDER BY label ASC")
     fun getAll(): LiveData<MutableList<FoodItemEntity>>
 

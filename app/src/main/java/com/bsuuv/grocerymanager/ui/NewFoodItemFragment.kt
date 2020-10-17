@@ -65,7 +65,9 @@ class NewFoodItemFragment : Fragment(), View.OnClickListener {
     private lateinit var imageView: ImageView
     private lateinit var unitDropdown: AutoCompleteTextView
     private lateinit var navController: NavController
-    private lateinit var viewModel: FoodItemViewModel
+
+    // TODO: Voitaisiinko nämä injektoida?
+    private lateinit var foodItemViewModel: FoodItemViewModel
     private lateinit var intention: Intention
     private lateinit var editedItem: FoodItemEntity
     private var imageUri = ""
@@ -76,7 +78,7 @@ class NewFoodItemFragment : Fragment(), View.OnClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = ViewModelProvider(this).get(FoodItemViewModel::class.java)
+        foodItemViewModel = ViewModelProvider(this).get(FoodItemViewModel::class.java)
         if (savedInstanceState != null) recoverFoodImage(savedInstanceState)
         return inflater.inflate(R.layout.fragment_new_fooditem, container, false)
     }
@@ -98,7 +100,7 @@ class NewFoodItemFragment : Fragment(), View.OnClickListener {
             intention = serializedIntention as Intention
             if (intention == Intention.EDIT) {
                 val editedItemId = requireArguments().getInt("editedItemId")
-                editedItem = viewModel.get(editedItemId)
+                editedItem = foodItemViewModel.get(editedItemId)
                 populateInputFields()
                 populateImageView()
                 setToggleButtonStates()
@@ -285,24 +287,37 @@ class NewFoodItemFragment : Fragment(), View.OnClickListener {
                 frequencyQuotient
             )
         ) {
-            when (intention) {
+            when (this.intention) {
                 Intention.CREATE -> {
-                    createFoodItemWithId(
+                    val foodItem = createFoodItemWithId(
                         Keys.ID_NOT_SET,
                         textFieldValues,
                         amount,
                         timeFrame,
                         frequency
                     )
+                    foodItemViewModel.insert(foodItem)
                 }
+
+                Intention.CREATE_ONE_TIME -> {
+                    val foodItem = createOneTimeFoodItemWithId(
+                        textFieldValues,
+                        amount,
+                        timeFrame,
+                        frequency
+                    )
+                    foodItemViewModel.insert(foodItem)
+                }
+
                 Intention.EDIT -> {
-                    createFoodItemWithId(
+                    val foodItem = createFoodItemWithId(
                         editedItem.id,
                         textFieldValues,
                         amount,
                         timeFrame,
                         frequency
                     )
+                    foodItemViewModel.insert(foodItem)
                 }
             }
             activity?.onBackPressed()
@@ -315,12 +330,24 @@ class NewFoodItemFragment : Fragment(), View.OnClickListener {
         amount: Int,
         timeFrame: TimeFrame,
         frequency: Int,
-    ) {
-        val newItem = FoodItemEntity(
+    ): FoodItemEntity {
+        return FoodItemEntity(
             id, imageUri, textFieldValues["label"]!!, textFieldValues["brand"]!!,
             textFieldValues["info"]!!, amount, textFieldValues["unit"]!!, timeFrame, frequency, 0.0
         )
-        viewModel.insert(newItem)
+    }
+
+    private fun createOneTimeFoodItemWithId(
+        textFieldValues: MutableMap<String, String>,
+        amount: Int,
+        timeFrame: TimeFrame,
+        frequency: Int,
+    ): FoodItemEntity {
+        return FoodItemEntity(
+            Keys.ID_NOT_SET, imageUri, textFieldValues["label"]!!, textFieldValues["brand"]!!,
+            textFieldValues["info"]!!, amount, textFieldValues["unit"]!!, timeFrame, frequency, 1.0,
+            onetimeItem = true
+        )
     }
 
     private fun handleImageClick() {

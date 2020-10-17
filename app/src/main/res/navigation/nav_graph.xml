@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_groceryListFragment_to_groceryItemDetailFragment"
             app:destination="@id/groceryItemDetailFragment" />
+        <action
+            android:id="@+id/action_groceryListFragment_to_newFoodItemFragment"
+            app:destination="@id/newFoodItemFragment" />
     </fragment>
 
     <fragment
@@ -42,6 +45,9 @@
         <argument
             android:name="editedItemId"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_newFoodItemFragment_to_groceryListFragment"
+            app:destination="@id/groceryListFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"

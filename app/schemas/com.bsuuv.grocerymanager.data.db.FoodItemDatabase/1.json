@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "b3fc8a55f3b6ab4a5f12fc7f267c2935",
+    "identityHash": "07136db6443a7ebb88465023c3475605",
     "entities": [
       {
         "tableName": "FoodItemEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `image_uri` TEXT NOT NULL, `label` TEXT NOT NULL, `brand` TEXT NOT NULL, `info` TEXT NOT NULL, `amount` INTEGER NOT NULL, `unit` TEXT NOT NULL, `time_frame` INTEGER NOT NULL, `frequency` INTEGER NOT NULL, `countdown_value` REAL NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `image_uri` TEXT NOT NULL, `label` TEXT NOT NULL, `brand` TEXT NOT NULL, `info` TEXT NOT NULL, `amount` INTEGER NOT NULL, `unit` TEXT NOT NULL, `time_frame` INTEGER NOT NULL, `frequency` INTEGER NOT NULL, `countdown_value` REAL NOT NULL, `onetime_item` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -67,6 +67,12 @@
             "columnName": "countdown_value",
             "affinity": "REAL",
             "notNull": true
+          },
+          {
+            "fieldPath": "onetimeItem",
+            "columnName": "onetime_item",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -82,7 +88,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b3fc8a55f3b6ab4a5f12fc7f267c2935')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '07136db6443a7ebb88465023c3475605')"
     ]
   }
 }

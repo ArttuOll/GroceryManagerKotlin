@@ -12,7 +12,7 @@ import com.bsuuv.grocerymanager.data.db.entity.TimeFrameConverter
 /**
  * A `Room` database definition for saving food-items.
  */
-@Database(entities = [FoodItemEntity::class], version = 1)
+@Database(entities = [FoodItemEntity::class], version = 2)
 @TypeConverters(TimeFrameConverter::class)
 abstract class FoodItemDatabase : RoomDatabase() {
 
@@ -34,7 +34,7 @@ abstract class FoodItemDatabase : RoomDatabase() {
                         context.applicationContext,
                         FoodItemDatabase::class.java,
                         "fooditem_database"
-                    ).build()
+                    ).fallbackToDestructiveMigration().build()
                     INSTANCE = instance
                 }
                 return instance

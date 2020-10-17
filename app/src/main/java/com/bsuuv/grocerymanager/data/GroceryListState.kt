@@ -10,7 +10,7 @@ import com.bsuuv.grocerymanager.util.SharedPreferencesHelper
  * countdown values, see [GroceryListExtractor]) were incremented, and food-items that the user
  * has removed from the grocery list.
  */
-class GroceryListState(private val mSharedPrefsHelper: SharedPreferencesHelper) {
+class GroceryListState(private val sharedPrefsHelper: SharedPreferencesHelper) {
 
     companion object {
         const val INCREMENTED_ITEMS_KEY = "incrementedItems"
@@ -18,12 +18,11 @@ class GroceryListState(private val mSharedPrefsHelper: SharedPreferencesHelper) 
     }
 
     val incrementedItems: MutableList<FoodItemEntity>
-
     internal val removedItems: MutableList<FoodItemEntity>
 
     init {
-        incrementedItems = mSharedPrefsHelper.getList(INCREMENTED_ITEMS_KEY)
-        removedItems = mSharedPrefsHelper.getList(REMOVED_ITEMS_KEY)
+        incrementedItems = sharedPrefsHelper.getList(INCREMENTED_ITEMS_KEY)
+        removedItems = sharedPrefsHelper.getList(REMOVED_ITEMS_KEY)
     }
 
     fun remove(foodItem: FoodItem) = removedItems.add(foodItem as FoodItemEntity)
@@ -37,12 +36,12 @@ class GroceryListState(private val mSharedPrefsHelper: SharedPreferencesHelper) 
     private fun notIncremented(foodItem: FoodItem): Boolean = !incrementedItems.contains(foodItem)
 
     fun save() {
-        mSharedPrefsHelper.saveList(incrementedItems, INCREMENTED_ITEMS_KEY)
-        mSharedPrefsHelper.saveList(removedItems, REMOVED_ITEMS_KEY)
+        sharedPrefsHelper.saveList(incrementedItems, INCREMENTED_ITEMS_KEY)
+        sharedPrefsHelper.saveList(removedItems, REMOVED_ITEMS_KEY)
     }
 
     fun reset() {
-        mSharedPrefsHelper.clearList(INCREMENTED_ITEMS_KEY)
-        mSharedPrefsHelper.clearList(REMOVED_ITEMS_KEY)
+        sharedPrefsHelper.clearList(INCREMENTED_ITEMS_KEY)
+        sharedPrefsHelper.clearList(REMOVED_ITEMS_KEY)
     }
 }
