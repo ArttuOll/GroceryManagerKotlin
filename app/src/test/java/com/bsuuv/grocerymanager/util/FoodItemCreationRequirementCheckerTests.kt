@@ -11,7 +11,7 @@ import org.junit.Test
 class FoodItemCreationRequirementCheckerTests {
 
     private lateinit var mGroceryDays: HashSet<String>
-    private lateinit var mTextFieldValues: MutableList<String>
+    private lateinit var mTextFieldValues: MutableMap<String, String>
     private lateinit var mChecker: FoodItemCreationRequirementChecker
     private var mAmount = 1
     private var mTimeFrame = TimeFrame.WEEK
@@ -23,7 +23,7 @@ class FoodItemCreationRequirementCheckerTests {
     fun init() {
         mChecker = FoodItemCreationRequirementChecker(mSharedPreferencesHelper)
         mGroceryDays = hashSetOf("Monday")
-        mTextFieldValues = mutableListOf("testi")
+        mTextFieldValues = mutableMapOf("label" to "testi")
         every { mSharedPreferencesHelper.getGroceryDays() } returns mGroceryDays
     }
 
@@ -43,7 +43,7 @@ class FoodItemCreationRequirementCheckerTests {
     @Test
     fun emptyLabel() {
         mTextFieldValues.clear()
-        mTextFieldValues.add("")
+        mTextFieldValues["label"] = ""
         try {
             mChecker.requirementsMet(
                 mTextFieldValues,

@@ -54,11 +54,10 @@ class SharedPreferencesHelper @Inject constructor(@ApplicationContext context: C
         editor.apply()
     }
 
-    fun registerOnSharedPreferenceChangeListenter(
-        listenter: SharedPreferences
-        .OnSharedPreferenceChangeListener
+    fun registerOnSharedPreferenceChangeListener(
+        listener: SharedPreferences.OnSharedPreferenceChangeListener
     ) {
-        sharedPreferences.registerOnSharedPreferenceChangeListener(listenter)
+        sharedPreferences.registerOnSharedPreferenceChangeListener(listener)
     }
 
     private inline fun <reified T> Gson.fromJson(json: String?) =

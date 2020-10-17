@@ -12,6 +12,7 @@ import javax.inject.Inject
  */
 class DateTimeHelper @Inject constructor(
     @ApplicationContext private val context: Context,
+    // TODO: Inject!
     private val sharedPrefsHelper: SharedPreferencesHelper
 ) : SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -22,7 +23,7 @@ class DateTimeHelper @Inject constructor(
     init {
         this.calendar = createCalendar()
         this.today = calendar.get(Calendar.DAY_OF_WEEK)
-        this.sharedPrefsHelper.registerOnSharedPreferenceChangeListenter(this)
+        this.sharedPrefsHelper.registerOnSharedPreferenceChangeListener(this)
     }
 
     companion object {

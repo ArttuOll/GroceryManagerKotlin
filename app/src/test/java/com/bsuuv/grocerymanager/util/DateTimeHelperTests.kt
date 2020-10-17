@@ -28,6 +28,7 @@ class DateTimeHelperTests {
         every { mContext.resources } returns mResources
         every { mResources.getStringArray(any()) } returns daysOfWeek
         every { mSharedPrefsHelper.getGroceryDays() } returns mGroceryDays
+        every { mSharedPrefsHelper.registerOnSharedPreferenceChangeListener(any()) } returns Unit
         mDateTimeHelper = DateTimeHelper(mContext, mSharedPrefsHelper)
     }
 
