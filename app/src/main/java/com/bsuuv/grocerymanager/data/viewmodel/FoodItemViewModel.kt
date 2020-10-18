@@ -1,6 +1,7 @@
 package com.bsuuv.grocerymanager.data.viewmodel
 
 import android.app.Application
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
@@ -15,7 +16,8 @@ import kotlinx.coroutines.runBlocking
  * A `ViewModel` that contains all the data and business logic calls required by
  * [ConfigurationsFragment].
  */
-class FoodItemViewModel(application: Application) : AndroidViewModel(application) {
+class FoodItemViewModel @ViewModelInject constructor(application: Application) :
+    AndroidViewModel(application) {
 
     private val mRepository: FoodItemRepository = FoodItemRepository(application)
 

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.bsuuv.grocerymanager.R
 import com.bsuuv.grocerymanager.data.model.FoodItem
 import com.bsuuv.grocerymanager.data.viewmodel.GroceryItemViewModel
@@ -27,6 +28,7 @@ class GroceryItemDetailFragment : Fragment() {
 
     @Inject lateinit var mPluralsProvider: PluralsProvider
     private lateinit var mFoodItem: FoodItem
+    private val viewModel: GroceryItemViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,15 +40,9 @@ class GroceryItemDetailFragment : Fragment() {
     }
 
     private fun getFoodItemFromArgs(): FoodItem {
-        val viewModel = getViewModel()
         val fragmentArgs = requireArguments()
         val id = fragmentArgs.getInt(FOOD_ITEM_ID_KEY)
         return viewModel.get(id)
-    }
-
-    private fun getViewModel(): GroceryItemViewModel {
-        val parentActivityOwner = requireActivity().application
-        return GroceryItemViewModel(parentActivityOwner)
     }
 
     override fun onCreateView(

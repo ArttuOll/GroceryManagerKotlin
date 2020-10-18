@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.bsuuv.grocerymanager.R
@@ -65,12 +65,10 @@ class NewFoodItemFragment : Fragment(), View.OnClickListener {
     private lateinit var imageView: ImageView
     private lateinit var unitDropdown: AutoCompleteTextView
     private lateinit var navController: NavController
-
-    // TODO: Voitaisiinko nämä injektoida?
-    private lateinit var foodItemViewModel: FoodItemViewModel
     private lateinit var intention: Intention
     private lateinit var editedItem: FoodItemEntity
     private var imageUri = ""
+    private val foodItemViewModel: FoodItemViewModel by viewModels()
     @Inject lateinit var sharedPrefsHelper: SharedPreferencesHelper
 
     override fun onCreateView(
@@ -78,7 +76,6 @@ class NewFoodItemFragment : Fragment(), View.OnClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        foodItemViewModel = ViewModelProvider(this).get(FoodItemViewModel::class.java)
         if (savedInstanceState != null) recoverFoodImage(savedInstanceState)
         return inflater.inflate(R.layout.fragment_new_fooditem, container, false)
     }

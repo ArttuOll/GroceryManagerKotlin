@@ -1,6 +1,7 @@
 package com.bsuuv.grocerymanager.data.viewmodel
 
 import android.app.Application
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
@@ -16,15 +17,17 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import javax.inject.Inject
 
 /**
  * A `ViewModel` that contains all the data and business logic calls required by [MainActivity].
  */
-class GroceryItemViewModel(application: Application) : AndroidViewModel(application) {
+class GroceryItemViewModel @ViewModelInject constructor(application: Application) :
+    AndroidViewModel(application) {
 
     private val repository: FoodItemRepository
     private val groceryListExtractor: GroceryListExtractor
-    private val dateTimeHelper: DateTimeHelper
+    @Inject lateinit var dateTimeHelper: DateTimeHelper
     private val groceryListState: GroceryListState
 
     init {
@@ -32,7 +35,6 @@ class GroceryItemViewModel(application: Application) : AndroidViewModel(applicat
         repository = FoodItemRepository(application)
         groceryListState = GroceryListState(sharedPrefsHelper)
         groceryListExtractor = GroceryListExtractor(groceryListState, sharedPrefsHelper)
-        dateTimeHelper = DateTimeHelper(application, sharedPrefsHelper)
     }
 
     fun onGroceryDayPassed() {

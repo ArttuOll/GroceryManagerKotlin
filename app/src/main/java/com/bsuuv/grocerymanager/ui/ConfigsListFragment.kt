@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -33,18 +33,17 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 class ConfigsListFragment : Fragment(), View.OnClickListener {
 
     private lateinit var adapter: ConfigurationsListAdapter
-    private lateinit var viewModel: FoodItemViewModel
     private lateinit var recyclerView: RecyclerView
     private lateinit var fab: FloatingActionButton
     private lateinit var recyclerViewPlaceholder: TextView
     private lateinit var navController: NavController
+    private val viewModel: FoodItemViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = ViewModelProvider(this).get(FoodItemViewModel::class.java)
         return inflater.inflate(R.layout.fragment_configurations, container, false)
     }
 
