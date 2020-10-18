@@ -35,6 +35,7 @@ class ConfigsListFragment : Fragment(), View.OnClickListener {
     private lateinit var adapter: ConfigurationsListAdapter
     private lateinit var viewModel: FoodItemViewModel
     private lateinit var recyclerView: RecyclerView
+    private lateinit var fab: FloatingActionButton
     private lateinit var recyclerViewPlaceholder: TextView
     private lateinit var navController: NavController
 
@@ -59,7 +60,7 @@ class ConfigsListFragment : Fragment(), View.OnClickListener {
         recyclerView = view.findViewById(R.id.config_recyclerview)
         adapter = ConfigurationsListAdapter(requireContext(), navController)
         recyclerViewPlaceholder = view.findViewById(R.id.config_recyclerview_placeholder)
-        val fab = view.findViewById<FloatingActionButton>(R.id.configs_fab)
+        this.fab = view.findViewById(R.id.configs_fab)
         fab.setOnClickListener(this)
     }
 
@@ -85,17 +86,14 @@ class ConfigsListFragment : Fragment(), View.OnClickListener {
 
     private fun setRecyclerViewVisibility(size: Int) {
         when {
-            size > 0 -> RecyclerViewVisibilityToggle.toggle(
+            size > 0 -> RecyclerViewVisibilityToggle.toggleOn(
                 recyclerView,
                 recyclerViewPlaceholder,
-                View.VISIBLE,
-                0
             )
-            else -> RecyclerViewVisibilityToggle.toggle(
+            else -> RecyclerViewVisibilityToggle.toggleOff(
                 recyclerView,
                 recyclerViewPlaceholder,
-                View.GONE,
-                R.string.no_grocery_items
+                R.string.no_grocery_items,
             )
         }
     }

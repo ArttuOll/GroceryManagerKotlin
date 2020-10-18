@@ -17,4 +17,5 @@ interface FoodItem {
     val timeFrame: TimeFrame
     val frequency: Int
     val countdownValue: Double
+    val onetimeItem: Boolean
 }

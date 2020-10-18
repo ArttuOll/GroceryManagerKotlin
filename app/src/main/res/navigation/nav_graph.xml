@@ -19,6 +19,12 @@
         <action
             android:id="@+id/action_groceryListFragment_to_groceryItemDetailFragment"
             app:destination="@id/groceryItemDetailFragment" />
+        <action
+            android:id="@+id/action_groceryListFragment_to_newFoodItemFragment"
+            app:destination="@id/newFoodItemFragment" />
+        <action
+            android:id="@+id/action_groceryListFragment_to_newOnetimeFoodItemFragment"
+            app:destination="@id/newOnetimeFoodItemFragment" />
     </fragment>
 
     <fragment
@@ -52,4 +58,8 @@
         android:id="@+id/groceryItemDetailFragment"
         android:name="com.bsuuv.grocerymanager.ui.GroceryItemDetailFragment"
         android:label="GroceryItemDetailFragment" />
+    <fragment
+        android:id="@+id/newOnetimeFoodItemFragment"
+        android:name="com.bsuuv.grocerymanager.ui.NewOnetimeFoodItemFragment"
+        android:label="NewOnetimeFoodItemFragment" />
 </navigation>

@@ -1,5 +1,5 @@
 package com.bsuuv.grocerymanager.ui.util
 
 enum class Intention {
-    CREATE, EDIT
+    CREATE, CREATE_ONE_TIME, EDIT
 }

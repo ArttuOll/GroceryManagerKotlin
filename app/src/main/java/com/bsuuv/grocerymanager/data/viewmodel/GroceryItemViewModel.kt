@@ -20,8 +20,7 @@ import kotlinx.coroutines.runBlocking
 /**
  * A `ViewModel` that contains all the data and business logic calls required by [MainActivity].
  */
-class GroceryItemViewModel(application: Application) : AndroidViewModel
-    (application) {
+class GroceryItemViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: FoodItemRepository
     private val groceryListExtractor: GroceryListExtractor
@@ -36,13 +35,24 @@ class GroceryItemViewModel(application: Application) : AndroidViewModel
         dateTimeHelper = DateTimeHelper(application, sharedPrefsHelper)
     }
 
-    fun updateItemCountdownValues() {
+    fun onGroceryDayPassed() {
+        updateItemCountdownValues()
+        deleteOneTimeItems()
+        groceryListState.reset()
+    }
+
+    private fun updateItemCountdownValues() {
         for (foodItem in groceryListState.incrementedItems) {
             CoroutineScope(IO).launch {
                 repository.update(foodItem)
             }
         }
-        groceryListState.reset()
+    }
+
+    private fun deleteOneTimeItems() {
+        CoroutineScope(IO).launch {
+            repository.deleteOneTimeItems()
+        }
     }
 
     /**

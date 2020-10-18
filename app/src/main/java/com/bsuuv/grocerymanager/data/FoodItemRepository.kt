@@ -27,9 +27,13 @@ class FoodItemRepository(application: Application) {
 
     suspend fun getFoodItem(id: Int): FoodItemEntity = mDao.get(id)
 
+    // TODO: jos halutaan optimoida, poistot voisi tehdä id:n perusteella, jolloin tätä varten
+    //  esim. GroceryListStaten ei tarvitsisi säilyttää viitteitä kokonaisiin olioihin
     suspend fun insert(foodItem: FoodItemEntity) = mDao.insert(foodItem)
 
     suspend fun delete(foodItem: FoodItemEntity) = mDao.delete(foodItem)
+
+    suspend fun deleteOneTimeItems() = mDao.deleteOneTimeItems()
 
     suspend fun update(foodItem: FoodItemEntity) = mDao.update(foodItem)
 }

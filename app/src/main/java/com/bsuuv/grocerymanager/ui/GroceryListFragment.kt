@@ -17,6 +17,7 @@ import com.bsuuv.grocerymanager.ui.adapters.GroceryListAdapter
 import com.bsuuv.grocerymanager.ui.util.RecyclerViewVisibilityToggle
 import com.bsuuv.grocerymanager.util.DateTimeHelper
 import com.bsuuv.grocerymanager.util.SharedPreferencesHelper
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -28,6 +29,7 @@ class GroceryListFragment : Fragment() {
     private lateinit var recyclerViewPlaceholder: TextView
     private lateinit var viewModel: GroceryItemViewModel
     private lateinit var navController: NavController
+    private lateinit var fab: ExtendedFloatingActionButton
     @Inject lateinit var dateTimeHelper: DateTimeHelper
     @Inject lateinit var sharedPrefsHelper: SharedPreferencesHelper
 
@@ -52,8 +54,16 @@ class GroceryListFragment : Fragment() {
         adapter = GroceryListAdapter(requireContext(), navController)
         recyclerView = view.findViewById(R.id.main_recyclerview)
         recyclerViewPlaceholder = view.findViewById(R.id.main_recyclerview_placeholder)
+        setUpFab(view)
         setUpRecyclerView()
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    private fun setUpFab(view: View) {
+        this.fab = view.findViewById(R.id.grocerylist_fab)
+        fab.setOnClickListener {
+            navController.navigate(R.id.action_groceryListFragment_to_newOnetimeFoodItemFragment)
+        }
     }
 
     private fun setUpRecyclerView() {
@@ -68,27 +78,26 @@ class GroceryListFragment : Fragment() {
         val numberOfGroceryDays = sharedPrefsHelper.getGroceryDays().size
         when {
             numberOfGroceryDays == 0 -> {
-                RecyclerViewVisibilityToggle.toggle(
+                RecyclerViewVisibilityToggle.toggleOff(
                     recyclerView,
                     recyclerViewPlaceholder,
-                    View.GONE,
-                    R.string.main_no_grocery_days_set
+                    R.string.main_no_grocery_days_set,
+                    fab
                 )
             }
             !dateTimeHelper.isGroceryDay() -> {
-                RecyclerViewVisibilityToggle.toggle(
+                RecyclerViewVisibilityToggle.toggleOff(
                     recyclerView,
                     recyclerViewPlaceholder,
-                    View.GONE,
-                    R.string.main_not_grocery_day
+                    R.string.main_not_grocery_day,
+                    fab
                 )
             }
             dateTimeHelper.isGroceryDay() -> {
-                RecyclerViewVisibilityToggle.toggle(
+                RecyclerViewVisibilityToggle.toggleOn(
                     recyclerView,
                     recyclerViewPlaceholder,
-                    View.VISIBLE,
-                    0
+                    fab
                 )
             }
         }
@@ -140,7 +149,11 @@ class GroceryListFragment : Fragment() {
          list fragment. On non-grocery days GroceryListExtractor does nothing, so calling this
          is safe
          */
-        if (!dateTimeHelper.isGroceryDay()) viewModel.updateItemCountdownValues()
+        // TODO: miksi käyttäjä avaisi sovelluksen muuna kuin kauppapäivänä? Voisiko arvojen
+        //  päivittämisen tehdä vaikkapa kun käyttäjä pyyhkäisee ruoan pois kauppalistalta?
+        if (!dateTimeHelper.isGroceryDay()) {
+            viewModel.onGroceryDayPassed()
+        }
         super.onPause()
     }
 }

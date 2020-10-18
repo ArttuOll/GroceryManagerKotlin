@@ -58,6 +58,13 @@ class FoodItemCreationRequirementChecker(private val mSharedPrefsHelper: SharedP
                 frequencyFieldSet(frequency)
     }
 
+    private fun inputFieldsValid(
+        textFieldValues: MutableMap<String, String>,
+        amount: Int,
+    ): Boolean {
+        return labelFieldValid(textFieldValues) && amountFieldValid(amount)
+    }
+
     private fun labelFieldValid(textFieldValues: MutableMap<String, String>): Boolean {
         val label = textFieldValues["label"]
         val labelNotEmpty = label?.isNotEmpty() ?: false
@@ -83,6 +90,11 @@ class FoodItemCreationRequirementChecker(private val mSharedPrefsHelper: SharedP
     private fun frequencyQuotientValid(frequencyQuotient: Double): Boolean {
         if (frequencyQuotient <= MAX_FREQUENCY_QUOTIENT) return true
         else throw RequirementNotMetException(R.string.snackbar_not_enough_grocery_days)
+    }
+
+    fun requirementsMet(textFieldValues: MutableMap<String, String>, amount: Int): Boolean {
+        return groceryDaysSet() && inputFieldsValid(textFieldValues, amount)
+
     }
 
     class RequirementNotMetException(val messageResId: Int) : Exception()

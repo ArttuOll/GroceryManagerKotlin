@@ -61,5 +61,8 @@
     <string name="notification_content_title">It\'s grocery day!</string>
     <string name="notification_content_text">Time to feed your fridge!</string>
     <string name="freq_edittext_default" translatable="false">0</string>
+    <string name="grocerylist_fab_text">One-Time Item</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="content_desc_fab_new_food_item">Done adding item</string>
 
 </resources>
