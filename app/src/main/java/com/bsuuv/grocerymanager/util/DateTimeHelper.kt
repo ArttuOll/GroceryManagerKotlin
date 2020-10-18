@@ -12,7 +12,6 @@ import javax.inject.Inject
  */
 class DateTimeHelper @Inject constructor(
     @ApplicationContext private val context: Context,
-    // TODO: Inject!
     private val sharedPrefsHelper: SharedPreferencesHelper
 ) : SharedPreferences.OnSharedPreferenceChangeListener {
 

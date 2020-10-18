@@ -298,17 +298,6 @@ class NewFoodItemFragment : Fragment(), View.OnClickListener {
                     )
                     foodItemViewModel.insert(foodItem)
                 }
-
-                Intention.CREATE_ONE_TIME -> {
-                    val foodItem = createOneTimeFoodItemWithId(
-                        textFieldValues,
-                        amount,
-                        timeFrame,
-                        frequency
-                    )
-                    foodItemViewModel.insert(foodItem)
-                }
-
                 Intention.EDIT -> {
                     val foodItem = createFoodItemWithId(
                         editedItem.id,
@@ -317,8 +306,9 @@ class NewFoodItemFragment : Fragment(), View.OnClickListener {
                         timeFrame,
                         frequency
                     )
-                    foodItemViewModel.insert(foodItem)
+                    foodItemViewModel.update(foodItem)
                 }
+                else -> return
             }
             activity?.onBackPressed()
         }
@@ -334,19 +324,6 @@ class NewFoodItemFragment : Fragment(), View.OnClickListener {
         return FoodItemEntity(
             id, imageUri, textFieldValues["label"]!!, textFieldValues["brand"]!!,
             textFieldValues["info"]!!, amount, textFieldValues["unit"]!!, timeFrame, frequency, 0.0
-        )
-    }
-
-    private fun createOneTimeFoodItemWithId(
-        textFieldValues: MutableMap<String, String>,
-        amount: Int,
-        timeFrame: TimeFrame,
-        frequency: Int,
-    ): FoodItemEntity {
-        return FoodItemEntity(
-            Keys.ID_NOT_SET, imageUri, textFieldValues["label"]!!, textFieldValues["brand"]!!,
-            textFieldValues["info"]!!, amount, textFieldValues["unit"]!!, timeFrame, frequency, 1.0,
-            onetimeItem = true
         )
     }
 

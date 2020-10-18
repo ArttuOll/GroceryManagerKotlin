@@ -79,13 +79,8 @@ class GroceryListAdapter(
          * Checks if the device screen is wide (>900 dp) and based on that launches
          * [GroceryItemDetailFragment] in [GroceryListFragment].
          */
-        //TODO: migrate to nav component
         override fun onClick(itemView: View?) {
             val currentFoodItem = mItems[adapterPosition]
-            showInFoodItemDetailActivity(currentFoodItem)
-        }
-
-        private fun showInFoodItemDetailActivity(currentFoodItem: FoodItem) {
             val foodItemIdKey = GroceryItemDetailFragment.FOOD_ITEM_ID_KEY
             val args = bundleOf(foodItemIdKey to currentFoodItem.id)
             navController.navigate(
@@ -94,5 +89,4 @@ class GroceryListAdapter(
             )
         }
     }
-
 }
