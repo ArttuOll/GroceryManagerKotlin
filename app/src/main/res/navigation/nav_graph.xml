@@ -8,39 +8,52 @@
     <fragment
         android:id="@+id/groceryListFragment"
         android:name="com.bsuuv.grocerymanager.ui.GroceryListFragment"
-        android:label="GroceryListFragment"
+        android:label="Your groceries"
         tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_groceryListFragment_to_configsListFragment"
-            app:destination="@id/configsListFragment" />
+            app:destination="@id/configsListFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_enter_anim"
+            app:popExitAnim="@anim/nav_default_exit_anim" />
         <action
             android:id="@+id/action_groceryListFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/action_groceryListFragment_to_groceryItemDetailFragment"
             app:destination="@id/groceryItemDetailFragment" />
         <action
-            android:id="@+id/action_groceryListFragment_to_newFoodItemFragment"
-            app:destination="@id/newFoodItemFragment" />
-        <action
             android:id="@+id/action_groceryListFragment_to_newOnetimeFoodItemFragment"
-            app:destination="@id/newOnetimeFoodItemFragment" />
+            app:destination="@id/newOnetimeFoodItemFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
 
     <fragment
         android:id="@+id/configsListFragment"
         android:name="com.bsuuv.grocerymanager.ui.ConfigsListFragment"
-        android:label="ConfigsListFragment"
+        android:label="Configure Items"
         tools:layout="@layout/fragment_configurations">
         <action
             android:id="@+id/action_configsListFragment_to_newFoodItemFragment"
-            app:destination="@id/newFoodItemFragment" />
+            app:destination="@id/newFoodItemFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
 
     <fragment
         android:id="@+id/newFoodItemFragment"
         android:name="com.bsuuv.grocerymanager.ui.NewFoodItemFragment"
-        android:label="NewFoodItemFragment"
+        android:label="New Food-Item"
         tools:layout="@layout/fragment_new_fooditem">
         <argument
             android:name="intention"
@@ -57,9 +70,16 @@
     <fragment
         android:id="@+id/groceryItemDetailFragment"
         android:name="com.bsuuv.grocerymanager.ui.GroceryItemDetailFragment"
-        android:label="GroceryItemDetailFragment" />
+        android:label="Grocery Item Details">
+        <argument
+            android:name="item_id"
+            app:argType="integer" />
+        <argument
+            android:name="image_uri"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/newOnetimeFoodItemFragment"
         android:name="com.bsuuv.grocerymanager.ui.NewOnetimeFoodItemFragment"
-        android:label="NewOnetimeFoodItemFragment" />
+        android:label="New One-Time Food-Item" />
 </navigation>

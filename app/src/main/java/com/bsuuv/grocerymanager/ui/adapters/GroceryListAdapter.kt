@@ -5,13 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.os.bundleOf
-import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bsuuv.grocerymanager.R
 import com.bsuuv.grocerymanager.data.model.FoodItem
-import com.bsuuv.grocerymanager.ui.GroceryItemDetailFragment
 import com.bsuuv.grocerymanager.ui.adapters.GroceryListAdapter.GroceryViewHolder
 import com.bsuuv.grocerymanager.ui.util.ImageViewPopulater
 import com.bsuuv.grocerymanager.ui.util.PluralsProvider
@@ -20,18 +18,15 @@ import com.bsuuv.grocerymanager.ui.util.PluralsProvider
  * Adapter that feeds grocery items in the form of [GroceryViewHolder]s to the
  * `RecyclerView` in [GroceryListFragment].
  */
-class GroceryListAdapter(
-    private val mContext: Context,
-    private val navController: NavController
-) : Adapter() {
+class GroceryListAdapter(private val context: Context) : Adapter() {
 
-    private val mInflater: LayoutInflater = LayoutInflater.from(mContext)
+    private val inflater: LayoutInflater = LayoutInflater.from(context)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): GroceryListAdapter.GroceryViewHolder {
-        val itemView = mInflater.inflate(R.layout.grocerylist_item, parent, false)
+        val itemView = inflater.inflate(R.layout.grocerylist_item, parent, false)
         return GroceryViewHolder(itemView)
     }
 
@@ -50,43 +45,37 @@ class GroceryListAdapter(
      * `RecyclerView` in [GroceryListFragment].
      */
     inner class GroceryViewHolder(itemView: View) :
-        RecyclerView.ViewHolder(itemView), View.OnClickListener {
+        RecyclerView.ViewHolder(itemView) {
 
-        private val mLabel: TextView = itemView.findViewById(R.id.grocery_item_label)
-        private val mBrand: TextView = itemView.findViewById(R.id.grocery_item_brand)
-        private val mAmount: TextView = itemView.findViewById(R.id.grocery_item_amount)
-        private val mPluralsProvider = PluralsProvider(mContext)
-        private val mImage: ImageView = itemView.findViewById(R.id.grocerylist_food_image)
+        private val label: TextView = itemView.findViewById(R.id.grocery_item_label)
+        private val brand: TextView = itemView.findViewById(R.id.grocery_item_brand)
+        private val amount: TextView = itemView.findViewById(R.id.grocery_item_amount)
+        private val pluralsProvider = PluralsProvider(context)
+        private val imageView: ImageView = itemView.findViewById(R.id.grocerylist_food_image)
+        private val layout: LinearLayout = itemView.findViewById(R.id.layout_grocery_list_item)
 
         init {
-            itemView.setOnClickListener(this)
-            mImage.clipToOutline = true
+            imageView.clipToOutline = true
         }
 
         internal fun bindTo(currentItem: FoodItem) {
-            setInputFieldValuesBasedOn(currentItem)
-            ImageViewPopulater.populateFromUri(mContext, currentItem.imageUri, mImage)
+            setFieldsToValuesOf(currentItem)
+            ImageViewPopulater.populateFromUri(context, currentItem.imageUri, imageView)
+            layout.setOnClickListener {
+                itemSelectedListener.onItemSelected(currentItem, imageView)
+            }
         }
 
-        private fun setInputFieldValuesBasedOn(foodItem: FoodItem) {
-            mLabel.text = foodItem.label
-            mBrand.text = foodItem.brand
-            mAmount.text = mPluralsProvider.getAmountString(foodItem.amount, foodItem.unit)
-        }
-
-        /**
-         * Called when an item in the `RecyclerView` in [GroceryListFragment] is clicked.
-         * Checks if the device screen is wide (>900 dp) and based on that launches
-         * [GroceryItemDetailFragment] in [GroceryListFragment].
-         */
-        override fun onClick(itemView: View?) {
-            val currentFoodItem = mItems[adapterPosition]
-            val foodItemIdKey = GroceryItemDetailFragment.FOOD_ITEM_ID_KEY
-            val args = bundleOf(foodItemIdKey to currentFoodItem.id)
-            navController.navigate(
-                R.id.action_groceryListFragment_to_groceryItemDetailFragment,
-                args
-            )
+        private fun setFieldsToValuesOf(foodItem: FoodItem) {
+            label.text = foodItem.label
+            brand.text = foodItem.brand
+            amount.text = pluralsProvider.getAmountString(foodItem.amount, foodItem.unit)
         }
     }
+
+    interface ItemSelectedListener {
+        fun onItemSelected(item: FoodItem, imageView: ImageView)
+    }
+
+    lateinit var itemSelectedListener: ItemSelectedListener
 }

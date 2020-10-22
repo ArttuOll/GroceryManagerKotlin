@@ -1,6 +1,7 @@
 package com.bsuuv.grocerymanager.ui
 
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.bsuuv.grocerymanager.R
 import com.bsuuv.grocerymanager.data.model.FoodItem
 import com.bsuuv.grocerymanager.data.viewmodel.GroceryItemViewModel
@@ -22,27 +24,20 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class GroceryItemDetailFragment : Fragment() {
 
-    companion object {
-        const val FOOD_ITEM_ID_KEY = "foodItemId"
-    }
-
     @Inject lateinit var mPluralsProvider: PluralsProvider
     private lateinit var mFoodItem: FoodItem
     private val viewModel: GroceryItemViewModel by viewModels()
+    private val args: GroceryItemDetailFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        sharedElementEnterTransition =
+            TransitionInflater.from(context).inflateTransition(android.R.transition.move)
         initMembers()
     }
 
     private fun initMembers() {
-        mFoodItem = getFoodItemFromArgs()
-    }
-
-    private fun getFoodItemFromArgs(): FoodItem {
-        val fragmentArgs = requireArguments()
-        val id = fragmentArgs.getInt(FOOD_ITEM_ID_KEY)
-        return viewModel.get(id)
+        mFoodItem = viewModel.get(args.itemId)
     }
 
     override fun onCreateView(
@@ -51,15 +46,17 @@ class GroceryItemDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_item_detail, container, false)
-        setUpImageViews(rootView)
+        setUpImageView(rootView)
         setUpTextViews(rootView)
         return rootView
     }
 
-    private fun setUpImageViews(rootView: View?) {
+    private fun setUpImageView(rootView: View?) {
         val foodImage: ImageView = rootView?.findViewById(R.id.imageView_detail)!!
-        val uri = mFoodItem.imageUri
-        context?.let { ImageViewPopulater.populateFromUri(it, uri, foodImage) }
+        foodImage.apply {
+            transitionName = getString(R.string.transition_detail)
+            ImageViewPopulater.populateFromUri(context, args.imageUri, this)
+        }
     }
 
     private fun setUpTextViews(rootView: View?) {

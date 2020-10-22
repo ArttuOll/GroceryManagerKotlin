@@ -2,16 +2,19 @@ package com.bsuuv.grocerymanager.ui
 
 import android.os.Bundle
 import android.view.*
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bsuuv.grocerymanager.R
 import com.bsuuv.grocerymanager.data.db.entity.FoodItemEntity
+import com.bsuuv.grocerymanager.data.model.FoodItem
 import com.bsuuv.grocerymanager.data.viewmodel.GroceryItemViewModel
 import com.bsuuv.grocerymanager.ui.adapters.GroceryListAdapter
 import com.bsuuv.grocerymanager.ui.util.RecyclerViewVisibilityToggle
@@ -50,12 +53,28 @@ class GroceryListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         navController = Navigation.findNavController(view)
-        adapter = GroceryListAdapter(requireContext(), navController)
+        adapter = getConfiguredAdapter()
         recyclerView = view.findViewById(R.id.main_recyclerview)
         recyclerViewPlaceholder = view.findViewById(R.id.main_recyclerview_placeholder)
         setUpFab(view)
         setUpRecyclerView()
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    private fun getConfiguredAdapter(): GroceryListAdapter {
+        adapter = GroceryListAdapter(requireContext())
+        adapter.itemSelectedListener = object : GroceryListAdapter.ItemSelectedListener {
+            override fun onItemSelected(item: FoodItem, imageView: ImageView) {
+                val extras = FragmentNavigatorExtras(imageView to item.imageUri)
+                val action = GroceryListFragmentDirections
+                    .actionGroceryListFragmentToGroceryItemDetailFragment(
+                        itemId = item.id,
+                        imageUri = item.imageUri
+                    )
+                navController.navigate(action, extras)
+            }
+        }
+        return adapter
     }
 
     private fun setUpFab(view: View) {
