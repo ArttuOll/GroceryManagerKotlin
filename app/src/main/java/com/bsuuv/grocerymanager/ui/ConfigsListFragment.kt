@@ -4,18 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bsuuv.grocerymanager.R
 import com.bsuuv.grocerymanager.data.db.entity.FoodItemEntity
+import com.bsuuv.grocerymanager.data.model.FoodItem
 import com.bsuuv.grocerymanager.data.viewmodel.FoodItemViewModel
+import com.bsuuv.grocerymanager.ui.adapters.AdapterItemSelectedListener
 import com.bsuuv.grocerymanager.ui.adapters.ConfigurationsListAdapter
 import com.bsuuv.grocerymanager.ui.util.Intention
 import com.bsuuv.grocerymanager.ui.util.RecyclerViewVisibilityToggle
@@ -39,6 +42,10 @@ class ConfigsListFragment : Fragment(), View.OnClickListener {
     private lateinit var navController: NavController
     private val viewModel: FoodItemViewModel by viewModels()
 
+    private companion object {
+        const val NULL_ID = -1
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -57,10 +64,23 @@ class ConfigsListFragment : Fragment(), View.OnClickListener {
     private fun initMembers(view: View) {
         navController = Navigation.findNavController(view)
         recyclerView = view.findViewById(R.id.config_recyclerview)
-        adapter = ConfigurationsListAdapter(requireContext(), navController)
+        adapter = getConfiguredAdapter()
         recyclerViewPlaceholder = view.findViewById(R.id.config_recyclerview_placeholder)
         this.fab = view.findViewById(R.id.configs_fab)
         fab.setOnClickListener(this)
+    }
+
+    private fun getConfiguredAdapter(): ConfigurationsListAdapter {
+        adapter = ConfigurationsListAdapter(requireContext(), navController)
+        adapter.itemSelectedListener = object : AdapterItemSelectedListener {
+            override fun onItemSelected(item: FoodItem, imageView: ImageView) {
+                val extras = FragmentNavigatorExtras(imageView to item.imageUri)
+                val action = ConfigsListFragmentDirections
+                    .actionConfigsListFragmentToNewFoodItemFragment(Intention.EDIT, item.id)
+                navController.navigate(action, extras)
+            }
+        }
+        return adapter
     }
 
     private fun configureUi() {
@@ -125,7 +145,8 @@ class ConfigsListFragment : Fragment(), View.OnClickListener {
      * `NewFoodItemActivity` for creating a new `FoodItem`.
      */
     override fun onClick(view: View) {
-        val args = bundleOf("intention" to Intention.CREATE)
-        navController.navigate(R.id.action_configsListFragment_to_newFoodItemFragment, args)
+        val action = ConfigsListFragmentDirections
+            .actionConfigsListFragmentToNewFoodItemFragment(Intention.CREATE, NULL_ID)
+        navController.navigate(action)
     }
 }

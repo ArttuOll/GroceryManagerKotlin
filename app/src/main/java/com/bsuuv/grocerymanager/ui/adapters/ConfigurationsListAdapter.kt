@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
@@ -27,6 +28,7 @@ class ConfigurationsListAdapter(
     Adapter() {
 
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
+    lateinit var itemSelectedListener: AdapterItemSelectedListener
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -47,35 +49,39 @@ class ConfigurationsListAdapter(
     inner class ConfigsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
 
-        private val mLabel: TextView = itemView.findViewById(R.id.config_item_label)
-        private val mBrand: TextView = itemView.findViewById(R.id.config_item_brand)
-        private val mAmount: TextView = itemView.findViewById(R.id.config_item_amount)
-        private val mSchedule: TextView = itemView.findViewById(R.id.config_item_schedule)
-        private val mImage: ImageView = itemView.findViewById(R.id.configlist_food_image)
-        private val mPlurals: PluralsProvider = PluralsProvider(context)
+        private val label: TextView = itemView.findViewById(R.id.config_item_label)
+        private val brand: TextView = itemView.findViewById(R.id.config_item_brand)
+        private val amount: TextView = itemView.findViewById(R.id.config_item_amount)
+        private val schedule: TextView = itemView.findViewById(R.id.config_item_schedule)
+        private val imageView: ImageView = itemView.findViewById(R.id.configlist_food_image)
+        private val plurals: PluralsProvider = PluralsProvider(context)
+        private val layout: LinearLayout = itemView.findViewById(R.id.config_item_linearlayout)
 
         init {
             itemView.setOnClickListener(this)
-            mImage.clipToOutline = true
+            imageView.clipToOutline = true
         }
 
         internal fun bindTo(currentItem: FoodItem) {
             setInputFieldValuesBasedOn(currentItem)
+            layout.setOnClickListener {
+                itemSelectedListener.onItemSelected(currentItem, imageView)
+            }
         }
 
         private fun setInputFieldValuesBasedOn(currentItem: FoodItem) {
-            mLabel.text = currentItem.label
+            label.text = currentItem.label
             setBrandOrHideIfEmpty(currentItem.brand)
-            mAmount.text = mPlurals.getAmountString(currentItem.amount, currentItem.unit)
-            mSchedule.text = mPlurals.getScheduleString(
+            amount.text = plurals.getAmountString(currentItem.amount, currentItem.unit)
+            schedule.text = plurals.getScheduleString(
                 currentItem.frequency,
                 currentItem.timeFrame
             )
-            ImageViewPopulater.populateFromUri(context, currentItem.imageUri, mImage)
+            ImageViewPopulater.populateFromUri(context, currentItem.imageUri, imageView)
         }
 
         private fun setBrandOrHideIfEmpty(brand: String) =
-            if (brand == "") mBrand.visibility = View.GONE else mBrand.text = brand
+            if (brand == "") this.brand.visibility = View.GONE else this.brand.text = brand
 
         override fun onClick(v: View?) {
             val currentItemId = mItems[adapterPosition].id

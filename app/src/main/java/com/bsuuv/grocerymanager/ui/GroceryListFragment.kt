@@ -16,6 +16,7 @@ import com.bsuuv.grocerymanager.R
 import com.bsuuv.grocerymanager.data.db.entity.FoodItemEntity
 import com.bsuuv.grocerymanager.data.model.FoodItem
 import com.bsuuv.grocerymanager.data.viewmodel.GroceryItemViewModel
+import com.bsuuv.grocerymanager.ui.adapters.AdapterItemSelectedListener
 import com.bsuuv.grocerymanager.ui.adapters.GroceryListAdapter
 import com.bsuuv.grocerymanager.ui.util.RecyclerViewVisibilityToggle
 import com.bsuuv.grocerymanager.util.DateTimeHelper
@@ -63,7 +64,7 @@ class GroceryListFragment : Fragment() {
 
     private fun getConfiguredAdapter(): GroceryListAdapter {
         adapter = GroceryListAdapter(requireContext())
-        adapter.itemSelectedListener = object : GroceryListAdapter.ItemSelectedListener {
+        adapter.itemSelectedListener = object : AdapterItemSelectedListener {
             override fun onItemSelected(item: FoodItem, imageView: ImageView) {
                 val extras = FragmentNavigatorExtras(imageView to item.imageUri)
                 val action = GroceryListFragmentDirections
@@ -80,7 +81,10 @@ class GroceryListFragment : Fragment() {
     private fun setUpFab(view: View) {
         this.fab = view.findViewById(R.id.grocerylist_fab)
         fab.setOnClickListener {
-            navController.navigate(R.id.action_groceryListFragment_to_newOnetimeFoodItemFragment)
+            navController.navigate(
+                GroceryListFragmentDirections
+                    .actionGroceryListFragmentToNewOnetimeFoodItemFragment()
+            )
         }
     }
 
@@ -144,11 +148,17 @@ class GroceryListFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_configure -> {
-                navController.navigate(R.id.action_groceryListFragment_to_configsListFragment)
+                navController.navigate(
+                    GroceryListFragmentDirections
+                        .actionGroceryListFragmentToConfigsListFragment()
+                )
                 true
             }
             R.id.action_settings -> {
-                navController.navigate(R.id.action_groceryListFragment_to_settingsFragment)
+                navController.navigate(
+                    GroceryListFragmentDirections
+                        .actionGroceryListFragmentToSettingsFragment()
+                )
                 true
             }
             else -> super.onOptionsItemSelected(item)

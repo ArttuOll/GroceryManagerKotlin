@@ -21,6 +21,7 @@ import com.bsuuv.grocerymanager.ui.util.PluralsProvider
 class GroceryListAdapter(private val context: Context) : Adapter() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
+    lateinit var itemSelectedListener: AdapterItemSelectedListener
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -60,7 +61,6 @@ class GroceryListAdapter(private val context: Context) : Adapter() {
 
         internal fun bindTo(currentItem: FoodItem) {
             setFieldsToValuesOf(currentItem)
-            ImageViewPopulater.populateFromUri(context, currentItem.imageUri, imageView)
             layout.setOnClickListener {
                 itemSelectedListener.onItemSelected(currentItem, imageView)
             }
@@ -70,12 +70,7 @@ class GroceryListAdapter(private val context: Context) : Adapter() {
             label.text = foodItem.label
             brand.text = foodItem.brand
             amount.text = pluralsProvider.getAmountString(foodItem.amount, foodItem.unit)
+            ImageViewPopulater.populateFromUri(context, foodItem.imageUri, imageView)
         }
     }
-
-    interface ItemSelectedListener {
-        fun onItemSelected(item: FoodItem, imageView: ImageView)
-    }
-
-    lateinit var itemSelectedListener: ItemSelectedListener
 }

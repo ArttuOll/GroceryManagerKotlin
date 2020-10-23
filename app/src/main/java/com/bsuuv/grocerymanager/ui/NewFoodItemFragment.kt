@@ -2,6 +2,7 @@ package com.bsuuv.grocerymanager.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
 import com.bsuuv.grocerymanager.R
 import com.bsuuv.grocerymanager.data.db.entity.FoodItemEntity
 import com.bsuuv.grocerymanager.data.viewmodel.FoodItemViewModel
@@ -49,7 +51,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class NewFoodItemFragment : Fragment(), View.OnClickListener {
 
-    private object Keys {
+    private companion object {
         const val IMAGE_PATH_KEY = "imagePath"
         const val FREQUENCY_NOT_SET = 0
         const val AMOUNT_FIELD_EMPTY = 0
@@ -65,11 +67,20 @@ class NewFoodItemFragment : Fragment(), View.OnClickListener {
     private lateinit var imageView: ImageView
     private lateinit var unitDropdown: AutoCompleteTextView
     private lateinit var navController: NavController
-    private lateinit var intention: Intention
     private lateinit var editedItem: FoodItemEntity
     private var imageUri = ""
     private val foodItemViewModel: FoodItemViewModel by viewModels()
+    private val args: NewFoodItemFragmentArgs by navArgs()
     @Inject lateinit var sharedPrefsHelper: SharedPreferencesHelper
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(
+            android
+                .R.transition.move
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -81,7 +92,7 @@ class NewFoodItemFragment : Fragment(), View.OnClickListener {
     }
 
     private fun recoverFoodImage(savedInstanceState: Bundle) {
-        imageUri = savedInstanceState.getString(Keys.IMAGE_PATH_KEY)!!
+        imageUri = savedInstanceState.getString(IMAGE_PATH_KEY)!!
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -92,16 +103,12 @@ class NewFoodItemFragment : Fragment(), View.OnClickListener {
     }
 
     private fun manageIntention() {
-        val serializedIntention = requireArguments().getSerializable("intention")
-        if (serializedIntention != null) {
-            intention = serializedIntention as Intention
-            if (intention == Intention.EDIT) {
-                val editedItemId = requireArguments().getInt("editedItemId")
-                editedItem = foodItemViewModel.get(editedItemId)
-                populateInputFields()
-                populateImageView()
-                setToggleButtonStates()
-            }
+        if (args.intention == Intention.EDIT) {
+            val editedItemId = args.editedItemId
+            editedItem = foodItemViewModel.get(editedItemId)
+            populateInputFields()
+            populateImageView()
+            setToggleButtonStates()
         }
     }
 
@@ -205,12 +212,12 @@ class NewFoodItemFragment : Fragment(), View.OnClickListener {
 
     private fun getAmount(): Int {
         val amountString = amountField.text.toString()
-        return if (amountString == "") Keys.AMOUNT_FIELD_EMPTY else amountString.toInt()
+        return if (amountString == "") AMOUNT_FIELD_EMPTY else amountString.toInt()
     }
 
     private fun getFrequency(): Int {
         val frequencyString = frequencyField.text.toString()
-        return if (frequencyString == "") Keys.FREQUENCY_NOT_SET else frequencyString.toInt()
+        return if (frequencyString == "") FREQUENCY_NOT_SET else frequencyString.toInt()
     }
 
     private fun foodItemCreationRequirementsMet(
@@ -284,10 +291,10 @@ class NewFoodItemFragment : Fragment(), View.OnClickListener {
                 frequencyQuotient
             )
         ) {
-            when (this.intention) {
+            when (args.intention) {
                 Intention.CREATE -> {
                     val foodItem = createFoodItemWithId(
-                        Keys.ID_NOT_SET,
+                        ID_NOT_SET,
                         textFieldValues,
                         amount,
                         timeFrame,
@@ -344,6 +351,6 @@ class NewFoodItemFragment : Fragment(), View.OnClickListener {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString(Keys.IMAGE_PATH_KEY, imageUri)
+        outState.putString(IMAGE_PATH_KEY, imageUri)
     }
 }
