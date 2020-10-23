@@ -43,10 +43,13 @@ import javax.inject.Inject
  *     by the frequency?
  * * Additional information the user wants to add
  *
- * Some of these input fields are not mandatory. Finally, the view contains a
- * floating action button, which launches validation of the input fields and
- * afterwards sends their data to [ConfigsListFragment]. For information
- * on required fields and their validation, see [FoodItemCreationRequirementChecker]
+ * Label, frequency and time-frame fields are mandatory.
+ *
+ * For information on validation of the mandatory fields, see [FoodItemCreationRequirementChecker]
+ *
+ * Finally, the view contains a floating action button, which launches validation of the input
+ * fields and afterwards sends their data to [ConfigsListFragment].
+ *
  */
 @AndroidEntryPoint
 class NewFoodItemFragment : Fragment(), View.OnClickListener {

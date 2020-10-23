@@ -19,7 +19,7 @@ import com.bsuuv.grocerymanager.ui.util.PluralsProvider
 
 /**
  * Adapter that feeds food-items in the form of [ConfigsViewHolder]s to the
- * `RecyclerView` in [ConfigurationsActivity].
+ * `RecyclerView` in [ConfigsListFragment].
  */
 class ConfigurationsListAdapter(
     private val context: Context,
@@ -46,6 +46,10 @@ class ConfigurationsListAdapter(
         (holder as ConfigsViewHolder).bindTo(currentItem)
     }
 
+    /**
+     * A `ViewHolder` containing one grocery item to be displayed in the
+     * `RecyclerView` in [ConfigsListFragment].
+     */
     inner class ConfigsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
 

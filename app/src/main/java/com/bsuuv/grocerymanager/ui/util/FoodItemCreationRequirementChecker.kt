@@ -7,7 +7,8 @@ import com.bsuuv.grocerymanager.util.TimeFrame
 
 /**
  * Utility class containing logic to check that given food-item properties fit their requirements.
- * This class is used in [NewFoodItemActivity] to validate the values in its input fields.
+ * This class is used in [NewFoodItemFragment] and [NewOneTimeItemFragment] to validate the values
+ * in their input fields.
  */
 class FoodItemCreationRequirementChecker(private val mSharedPrefsHelper: SharedPreferencesHelper) {
 
@@ -27,6 +28,9 @@ class FoodItemCreationRequirementChecker(private val mSharedPrefsHelper: SharedP
      *   * TimeFrame must not equal `TimeFrame.NULL`
      *   * Frequency must be greater than zero
      *   * Frequency quotient must not be more than 1.0 [FrequencyQuotientCalc]).
+     *
+     * The `textFieldValues` parameter contains the label on the key "label".
+     *
      * @throws RequirementNotMetException An exception with message telling which of the requirements
      *                                    was not met.
      */

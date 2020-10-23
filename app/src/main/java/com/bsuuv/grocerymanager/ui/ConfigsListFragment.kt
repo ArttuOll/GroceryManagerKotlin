@@ -84,37 +84,10 @@ class ConfigsListFragment : Fragment(), View.OnClickListener {
     }
 
     private fun configureUi() {
-        setUpRecyclerView()
-    }
-
-    private fun setUpRecyclerView() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
         val itemTouchHelper = initializeItemTouchHelper()
         itemTouchHelper.attachToRecyclerView(recyclerView)
-    }
-
-    private fun setUpViewModel() {
-        viewModel.getFoodItems().observe(viewLifecycleOwner, { foodItemEntities ->
-            run {
-                setRecyclerViewVisibility(foodItemEntities.size)
-                adapter.setItems(foodItemEntities)
-            }
-        })
-    }
-
-    private fun setRecyclerViewVisibility(size: Int) {
-        when {
-            size > 0 -> RecyclerViewVisibilityToggle.toggleOn(
-                recyclerView,
-                recyclerViewPlaceholder,
-            )
-            else -> RecyclerViewVisibilityToggle.toggleOff(
-                recyclerView,
-                recyclerViewPlaceholder,
-                R.string.no_grocery_items,
-            )
-        }
     }
 
     private fun initializeItemTouchHelper(): ItemTouchHelper {
@@ -138,6 +111,29 @@ class ConfigsListFragment : Fragment(), View.OnClickListener {
                     viewModel.delete(deletedItem)
                 }
             })
+    }
+
+    private fun setUpViewModel() {
+        viewModel.getFoodItems().observe(viewLifecycleOwner, { foodItemEntities ->
+            run {
+                setRecyclerViewVisibility(foodItemEntities.size)
+                adapter.setItems(foodItemEntities)
+            }
+        })
+    }
+
+    private fun setRecyclerViewVisibility(size: Int) {
+        when {
+            size > 0 -> RecyclerViewVisibilityToggle.toggleOn(
+                recyclerView,
+                recyclerViewPlaceholder,
+            )
+            else -> RecyclerViewVisibilityToggle.toggleOff(
+                recyclerView,
+                recyclerViewPlaceholder,
+                R.string.no_grocery_items,
+            )
+        }
     }
 
     /**
