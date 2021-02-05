@@ -2,9 +2,10 @@
 
 Android app for managing and scheduling your groceries!
 
-![Main View](https://github.com/ArttuOll/GroceryManagerKotlin/blob/master/designs/main_view.png)
-![Grocery Items View](https://github.com/ArttuOll/GroceryManagerKotlin/blob/master/designs/configurations.png)
-![New Item](https://github.com/ArttuOll/GroceryManagerKotlin/blob/master/designs/add_item.png)
+![Main View](https://github.com/ArttuOll/GroceryManagerKotlin/blob/master/screenshots/main_view.png)
+![](https://github.com/ArttuOll/GroceryManagerKotlin/blob/master/screenshots/confgs_view.png)
+![New Item](https://github.com/ArttuOll/GroceryManagerKotlin/blob/master/screenshots/edit_view.png)
+![Item View](https://github.com/ArttuOll/GroceryManagerKotlin/blob/master/screenshots/item_view.png)
 
 
 
